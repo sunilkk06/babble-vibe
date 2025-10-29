@@ -84,10 +84,19 @@ const LearningPathNode: React.FC<{
 
 export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLessonSelect, scenarios, lessons }) => {
     
+    // Determine current language from the lessons passed in, which are pre-filtered by language.
+    // Fallback to English if no lessons are available for the selected language.
+    const currentLangCode = lessons[0]?.lang || 'en';
+    
+    // The "Basic Greetings" lesson for the current language should have this ID.
+    const firstLessonId = `${currentLangCode}_01`;
+    
     // Create a more curated and diverse learning path to avoid repetition.
+    // NOTE: This uses the full, unfiltered LESSONS and SCENARIOS from constants
+    // to allow for a diverse path featuring multiple languages.
     const allItems = [...LESSONS, ...SCENARIOS];
     const curatedPathIds = [
-        'sanskrit_01',   // Lesson
+        firstLessonId,   // DYNAMIC: The first lesson matches the selected language
         'cafe-fr',       // French Scenario
         'chest-1',       // Special Reward Chest
         'chat-de',       // German Scenario

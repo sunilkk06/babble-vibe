@@ -83,7 +83,6 @@ export const LESSONS: Lesson[] = [
         content: [
             {
                 word: "नमः",
-                // Fix: Corrected malformed object key from `transliteration"` to `transliteration`.
                 transliteration: "namah",
                 meaning: "Hello / Greetings",
                 example: "त्वं कथं भवसि? नमः!",
@@ -91,7 +90,6 @@ export const LESSONS: Lesson[] = [
             },
             {
                 word: "धन्यवादः",
-                // Fix: Corrected malformed object key from `transliteration"` to `transliteration`.
                 transliteration: "dhanyavaadah",
                 meaning: "Thank you",
                 example: "ते धन्यवादः।",
@@ -99,7 +97,6 @@ export const LESSONS: Lesson[] = [
             },
             {
                 word: "शुभरात्रिः",
-                // Fix: Corrected malformed object key from `transliteration"` to `transliteration`.
                 transliteration: "shubha-raatrih",
                 meaning: "Good night",
                 example: "शुभरात्रिः मित्र!",
@@ -117,6 +114,159 @@ export const LESSONS: Lesson[] = [
                 options: ["शुभरात्रिः", "नमः", "धन्यवादः"],
                 answer: "शुभरात्रिः"
             }
+        ]
+    },
+    {
+        lesson_id: "en_01",
+        language: "English",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in English with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'en',
+        category: 'Lesson',
+        content: [
+            { word: "Hello", transliteration: "Hello", meaning: "Hello", example: "Hello, how are you?", audio: "audio/hello_en.mp3" },
+            { word: "Thank you", transliteration: "Thank you", meaning: "Thank you", example: "Thank you so much!", audio: "audio/thankyou_en.mp3" },
+            { word: "Good night", transliteration: "Good night", meaning: "Good night", example: "Good night, see you tomorrow.", audio: "audio/goodnight_en.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Thank you' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in English?", options: ["Good night", "Hello", "Thank you"], answer: "Hello" }
+        ]
+    },
+    {
+        lesson_id: "es_01",
+        language: "Spanish",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Spanish with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'es',
+        category: 'Lesson',
+        content: [
+            { word: "Hola", transliteration: "Hola", meaning: "Hello", example: "Hola, ¿cómo estás?", audio: "audio/hola_es.mp3" },
+            { word: "Gracias", transliteration: "Gracias", meaning: "Thank you", example: "Muchas gracias.", audio: "audio/gracias_es.mp3" },
+            { word: "Buenas noches", transliteration: "Buenas noches", meaning: "Good night", example: "Buenas noches, hasta mañana.", audio: "audio/buenasnoches_es.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Gracias' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Spanish?", options: ["Buenas noches", "Hola", "Gracias"], answer: "Hola" }
+        ]
+    },
+    {
+        lesson_id: "fr_01",
+        language: "French",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in French with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'fr',
+        category: 'Lesson',
+        content: [
+            { word: "Bonjour", transliteration: "Bonjour", meaning: "Hello", example: "Bonjour, comment ça va ?", audio: "audio/bonjour_fr.mp3" },
+            { word: "Merci", transliteration: "Merci", meaning: "Thank you", example: "Merci beaucoup.", audio: "audio/merci_fr.mp3" },
+            { word: "Bonsoir", transliteration: "Bonsoir", meaning: "Good evening", example: "Bonsoir, madame.", audio: "audio/bonsoir_fr.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Merci' mean?", options: ["Hello", "Good evening", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in French?", options: ["Bonsoir", "Bonjour", "Merci"], answer: "Bonjour" }
+        ]
+    },
+    {
+        lesson_id: "de_01",
+        language: "German",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in German with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'de',
+        category: 'Lesson',
+        content: [
+            { word: "Hallo", transliteration: "Hallo", meaning: "Hello", example: "Hallo, wie geht's?", audio: "audio/hallo_de.mp3" },
+            { word: "Danke", transliteration: "Danke", meaning: "Thank you", example: "Danke schön.", audio: "audio/danke_de.mp3" },
+            { word: "Gute Nacht", transliteration: "Gute Nacht", meaning: "Good night", example: "Gute Nacht, schlaf gut.", audio: "audio/gutenacht_de.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Danke' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in German?", options: ["Gute Nacht", "Hallo", "Danke"], answer: "Hallo" }
+        ]
+    },
+    {
+        lesson_id: "ja_01",
+        language: "Japanese",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Japanese with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'ja',
+        category: 'Lesson',
+        content: [
+            { word: "こんにちは", transliteration: "Konnichiwa", meaning: "Hello", example: "こんにちは、田中さん。", audio: "audio/konnichiwa_ja.mp3" },
+            { word: "ありがとう", transliteration: "Arigatou", meaning: "Thank you", example: "どうもありがとう。", audio: "audio/arigatou_ja.mp3" },
+            { word: "おやすみなさい", transliteration: "Oyasuminasai", meaning: "Good night", example: "おやすみなさい、また明日。", audio: "audio/oyasuminasai_ja.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'ありがとう' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Japanese?", options: ["おやすみなさい", "こんにちは", "ありがとう"], answer: "こんにちは" }
+        ]
+    },
+    {
+        lesson_id: "hi_01",
+        language: "Hindi",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Hindi with a fun quiz.",
+        // Fix: Corrected typo in 'level' from 'Beginger' to 'Beginner'.
+        level: "Beginner",
+        emoji: "🙏",
+        lang: 'hi',
+        category: 'Lesson',
+        content: [
+            { word: "नमस्ते", transliteration: "Namaste", meaning: "Hello", example: "नमस्ते, आप कैसे हैं?", audio: "audio/namaste_hi.mp3" },
+            { word: "धन्यवाद", transliteration: "Dhanyavaad", meaning: "Thank you", example: "बहुत धन्यवाद।", audio: "audio/dhanyavaad_hi.mp3" },
+            { word: "शुभ रात्रि", transliteration: "Shubh raatri", meaning: "Good night", example: "शुभ रात्रि, फिर मिलेंगे।", audio: "audio/shubhraatri_hi.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'धन्यवाद' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Hindi?", options: ["शुभ रात्रि", "नमस्ते", "धन्यवाद"], answer: "नमस्ते" }
+        ]
+    },
+    {
+        lesson_id: "ta_01",
+        language: "Tamil",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Tamil with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'ta',
+        category: 'Lesson',
+        content: [
+            { word: "வணக்கம்", transliteration: "Vanakkam", meaning: "Hello", example: "வணக்கம், எப்படி இருக்கிறீர்கள்?", audio: "audio/vanakkam_ta.mp3" },
+            { word: "நன்றி", transliteration: "Nandri", meaning: "Thank you", example: "மிக்க நன்றி.", audio: "audio/nandri_ta.mp3" },
+            { word: "இனிய இரவு", transliteration: "Iniya iravu", meaning: "Good night", example: "இனிய இரவு, நாளை சந்திப்போம்.", audio: "audio/iniyairavu_ta.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'நன்றி' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Tamil?", options: ["இனிய இரவு", "வணக்கம்", "நன்றி"], answer: "வணக்கம்" }
+        ]
+    },
+    {
+        lesson_id: "kn_01",
+        language: "Kannada",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Kannada with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'kn',
+        category: 'Lesson',
+        content: [
+            { word: "ನಮಸ್ಕಾರ", transliteration: "Namaskara", meaning: "Hello", example: "ನಮಸ್ಕಾರ, ನೀವು ಹೇಗಿದ್ದೀರಾ?", audio: "audio/namaskara_kn.mp3" },
+            { word: "ಧನ್ಯವಾದಗಳು", transliteration: "Dhanyavadagalu", meaning: "Thank you", example: "ತುಂಬಾ ಧನ್ಯವಾದಗಳು.", audio: "audio/dhanyavadagalu_kn.mp3" },
+            { word: "ಶುಭರಾತ್ರಿ", transliteration: "Shubharatri", meaning: "Good night", example: "ಶುಭರಾತ್ರಿ, ನಾಳೆ ಸಿಗೋಣ.", audio: "audio/shubharatri_kn.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'ಧನ್ಯವಾದಗಳು' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Kannada?", options: ["ಶುಭರಾತ್ರಿ", "ನಮಸ್ಕಾರ", "ಧನ್ಯವಾದಗಳು"], answer: "ನಮಸ್ಕಾರ" }
         ]
     }
 ];
