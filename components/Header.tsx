@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { MenuIcon } from './icons/Icons';
 import { ParrotIcon } from './icons/ParrotIcon';
@@ -57,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage
                         <div className="-m-1.5 flex items-center p-1.5">
                             <span className="sr-only">Your profile</span>
                              <div className="h-8 w-8 rounded-full bg-cyan-500 flex items-center justify-center">
-                                <ParrotIcon className="h-6 w-6 text-white"/>
+                                <ParrotIcon className="h-6 w-6"/>
                             </div>
                             <div className="hidden lg:flex lg:items-center ml-4 w-40">
                                 <div className="w-full">
