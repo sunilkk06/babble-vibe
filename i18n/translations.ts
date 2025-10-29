@@ -1,0 +1,57 @@
+// A simple translation dictionary
+// The keys are English labels from the constants.tsx VIEWS object.
+
+export const TRANSLATIONS: Record<string, Record<string, string>> = {
+  en: {
+    'Learn': 'Learn',
+    'Grammar': 'Grammar',
+    'Vocabulary': 'Vocabulary',
+    'Word Bank': 'Word Bank',
+    'Community': 'Community',
+    'Achievements': 'Achievements',
+    'Media': 'Media',
+    'Challenges': 'Challenges',
+    'Start': 'Start',
+    'Profile': 'Profile',
+    'Leaderboard': 'Leaderboard',
+  },
+  hi: { // Hindi
+    'Learn': 'सीखें',
+    'Grammar': 'व्याकरण',
+    'Vocabulary': 'शब्दावली',
+    'Word Bank': 'शब्द बैंक',
+    'Community': 'समुदाय',
+    'Achievements': 'उपलब्धियां',
+    'Media': 'मीडिया',
+    'Challenges': 'चुनौतियां',
+    'Start': 'शुरू करें',
+    'Profile': 'प्रोफ़ाइल',
+    'Leaderboard': 'लीडरबोर्ड',
+  },
+  kn: { // Kannada
+    'Learn': 'ಕಲಿಯಿರಿ',
+    'Grammar': 'ವ್ಯಾಕರಣ',
+    'Vocabulary': 'ಶಬ್ದಕೋಶ',
+    'Word Bank': 'ಪದಗಳ ಬ್ಯಾಂಕ್',
+    'Community': 'ಸಮುದಾಯ',
+    'Achievements': 'ಸಾಧನೆಗಳು',
+    'Media': 'ಮಾಧ್ಯಮ',
+    'Challenges': 'ಸವಾಲುಗಳು',
+    'Start': 'ಪ್ರಾರಂಭಿಸಿ',
+    'Profile': 'ಪ್ರೊಫೈಲ್',
+    'Leaderboard': 'ಲೀಡರ್‌ಬೋರ್ಡ್',
+  },
+  ta: { // Tamil
+    'Learn': 'கற்க',
+    'Grammar': 'இலக்கணம்',
+    'Vocabulary': 'சொல்லகராதி',
+    'Word Bank': 'சொல் வங்கி',
+    'Community': 'சமூகம்',
+    'Achievements': 'சாதனைகள்',
+    'Media': 'ஊடகம்',
+    'Challenges': 'சவால்கள்',
+    'Start': 'தொடங்கு',
+    'Profile': 'சுயவிவரம்',
+    'Leaderboard': 'தரவரிசை',
+  }
+};
