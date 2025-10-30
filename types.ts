@@ -71,11 +71,13 @@ export interface AchievementBadge {
   icon: string;
 }
 
-export interface DailyChallenge {
+export interface Challenge {
   id: string;
+  type: 'daily' | 'weekly' | 'event';
   title: string;
   description: string;
   icon: string;
+  reward: string;
 }
 
 export interface PostLessonMessage {
@@ -98,4 +100,29 @@ export interface MediaItem {
   thumbnailUrl: string;
   duration: string;
   lang: string;
+}
+
+export interface Workshop {
+  id: string;
+  title: string;
+  host: string;
+  date: string;
+  price: string;
+  isPro: boolean;
+}
+
+export interface Tutor {
+  id: string;
+  name: string;
+  nativeLanguage: string; // Language code
+  specialty: string;
+  bio: string;
+  isOnline: boolean;
+  pricePerSession: string; // e.g., "$15 / 30 min"
+  avatarUrl: string;
+}
+
+export interface TranscriptionFeedback {
+  transcription: string;
+  feedback: string;
 }

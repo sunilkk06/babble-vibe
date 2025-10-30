@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ACHIEVEMENT_BADGES, DAILY_CHALLENGES } from '../constants';
-import type { DailyChallenge, AchievementBadge } from '../types';
+import { ACHIEVEMENT_BADGES, CHALLENGES } from '../constants';
+import type { Challenge, AchievementBadge } from '../types';
 
 const BadgeCard: React.FC<{ badge: AchievementBadge }> = ({ badge }) => (
     <div className="bg-white/70 backdrop-blur-lg border border-white/30 p-5 rounded-xl shadow-lg text-center flex flex-col items-center transform hover:-translate-y-1 transition-transform duration-300">
@@ -10,12 +10,12 @@ const BadgeCard: React.FC<{ badge: AchievementBadge }> = ({ badge }) => (
     </div>
 );
 
-const DailyChallengeCard: React.FC = () => {
-    const [challenge, setChallenge] = useState<DailyChallenge | null>(null);
+const FeaturedChallengeCard: React.FC = () => {
+    const [challenge, setChallenge] = useState<Challenge | null>(null);
 
     useEffect(() => {
         // Pick a random challenge when the component mounts
-        setChallenge(DAILY_CHALLENGES[Math.floor(Math.random() * DAILY_CHALLENGES.length)]);
+        setChallenge(CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)]);
     }, []);
 
     if (!challenge) return null;
@@ -27,9 +27,10 @@ const DailyChallengeCard: React.FC = () => {
                     {challenge.icon}
                 </div>
                 <div>
-                    <h3 className="font-bold font-poppins text-lg">Today's Chirp Challenge</h3>
+                    <h3 className="font-bold font-poppins text-lg">Featured Challenge</h3>
                     <p className="font-semibold">{challenge.title}</p>
                     <p className="text-sm mt-1">{challenge.description}</p>
+                    <p className="text-sm mt-2 font-bold bg-white/20 px-2 py-1 rounded-full inline-block">Reward: {challenge.reward}</p>
                 </div>
             </div>
         </div>
@@ -47,7 +48,7 @@ export const AchievementsView: React.FC = () => {
             </div>
 
             <div className="mb-10">
-                <DailyChallengeCard />
+                <FeaturedChallengeCard />
             </div>
 
             <div>

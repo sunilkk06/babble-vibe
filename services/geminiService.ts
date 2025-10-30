@@ -104,3 +104,25 @@ export const generateSpeech = async (prompt: string): Promise<string | null> => 
         return null;
     }
 };
+
+export const getPronunciationFeedback = async (originalText: string, userTranscription: string, languageName: string): Promise<string> => {
+    const prompt = `You are an expert accent coach for ${languageName} learners. The user was asked to say "${originalText}". They pronounced it as "${userTranscription}".
+    
+Provide a short, constructive analysis of their pronunciation based on the transcription. 
+- If the transcription is perfect or very close, praise them.
+- If there are errors, focus on the potential mispronunciations and offer simple, actionable tips for improvement.
+- Keep the feedback concise and encouraging.
+- Format your response using markdown.
+- Do not grade them or give a score.`;
+
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-pro',
+            contents: prompt,
+        });
+        return response.text;
+    } catch (error) {
+        console.error("Error getting pronunciation feedback:", error);
+        return "Sorry, I couldn't provide feedback at this time.";
+    }
+};

@@ -1,7 +1,7 @@
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
-import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, DailyChallenge, PostLessonMessage, MediaItem } from './types';
-import { HomeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, MediaIcon, ChallengesIcon, AchievementsIcon, WordBankIcon } from './components/icons/SidebarIcons';
+import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop } from './types';
+import { HomeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, MediaIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon } from './components/icons/SidebarIcons';
 import { ChatBubbleIcon } from './components/icons/Icons';
 
 export const LANGUAGES: Language[] = [
@@ -457,36 +457,70 @@ export const ACHIEVEMENT_BADGES: AchievementBadge[] = [
     }
 ];
 
-export const DAILY_CHALLENGES: DailyChallenge[] = [
+export const CHALLENGES: Challenge[] = [
     {
         id: 'dc01',
+        type: 'daily',
         title: "Translate This!",
         description: "Translate 'Good morning, how are you?' into your target language without using a translator.",
-        icon: "↔️"
+        icon: "↔️",
+        reward: "20 XP"
     },
     {
         id: 'dc02',
+        type: 'daily',
         title: "Adjective Adventure",
         description: "Describe your favorite food using 5 new adjectives you learned this week.",
-        icon: "🍕"
+        icon: "🍕",
+        reward: "25 XP"
     },
     {
         id: 'dc03',
+        type: 'daily',
         title: "Listen Up!",
         description: "Listen to a song in your target language and write down 3 words you recognize.",
-        icon: "🎶"
+        icon: "🎶",
+        reward: "15 XP"
     },
     {
         id: 'dc04',
+        type: 'daily',
         title: "Quick Query",
         description: "Ask a question in a conversation scenario, like 'What time is it?' or 'Where is the library?'",
-        icon: "❓"
+        icon: "❓",
+        reward: "15 XP"
     },
     {
         id: 'dc05',
+        type: 'daily',
         title: "Photo Flashcard",
         description: "Use the Vocabulary tool to add a label to a photo of something in your room.",
-        icon: "🖼️"
+        icon: "🖼️",
+        reward: "20 XP"
+    },
+    {
+        id: 'wc01',
+        type: 'weekly',
+        title: "Scenario Streak",
+        description: "Complete 3 conversation scenarios in a week with 80% grammar accuracy.",
+        icon: "💬",
+        reward: "100 XP & 💎"
+    },
+    {
+        id: 'wc02',
+        type: 'weekly',
+        title: "Vocabulary Voyager",
+        description: "Learn 20 new words using the Word Bank and score 90% on a lesson quiz.",
+        icon: "📚",
+        reward: "120 XP"
+    },
+    {
+        id: 'ec01',
+        type: 'event',
+        title: "Weekend Warrior",
+        description: "Complete a lesson every day this weekend (Friday, Saturday, Sunday).",
+        icon: "🗓️",
+        reward: "75 XP & ✨"
     }
 ];
 
@@ -555,6 +589,94 @@ export const MEDIA_ITEMS: MediaItem[] = [
   },
 ];
 
+export const WORKSHOPS: Workshop[] = [
+    {
+        id: 'w01',
+        title: 'Mastering the French Subjunctive',
+        host: 'Elodie Moreau',
+        date: 'October 28, 2024',
+        price: '$25',
+        isPro: true,
+    },
+    {
+        id: 'w02',
+        title: 'German Cases Made Easy: A Beginner\'s Guide',
+        host: 'Lars Weber',
+        date: 'November 5, 2024',
+        price: 'Free',
+        isPro: false,
+    },
+    {
+        id: 'w03',
+        title: 'Writing Professional Emails in English',
+        host: 'John Smith',
+        date: 'November 12, 2024',
+        price: '$25',
+        isPro: true,
+    },
+    {
+        id: 'w04',
+        title: 'Japanese Kanji Practice Session',
+        host: 'Kenji Tanaka',
+        date: 'November 18, 2024',
+        price: '$15',
+        isPro: true,
+    },
+];
+
+export const TUTORS: Tutor[] = [
+    {
+        id: 'tutor-1',
+        name: 'Elodie Moreau',
+        nativeLanguage: 'fr',
+        specialty: 'Conversational French & Accent Correction',
+        bio: 'Bonjour! Let\'s chat about French culture, food, and film. I can help you sound like a true Parisian!',
+        isOnline: true,
+        pricePerSession: '$20 / 30 min',
+        avatarUrl: 'https://picsum.photos/seed/tutor1/200'
+    },
+    {
+        id: 'tutor-2',
+        name: 'Kenji Tanaka',
+        nativeLanguage: 'ja',
+        specialty: 'Beginner Japanese & JLPT N5 Prep',
+        bio: 'こんにちは！I make learning Japanese fun and easy, focusing on practical phrases for your first trip to Japan.',
+        isOnline: true,
+        pricePerSession: '$25 / 30 min',
+        avatarUrl: 'https://picsum.photos/seed/tutor2/200'
+    },
+    {
+        id: 'tutor-3',
+        name: 'Sofia Rossi',
+        nativeLanguage: 'es',
+        specialty: 'Business Spanish & DELE Exam Prep',
+        bio: 'Hola! I have 5 years of experience helping professionals master Spanish for the workplace. Let\'s elevate your career.',
+        isOnline: false,
+        pricePerSession: '$30 / 30 min',
+        avatarUrl: 'https://picsum.photos/seed/tutor3/200'
+    },
+    {
+        id: 'tutor-4',
+        name: 'Lars Weber',
+        nativeLanguage: 'de',
+        specialty: 'German Grammar & Pronunciation',
+        bio: 'Guten Tag! German grammar can be tricky, but I have simple methods to help you understand it perfectly.',
+        isOnline: true,
+        pricePerSession: '$22 / 30 min',
+        avatarUrl: 'https://picsum.photos/seed/tutor4/200'
+    },
+    {
+        id: 'tutor-5',
+        name: 'Aarav Sharma',
+        nativeLanguage: 'hi',
+        specialty: 'Hindi Script & Daily Conversation',
+        bio: 'नमस्ते! Learn to read, write, and speak Hindi with confidence. We can practice dialogues for everyday situations.',
+        isOnline: false,
+        pricePerSession: '$18 / 30 min',
+        avatarUrl: 'https://picsum.photos/seed/tutor5/200'
+    },
+];
+
 
 export const VIEWS = {
   DASHBOARD: { id: 'dashboard', label: 'Learn', icon: HomeIcon },
@@ -563,10 +685,15 @@ export const VIEWS = {
   GRAMMAR: { id: 'grammar', label: 'Grammar', icon: GrammarIcon },
   IMAGE_EDITOR: { id: 'image_editor', label: 'Vocabulary', icon: VocabularyIcon },
   WORD_BANK: { id: 'word_bank', label: 'Word Bank', icon: WordBankIcon },
+  ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon },
   COMMUNITY: { id: 'community', label: 'Community', icon: CommunityIcon },
   ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', icon: AchievementsIcon },
   MEDIA: { id: 'media', label: 'Media', icon: MediaIcon },
   CHALLENGES: { id: 'challenges', label: 'Challenges', icon: ChallengesIcon },
+  TUTORS: { id: 'tutors', label: 'Tutors', icon: TutorIcon },
+  ABOUT: { id: 'about', label: 'About Us' },
+  TERMS: { id: 'terms', label: 'Terms of Service' },
+  PRIVACY: { id: 'privacy', label: 'Privacy Policy' },
 };
 
 export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> })[] = [
@@ -574,8 +701,10 @@ export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> 
     VIEWS.GRAMMAR,
     VIEWS.IMAGE_EDITOR,
     VIEWS.WORD_BANK,
+    VIEWS.ACCENT_TRAINING,
     VIEWS.COMMUNITY,
     VIEWS.ACHIEVEMENTS,
     VIEWS.MEDIA,
     VIEWS.CHALLENGES,
+    VIEWS.TUTORS,
 ];

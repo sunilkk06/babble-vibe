@@ -90,3 +90,26 @@ export const ChallengesIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) =
     </g>
   </svg>
 );
+
+// Duolingo-style colorful icon for Tutors
+export const TutorIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g fill="none" fillRule="evenodd">
+      <circle stroke="#0891B2" strokeWidth="2" cx="20" cy="16" r="6"></circle>
+      <path d="M10 35v-5a10 10 0 0110-10h0a10 10 0 0110 10v5" stroke="#06B6D4" strokeWidth="2" strokeLinecap="round"></path>
+      <path d="M28 22v-4a4 4 0 00-4-4h-2a2 2 0 00-2 2v8a2 2 0 002 2h2a4 4 0 004-4z" stroke="#10B981" strokeWidth="2"></path>
+      <path d="M32 20h-4" stroke="#10B981" strokeWidth="2" strokeLinecap="round"></path>
+    </g>
+  </svg>
+);
+
+// Duolingo-style colorful icon for Accent Training
+export const AccentTrainingIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <g fill="none" fillRule="evenodd">
+            <path d="M20 28c-4.42 0-8-3.58-8-8V8c0-4.42 3.58-8 8-8s8 3.58 8 8v12c0 4.42-3.58 8-8 8z" stroke="#0891B2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+            <path d="M28 20v2a8 8 0 01-16 0v-2" stroke="#06B6D4" strokeWidth="2" strokeLinecap="round"></path>
+            <path d="M20 28v7m-6 0h12" stroke="#10B981" strokeWidth="2" strokeLinecap="round"></path>
+        </g>
+    </svg>
+);

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
@@ -6,13 +7,19 @@ import { ScenarioView } from './components/ScenarioView';
 import { LessonView } from './components/LessonView';
 import { GrammarClinicView } from './components/GrammarClinicView';
 import { ImageEditorView } from './components/ImageEditorView';
-import { PlaceholderView } from './components/PlaceholderView';
+import { ChallengesView } from './components/ChallengesView';
 import { CommunityView } from './components/CommunityView';
 import { AchievementsView } from './components/AchievementsView';
 import { WordBankView } from './components/WordBankView';
 import { Onboarding } from './components/Onboarding';
-import { LoginPage } from './components/LoginPage'; // Import the new Login Page
+import { LoginPage } from './components/LoginPage';
 import { MediaView } from './components/MediaView';
+import { TutorView } from './components/TutorView';
+import { AccentTrainingView } from './components/AccentTrainingView';
+import { Footer } from './components/Footer';
+import { AboutView } from './components/AboutView';
+import { TermsView } from './components/TermsView';
+import { PrivacyView } from './components/PrivacyView';
 import type { View, Scenario, Language, Lesson } from './types';
 import { VIEWS, SCENARIOS, LANGUAGES, LESSONS } from './constants';
 
@@ -66,6 +73,54 @@ export default function App() {
       setSidebarOpen(false);
   }
 
+  const handleLanguageChange = (newLang: Language) => {
+    if (newLang.code === currentLanguage.code) return; // No change
+
+    // If user is in a Lesson view, try to find the equivalent lesson in the new language
+    if (currentView.id === VIEWS.LESSON.id && currentLesson) {
+        const lessonIdParts = currentLesson.lesson_id.split('_');
+        if (lessonIdParts.length > 1) { // e.g., 'es_01' -> ['es', '01']
+            const lessonIdentifier = lessonIdParts.slice(1).join('_'); // e.g., '01'
+            const newLessonId = `${newLang.code}_${lessonIdentifier}`;
+            const newLesson = LESSONS.find(l => l.lesson_id === newLessonId);
+            
+            if (newLesson) {
+                setCurrentLesson(newLesson);
+            } else {
+                // Fallback: no equivalent lesson found, go to dashboard
+                handleViewChange(VIEWS.DASHBOARD);
+            }
+        } else {
+            handleViewChange(VIEWS.DASHBOARD);
+        }
+    }
+
+    // If user is in a Scenario view, try to find the equivalent scenario
+    if (currentView.id === VIEWS.SCENARIO.id && currentScenario) {
+        const scenarioIdParts = currentScenario.id.split('-');
+        const langCodeIndex = scenarioIdParts.lastIndexOf(currentLanguage.code);
+        
+        if (langCodeIndex !== -1) { // e.g., 'cafe-fr' -> ['cafe', 'fr']
+            const newScenarioIdParts = [...scenarioIdParts];
+            newScenarioIdParts[langCodeIndex] = newLang.code;
+            const newScenarioId = newScenarioIdParts.join('-');
+            const newScenario = SCENARIOS.find(s => s.id === newScenarioId);
+
+            if (newScenario) {
+                setCurrentScenario(newScenario);
+            } else {
+                // Fallback: no equivalent scenario found, go to dashboard
+                handleViewChange(VIEWS.DASHBOARD);
+            }
+        } else {
+            handleViewChange(VIEWS.DASHBOARD);
+        }
+    }
+    
+    // Finally, update the language state
+    setCurrentLanguage(newLang);
+  }
+
   const renderView = () => {
     const dashboardProps = {
         onScenarioSelect: handleScenarioSelect,
@@ -87,6 +142,8 @@ export default function App() {
         return <ImageEditorView />;
       case VIEWS.WORD_BANK.id:
         return <WordBankView language={currentLanguage} />;
+      case VIEWS.ACCENT_TRAINING.id:
+        return <AccentTrainingView language={currentLanguage} />;
       case VIEWS.COMMUNITY.id:
         return <CommunityView />;
       case VIEWS.ACHIEVEMENTS.id:
@@ -94,7 +151,15 @@ export default function App() {
       case VIEWS.MEDIA.id:
         return <MediaView language={currentLanguage} />;
       case VIEWS.CHALLENGES.id:
-        return <PlaceholderView title="Group Challenges" description="Compete in live quizzes and group games. Leaderboards and friend networks are on their way!" icon={VIEWS.CHALLENGES.icon} />;
+        return <ChallengesView />;
+      case VIEWS.TUTORS.id:
+        return <TutorView />;
+      case VIEWS.ABOUT.id:
+        return <AboutView />;
+      case VIEWS.TERMS.id:
+        return <TermsView />;
+      case VIEWS.PRIVACY.id:
+        return <PrivacyView />;
       default:
         return <Dashboard {...dashboardProps} />;
     }
@@ -118,12 +183,13 @@ export default function App() {
         <Header 
           onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
           currentLanguage={currentLanguage}
-          setCurrentLanguage={setCurrentLanguage}
+          setCurrentLanguage={handleLanguageChange}
           onLogout={handleLogout}
         />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           {renderView()}
         </main>
+        <Footer onNavigate={handleViewChange} />
       </div>
     </div>
   );
