@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI, LiveSession, LiveServerMessage, Blob } from "@google/genai";
 import { marked } from 'marked';
@@ -94,34 +95,34 @@ const WordPracticeCard: React.FC<{
 
 
     return (
-        <div className="bg-white/70 backdrop-blur-lg border border-white/30 p-5 rounded-xl shadow-lg flex flex-col h-full">
+        <div className="bg-white border-t-4 border-sky-400 p-5 rounded-xl shadow-lg flex flex-col h-full">
             <div className="flex items-center gap-x-4">
                 <button
                     onClick={() => onRecordToggle(item.word)}
                     className={`p-4 rounded-full transition-colors ${
                         isRecordingThis
                         ? 'bg-rose-500 text-white animate-pulse'
-                        : 'bg-cyan-100/80 text-cyan-700 hover:bg-cyan-200/80'
+                        : 'bg-sky-100 text-sky-700 hover:bg-sky-200'
                     }`}
                 >
                     {isRecordingThis ? <StopCircleIcon className="w-8 h-8"/> : <MicrophoneIcon className="w-8 h-8"/>}
                 </button>
                 <div>
-                     <p className="text-2xl font-bold text-cyan-800">{item.word}</p>
-                     <p className="text-lg text-slate-500 font-mono">({item.transliteration})</p>
+                     <p className="text-2xl font-bold text-sky-800">{item.word}</p>
+                     <p className="text-lg text-gray-500 font-mono">({item.transliteration})</p>
                 </div>
             </div>
 
             <div className="mt-4 flex-grow space-y-4">
-                <div className="bg-slate-100/70 p-3 rounded-lg min-h-[60px]">
-                    <h4 className="text-sm font-semibold text-slate-600 mb-1">Your Pronunciation (Live Transcription)</h4>
-                    <p className="text-slate-800 font-medium italic">{transcription || "..."}</p>
+                <div className="bg-slate-100 p-3 rounded-lg min-h-[60px]">
+                    <h4 className="text-sm font-semibold text-gray-600 mb-1">Your Pronunciation (Live Transcription)</h4>
+                    <p className="text-gray-800 font-medium italic">{transcription || "..."}</p>
                 </div>
 
                 {feedback && (
-                     <div className="bg-emerald-50/80 p-3 rounded-lg min-h-[60px] animate-fade-in">
-                        <h4 className="text-sm font-semibold text-emerald-700 mb-1">AI Accent Coach</h4>
-                        <div className="prose prose-sm max-w-none prose-p:text-emerald-800" dangerouslySetInnerHTML={{ __html: feedback }} />
+                     <div className="bg-green-50 p-3 rounded-lg min-h-[60px] animate-fade-in">
+                        <h4 className="text-sm font-semibold text-green-700 mb-1">AI Accent Coach</h4>
+                        <div className="prose prose-sm max-w-none prose-p:text-green-800" dangerouslySetInnerHTML={{ __html: feedback }} />
                     </div>
                 )}
             </div>
@@ -247,10 +248,10 @@ export const AccentTrainingView: React.FC<{ language: Language }> = ({ language 
     return (
         <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
              <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl font-poppins">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">
                     AI-Powered Accent Training
                 </h1>
-                <p className="mt-2 text-lg text-slate-600">Practice your pronunciation and get instant feedback from Gemini.</p>
+                <p className="mt-2 text-lg text-gray-600">Practice your pronunciation and get instant feedback from Gemini.</p>
             </div>
 
             {wordList.length > 0 ? (
@@ -267,7 +268,7 @@ export const AccentTrainingView: React.FC<{ language: Language }> = ({ language 
                 </div>
             ) : (
                 <div className="text-center py-12 bg-white/50 rounded-lg">
-                    <p className="text-slate-500">No vocabulary available for {language.name} yet.</p>
+                    <p className="text-gray-500">No vocabulary available for {language.name} yet.</p>
                 </div>
             )}
         </div>

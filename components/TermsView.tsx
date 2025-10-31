@@ -1,8 +1,9 @@
+
 import React from 'react';
 
 export const TermsView: React.FC = () => (
     <div className="max-w-4xl mx-auto animate-fade-in">
-        <div className="bg-white/70 backdrop-blur-lg rounded-lg shadow-lg border border-white/30 p-8 prose prose-cyan max-w-none">
+        <div className="bg-white rounded-lg shadow-lg border-t-4 border-teal-400 p-8 prose prose-teal max-w-none">
             <h1 className="font-poppins">Terms of Service</h1>
             <p>Last updated: October 26, 2023</p>
 

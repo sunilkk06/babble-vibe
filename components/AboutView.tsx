@@ -1,8 +1,9 @@
+
 import React from 'react';
 
 export const AboutView: React.FC = () => (
     <div className="max-w-4xl mx-auto animate-fade-in">
-        <div className="bg-white/70 backdrop-blur-lg rounded-lg shadow-lg border border-white/30 p-8 prose prose-cyan max-w-none">
+        <div className="bg-white rounded-lg shadow-lg border-t-4 border-teal-400 p-8 prose prose-teal max-w-none">
             <h1 className="font-poppins">About Babble Vibe: The Future of Language Learning</h1>
             <p>Welcome to Babble Vibe, the next-generation, AI-powered language learning platform designed to take you beyond flashcards and into real-world conversational fluency. Our mission is to make mastering a new language an intuitive, engaging, and deeply personal experience. We believe that the key to true fluency lies in practice, context, and confidence—three pillars that form the core of our app.</p>
 

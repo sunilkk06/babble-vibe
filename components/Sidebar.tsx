@@ -1,3 +1,4 @@
+
 import React, { Fragment } from 'react';
 import { ParrotIcon } from './icons/ParrotIcon';
 import type { View, Language } from '../types';
@@ -25,10 +26,10 @@ const NavLink: React.FC<{
                 e.preventDefault();
                 onClick();
             }}
-            className={`w-full flex items-center gap-x-4 px-3 py-2.5 rounded-xl font-bold text-base transition-all duration-200 uppercase tracking-wider ${
+            className={`w-full flex items-center gap-x-4 px-4 py-3 rounded-xl font-bold text-base transition-all duration-300 uppercase tracking-wider transform hover:scale-105 ${
                 isCurrent
-                    ? 'bg-cyan-200/50 border-2 border-cyan-300/70 text-cyan-800'
-                    : 'text-slate-500 hover:bg-cyan-100/60 hover:text-cyan-700'
+                    ? 'bg-teal-400 text-white shadow-lg shadow-teal-500/30'
+                    : 'text-gray-500 hover:bg-teal-100 hover:text-teal-700'
             }`}
         >
             <view.icon
@@ -48,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
     };
     
     const navigationContent = (
-         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white/70 backdrop-blur-xl px-4 pb-4 border-r border-white/30">
+         <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-50 px-4 pb-4 border-r border-slate-200/80">
             <a
                 href="#"
                 onClick={(e) => {
@@ -58,7 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
                 className="flex h-16 shrink-0 items-center gap-x-3 cursor-pointer"
             >
                 <ParrotIcon className="h-10 w-10"/>
-                <span className="font-poppins text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-emerald-500">Babble Vibe</span>
+                <span className="font-poppins text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-teal-500">Babble Vibe</span>
             </a>
             <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-2">
@@ -101,7 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
             </div>
             
             {/* Desktop Sidebar */}
-            <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+            <div className="hidden md:fixed md:inset-y-0 md:flex md:w-72 md:flex-col">
                 {navigationContent}
             </div>
         </>

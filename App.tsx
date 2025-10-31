@@ -167,7 +167,7 @@ export default function App() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-cyan-100/30 via-white to-emerald-100/30 min-h-screen flex">
+    <div className="bg-gradient-to-br from-sky-200 via-teal-100 to-yellow-100 min-h-screen flex">
       {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
       <Sidebar 
         currentView={currentView} 
@@ -176,7 +176,7 @@ export default function App() {
         setIsOpen={setSidebarOpen}
         currentLanguage={currentLanguage}
       />
-      <div className="flex-1 flex flex-col transition-all duration-300 md:ml-64">
+      <div className="flex-1 flex flex-col transition-all duration-300 md:ml-72">
         <Header 
           onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
           currentLanguage={currentLanguage}

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { editImage } from '../services/geminiService';
 import { Spinner } from './common/Spinner';
@@ -67,14 +68,14 @@ export const ImageEditorView: React.FC = () => {
     return (
         <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl font-poppins">Vocabulary</h1>
-                <p className="mt-2 text-lg text-slate-600">Edit images with text prompts. Try "add a retro filter" or "make the sky purple".</p>
+                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">Vocabulary</h1>
+                <p className="mt-2 text-lg text-gray-600">Edit images with text prompts. Try "add a retro filter" or "make the sky purple".</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-white/70 backdrop-blur-lg border border-white/30 p-6 rounded-lg shadow-lg flex flex-col">
+                <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col border-t-4 border-teal-400">
                     <div
-                        className="flex-grow flex items-center justify-center border-2 border-dashed border-slate-300/80 rounded-lg cursor-pointer hover:border-cyan-500 transition-colors"
+                        className="flex-grow flex items-center justify-center border-2 border-dashed border-slate-300/80 rounded-lg cursor-pointer hover:border-teal-400 transition-colors"
                         onClick={() => fileInputRef.current?.click()}
                     >
                         {originalImage ? (
@@ -100,7 +101,7 @@ export const ImageEditorView: React.FC = () => {
                             value={prompt}
                             onChange={(e) => setPrompt(e.target.value)}
                             placeholder="e.g., Add a smiling sun in the corner"
-                            className="w-full p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white/80"
+                            className="w-full p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
                             disabled={isLoading}
                         />
                     </div>
@@ -112,16 +113,16 @@ export const ImageEditorView: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="bg-white/70 backdrop-blur-lg border border-white/30 p-6 rounded-lg shadow-lg flex items-center justify-center">
+                <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-center border-t-4 border-sky-400">
                     {isLoading ? (
                         <div className="text-center">
                             <Spinner />
-                            <p className="mt-2 text-slate-600">Gemini is creating your image...</p>
+                            <p className="mt-2 text-gray-600">Gemini is creating your image...</p>
                         </div>
                     ) : editedImage ? (
                         <img src={editedImage} alt="Edited" className="max-h-full object-contain rounded-md animate-fade-in" />
                     ) : (
-                        <div className="text-center text-slate-400">
+                        <div className="text-center text-gray-400">
                             <p>Your edited image will appear here.</p>
                         </div>
                     )}

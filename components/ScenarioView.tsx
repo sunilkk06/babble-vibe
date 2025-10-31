@@ -105,10 +105,10 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
     };
     
     return (
-        <div className="flex flex-col h-full max-w-4xl mx-auto bg-white/70 backdrop-blur-lg rounded-lg shadow-lg border border-white/30">
-            <div className="p-4 border-b border-white/30">
-                <h2 className="text-xl font-bold font-poppins text-slate-800">{scenario.emoji} {scenario.title}</h2>
-                <p className="text-sm text-slate-600">{scenario.description}</p>
+        <div className="flex flex-col h-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg border-t-4 border-teal-400">
+            <div className="p-4 border-b border-gray-200">
+                <h2 className="text-xl font-bold font-poppins text-gray-800">{scenario.emoji} {scenario.title}</h2>
+                <p className="text-sm text-gray-600">{scenario.description}</p>
             </div>
 
             <div className="flex-1 p-4 overflow-y-auto">
@@ -116,11 +116,11 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                            {msg.role === 'model' && <span className="text-2xl">🦜</span>}
-                           <div className={`rounded-xl px-4 py-2 max-w-md shadow-sm ${msg.role === 'user' ? 'bg-cyan-600 text-white' : 'bg-white/80 text-slate-800'}`}>
+                           <div className={`rounded-xl px-4 py-2 max-w-md shadow-sm ${msg.role === 'user' ? 'bg-teal-500 text-white' : 'bg-slate-100 text-gray-800'}`}>
                                <p>{msg.text}</p>
                            </div>
                            {msg.role === 'user' && msg.grammarFeedback && (
-                                <div className="p-3 bg-amber-100/80 backdrop-blur-md border border-amber-300 rounded-lg text-sm text-amber-900 animate-fade-in shadow-md">
+                                <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-900 animate-fade-in shadow-md">
                                     <h4 className="font-bold mb-1">Grammar Tip!</h4>
                                     <p><span className="font-semibold">Correction:</span> {msg.grammarFeedback.correction}</p>
                                     <p><span className="font-semibold">Explanation:</span> {msg.grammarFeedback.explanation}</p>
@@ -131,13 +131,13 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                     {isLoading && messages.length === 0 && (
                         <div className="flex items-center justify-center h-full">
                             <Spinner />
-                            <p className="ml-2 text-slate-600">Vibo is getting ready...</p>
+                            <p className="ml-2 text-gray-600">Vibo is getting ready...</p>
                         </div>
                     )}
                     {isLoading && messages.length > 0 && (
                         <div className="flex items-end gap-2 justify-start">
                              <span className="text-2xl">🦜</span>
-                            <div className="rounded-xl px-4 py-2 bg-white/80">
+                            <div className="rounded-xl px-4 py-2 bg-slate-100">
                                 <Spinner />
                             </div>
                         </div>
@@ -146,11 +146,11 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                 </div>
             </div>
 
-            <div className="p-4 border-t border-white/30">
+            <div className="p-4 border-t border-gray-200">
                 <div className="flex items-center space-x-2">
                     <button
                         onClick={() => setShowGrammarCheck(!showGrammarCheck)}
-                        className={`p-2 rounded-full transition-colors duration-200 ${showGrammarCheck ? 'bg-amber-200 text-amber-800' : 'bg-slate-200 text-slate-500 hover:bg-slate-300'}`}
+                        className={`p-2 rounded-full transition-colors duration-200 ${showGrammarCheck ? 'bg-yellow-200 text-yellow-800' : 'bg-slate-200 text-gray-500 hover:bg-slate-300'}`}
                         title={showGrammarCheck ? 'Disable Grammar Check' : 'Enable Grammar Check'}
                     >
                         <SparklesIcon className="w-5 h-5" />
@@ -161,13 +161,13 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                         onChange={(e) => setInput(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                         placeholder={`Chirp your response in ${language.name}...`}
-                        className="flex-1 p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-white/80"
+                        className="flex-1 p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
                         disabled={isLoading}
                     />
                     <button
                         onClick={handleSend}
                         disabled={isLoading || !input.trim()}
-                        className="p-2 bg-cyan-600 text-white rounded-full hover:bg-cyan-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                        className="p-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                         title="Send Chirp"
                     >
                         <SendIcon className="w-5 h-5" />

@@ -28,38 +28,38 @@ const LearningPathNode: React.FC<{
 
     switch(status) {
         case 'completed':
-            bgColor = 'bg-emerald-500';
-            textColor = 'text-emerald-800';
-            shadowColor = 'shadow-emerald-300';
-            borderColor = 'border-emerald-600';
+            bgColor = 'bg-green-500';
+            textColor = 'text-green-800';
+            shadowColor = 'shadow-green-300';
+            borderColor = 'border-green-600';
             iconColor = 'text-white';
             icon = <StarIcon className="w-8 h-8"/>;
             break;
         case 'active':
-            bgColor = 'bg-cyan-500';
-            textColor = 'text-cyan-800';
-            shadowColor = 'shadow-cyan-300';
-            borderColor = 'border-cyan-600';
+            bgColor = 'bg-sky-500';
+            textColor = 'text-sky-800';
+            shadowColor = 'shadow-sky-300';
+            borderColor = 'border-sky-600';
             iconColor = 'text-white';
-            statusRingColor = 'ring-cyan-300';
+            statusRingColor = 'ring-sky-300';
             icon = item.type === 'lesson' ? <BookOpenIcon className="w-8 h-8"/> : <ChatBubbleIcon className="w-8 h-8" />;
             break;
         case 'locked':
         default:
-            bgColor = 'bg-slate-300';
-            textColor = 'text-slate-500';
-            shadowColor = 'shadow-slate-300';
-            borderColor = 'border-slate-400';
-            iconColor = 'text-slate-500';
+            bgColor = 'bg-slate-200';
+            textColor = 'text-gray-500';
+            shadowColor = 'shadow-slate-200';
+            borderColor = 'border-slate-300';
+            iconColor = 'text-slate-400';
             icon = isSpecial ? <ChestIcon className="w-8 h-8"/> : <LockIcon className="w-8 h-8"/>;
             break;
     }
     
     if (isSpecial && status !== 'locked') {
-        bgColor = 'bg-amber-400';
-        textColor = 'text-amber-800';
-        borderColor = 'border-amber-500'
-        shadowColor = 'shadow-amber-200';
+        bgColor = 'bg-yellow-400';
+        textColor = 'text-yellow-800';
+        borderColor = 'border-yellow-500'
+        shadowColor = 'shadow-yellow-200';
         iconColor = 'text-white';
         icon = <ChestIcon className="w-8 h-8"/>;
     }
@@ -139,13 +139,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
             {/* Main Content: Learning Path */}
             <div className="flex-1">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl font-poppins">Your Learning Path</h1>
-                    <p className="mt-2 text-lg text-slate-600">Complete each step to advance!</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">Your Learning Path</h1>
+                    <p className="mt-2 text-lg text-gray-600">Complete each step to advance!</p>
                 </div>
                 
                 <div className="relative flex flex-col items-center space-y-4 py-8">
                     {/* Background path line */}
-                    <div className="absolute top-12 bottom-12 left-1/2 w-1 bg-slate-200/90 -translate-x-1/2 z-0 rounded-full"></div>
+                    <div className="absolute top-12 bottom-12 left-1/2 w-1 bg-slate-200 -translate-x-1/2 z-0 rounded-full"></div>
 
                     {combinedLearningItems.map((item, index) => {
                         const align = index % 2 === 0 ? 'left' : 'right';
@@ -178,25 +178,25 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
 
             {/* Right Sidebar */}
             <div className="w-full lg:w-80 lg:sticky top-8 self-start space-y-6">
-                 <div className="bg-white/70 backdrop-blur-lg border border-white/30 p-5 rounded-xl shadow-lg">
-                    <h3 className="font-bold font-poppins text-slate-800 mb-3">Unlock Leaderboards!</h3>
+                 <div className="bg-white p-5 rounded-xl shadow-lg border-t-4 border-yellow-400">
+                    <h3 className="font-bold font-poppins text-gray-800 mb-3">Unlock Leaderboards!</h3>
                     <div className="flex items-center gap-4">
-                        <div className="p-3 bg-slate-200 rounded-full">
+                        <div className="p-3 bg-slate-100 rounded-full">
                             <LeaderboardIcon className="w-8 h-8 text-slate-500" />
                         </div>
-                        <p className="text-sm text-slate-600">Complete 10 more lessons to start competing.</p>
+                        <p className="text-sm text-gray-600">Complete 10 more lessons to start competing.</p>
                     </div>
                  </div>
-                 <div className="bg-white/70 backdrop-blur-lg border border-white/30 p-5 rounded-xl shadow-lg">
+                 <div className="bg-white p-5 rounded-xl shadow-lg border-t-4 border-teal-400">
                      <div className="flex justify-between items-center mb-3">
-                         <h3 className="font-bold font-poppins text-slate-800">Daily Quests</h3>
-                         <a href="#" className="text-sm font-semibold text-cyan-600 hover:text-cyan-500">View All</a>
+                         <h3 className="font-bold font-poppins text-gray-800">Daily Quests</h3>
+                         <a href="#" className="text-sm font-semibold text-teal-600 hover:text-teal-500">View All</a>
                      </div>
                      <div className="space-y-4">
                         <div className="flex items-center gap-4">
                             <QuestIcon className="w-8 h-8 text-amber-500"/>
                             <div>
-                                <p className="font-semibold text-slate-700">Earn 10 XP</p>
+                                <p className="font-semibold text-gray-700">Earn 10 XP</p>
                                 <div className="w-full bg-slate-200 rounded-full h-2 mt-1">
                                     <div className="bg-amber-400 h-2 rounded-full" style={{width: '70%'}}></div>
                                 </div>
@@ -204,12 +204,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                         </div>
                      </div>
                  </div>
-                 <div className="bg-white/70 backdrop-blur-lg border border-white/30 p-5 rounded-xl shadow-lg text-center">
-                    <h3 className="font-bold font-poppins text-slate-800 mb-2">Create a profile</h3>
-                     <p className="text-sm text-slate-600 mb-4">Save your progress and connect with friends!</p>
+                 <div className="bg-white p-5 rounded-xl shadow-lg text-center border-t-4 border-sky-400">
+                    <h3 className="font-bold font-poppins text-gray-800 mb-2">Create a profile</h3>
+                     <p className="text-sm text-gray-600 mb-4">Save your progress and connect with friends!</p>
                      <div className="space-y-2">
-                        <button className="w-full text-center rounded-lg bg-emerald-500 text-white font-bold py-2 hover:bg-emerald-600 transition-colors">CREATE A PROFILE</button>
-                        <button className="w-full text-center rounded-lg bg-cyan-500 text-white font-bold py-2 hover:bg-cyan-600 transition-colors">SIGN IN</button>
+                        <button className="w-full text-center rounded-lg bg-green-500 text-white font-bold py-2 hover:bg-green-600 transition-colors">CREATE A PROFILE</button>
+                        <button className="w-full text-center rounded-lg bg-sky-500 text-white font-bold py-2 hover:bg-sky-600 transition-colors">SIGN IN</button>
                      </div>
                  </div>
             </div>

@@ -83,28 +83,28 @@ export const WordBankView: React.FC<{ language: Language }> = ({ language }) => 
 
     return (
         <div className="max-w-4xl mx-auto animate-fade-in">
-            <div className="bg-white/70 backdrop-blur-lg rounded-lg shadow-lg border border-white/30 p-6 mb-8">
-                <h1 className="text-3xl font-bold font-poppins text-slate-800">Word Bank: {language.name}</h1>
-                <p className="text-lg text-slate-600 mt-1">Explore essential vocabulary.</p>
+            <div className="bg-white rounded-lg shadow-lg border-t-4 border-sky-400 p-6 mb-8">
+                <h1 className="text-3xl font-bold font-poppins text-gray-800">Word Bank: {language.name}</h1>
+                <p className="text-lg text-gray-600 mt-1">Explore essential vocabulary.</p>
             </div>
             
-            <div className="bg-white/70 backdrop-blur-lg rounded-lg shadow-lg border border-white/30 p-6">
+            <div className="bg-white rounded-lg shadow-lg border-t-4 border-teal-400 p-6">
                 {wordList.length > 0 ? (
                     <div className="space-y-4">
                         {wordList.map((item, index) => (
-                            <div key={index} className="p-4 bg-cyan-50/50 rounded-lg border border-cyan-200/50 flex items-center">
+                            <div key={index} className="p-4 bg-sky-50 rounded-lg border border-sky-200/50 flex items-center">
                                 <div className="flex-grow">
                                     <div className="flex items-baseline gap-x-3">
-                                        <p className="text-2xl font-bold text-cyan-800">{item.word}</p>
-                                        <p className="text-lg text-slate-500 font-mono">({item.transliteration})</p>
+                                        <p className="text-2xl font-bold text-sky-800">{item.word}</p>
+                                        <p className="text-lg text-gray-500 font-mono">({item.transliteration})</p>
                                     </div>
-                                    <p className="text-slate-700 mt-1"><span className="font-semibold">Meaning:</span> {item.meaning}</p>
+                                    <p className="text-gray-700 mt-1"><span className="font-semibold">Meaning:</span> {item.meaning}</p>
                                 </div>
                                 <button
                                     title="Play audio"
                                     disabled={!!loadingWord}
                                     onClick={() => handlePlayAudio(item.word, item.audio_prompt)}
-                                    className="p-2 rounded-full bg-cyan-100/80 text-cyan-700 ml-4 disabled:bg-slate-200 disabled:cursor-not-allowed transition-colors"
+                                    className="p-2 rounded-full bg-sky-100 text-sky-700 ml-4 disabled:bg-slate-200 disabled:cursor-not-allowed transition-colors"
                                 >
                                     {loadingWord === item.word ? (
                                         <Spinner size="sm" />
@@ -117,7 +117,7 @@ export const WordBankView: React.FC<{ language: Language }> = ({ language }) => 
                     </div>
                 ) : (
                     <div className="text-center py-12">
-                        <p className="text-slate-500">No vocabulary available for {language.name} yet. Check back soon!</p>
+                        <p className="text-gray-500">No vocabulary available for {language.name} yet. Check back soon!</p>
                     </div>
                 )}
             </div>
