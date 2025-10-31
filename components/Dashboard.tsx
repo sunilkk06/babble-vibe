@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { Scenario, Lesson } from '../types';
 import { ParrotIcon } from './icons/ParrotIcon';
@@ -151,6 +152,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                         const parrotAlignment = align === 'left' ? 'left-1/4' : 'left-3/4';
 
                         const itemKey = 'lesson_id' in item ? item.lesson_id : item.id;
+                        
+                        // Make all lessons active and clickable
+                        const status = index < activeItemIndex ? 'completed' : 'active';
+
 
                         return (
                             <div key={itemKey} className="relative w-full flex px-4 sm:px-8 z-10">
@@ -161,7 +166,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                                 )}
                                 <LearningPathNode 
                                     item={item}
-                                    status={index < activeItemIndex ? 'completed' : index === activeItemIndex ? 'active' : 'locked'}
+                                    status={status}
                                     onClick={() => handleNodeClick(item)}
                                     align={align}
                                 />

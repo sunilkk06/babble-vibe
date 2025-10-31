@@ -22,7 +22,8 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
         }
     }, [quizFinished]);
 
-    const currentQuestion = lesson.quiz[currentQuestionIndex];
+    const hasQuiz = lesson.quiz && lesson.quiz.length > 0;
+    const currentQuestion = hasQuiz ? lesson.quiz[currentQuestionIndex] : null;
 
     const handleOptionSelect = (option: string) => {
         if (showFeedback) return;
@@ -30,7 +31,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
     };
 
     const checkAnswer = () => {
-        if (!selectedOption) return;
+        if (!selectedOption || !currentQuestion) return;
         if (selectedOption === currentQuestion.answer) {
             setScore(prev => prev + 1);
         }
@@ -61,7 +62,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
                 ? 'bg-cyan-200 border-cyan-400'
                 : 'bg-white/80 hover:bg-cyan-100/60';
         }
-        if (option === currentQuestion.answer) {
+        if (currentQuestion && option === currentQuestion.answer) {
             return 'bg-emerald-200 border-emerald-400 text-emerald-900';
         }
         if (option === selectedOption) {
@@ -100,7 +101,11 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
 
             <div className="bg-white/70 backdrop-blur-lg rounded-lg shadow-lg border border-white/30 p-6">
                 <h2 className="text-2xl font-bold font-poppins text-slate-700 mb-4">Mini-Quiz!</h2>
-                {quizFinished ? (
+                {!hasQuiz ? (
+                    <div className="text-center py-8">
+                        <p className="text-slate-600">This lesson doesn't have a quiz. Great job reviewing the material!</p>
+                    </div>
+                ) : quizFinished ? (
                     <div className="text-center py-8">
                         <h3 className="text-2xl font-bold text-slate-800">Quiz Complete!</h3>
                         <p className="text-lg text-slate-600 mt-2">Your Score: <span className="font-bold text-cyan-600">{score}</span> / {lesson.quiz.length}</p>
@@ -115,7 +120,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
                             </Button>
                         </div>
                     </div>
-                ) : (
+                ) : currentQuestion && (
                     <div>
                         <p className="text-lg text-slate-700 mb-4">{currentQuestionIndex + 1}. {currentQuestion.question}</p>
                         <div className="space-y-3">

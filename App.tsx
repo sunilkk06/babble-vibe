@@ -13,7 +13,6 @@ import { AchievementsView } from './components/AchievementsView';
 import { WordBankView } from './components/WordBankView';
 import { Onboarding } from './components/Onboarding';
 import { LoginPage } from './components/LoginPage';
-import { MediaView } from './components/MediaView';
 import { TutorView } from './components/TutorView';
 import { AccentTrainingView } from './components/AccentTrainingView';
 import { Footer } from './components/Footer';
@@ -148,8 +147,6 @@ export default function App() {
         return <CommunityView />;
       case VIEWS.ACHIEVEMENTS.id:
         return <AchievementsView />;
-      case VIEWS.MEDIA.id:
-        return <MediaView language={currentLanguage} />;
       case VIEWS.CHALLENGES.id:
         return <ChallengesView />;
       case VIEWS.TUTORS.id:

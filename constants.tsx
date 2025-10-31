@@ -1,7 +1,7 @@
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
 import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop } from './types';
-import { HomeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, MediaIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon } from './components/icons/SidebarIcons';
+import { HomeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon } from './components/icons/SidebarIcons';
 import { ChatBubbleIcon } from './components/icons/Icons';
 
 export const LANGUAGES: Language[] = [
@@ -688,7 +688,6 @@ export const VIEWS = {
   ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon },
   COMMUNITY: { id: 'community', label: 'Community', icon: CommunityIcon },
   ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', icon: AchievementsIcon },
-  MEDIA: { id: 'media', label: 'Media', icon: MediaIcon },
   CHALLENGES: { id: 'challenges', label: 'Challenges', icon: ChallengesIcon },
   TUTORS: { id: 'tutors', label: 'Tutors', icon: TutorIcon },
   ABOUT: { id: 'about', label: 'About Us' },
@@ -704,7 +703,6 @@ export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> 
     VIEWS.ACCENT_TRAINING,
     VIEWS.COMMUNITY,
     VIEWS.ACHIEVEMENTS,
-    VIEWS.MEDIA,
     VIEWS.CHALLENGES,
     VIEWS.TUTORS,
 ];
