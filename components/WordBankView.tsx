@@ -83,7 +83,7 @@ export const WordBankView: React.FC<{ language: Language }> = ({ language }) => 
 
     return (
         <div className="max-w-4xl mx-auto animate-fade-in">
-            <div className="bg-white rounded-lg shadow-lg border-t-4 border-sky-400 p-6 mb-8">
+            <div className="bg-white rounded-lg shadow-lg border-t-4 border-rose-400 p-6 mb-8">
                 <h1 className="text-3xl font-bold font-poppins text-gray-800">Word Bank: {language.name}</h1>
                 <p className="text-lg text-gray-600 mt-1">Explore essential vocabulary.</p>
             </div>

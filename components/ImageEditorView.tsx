@@ -73,7 +73,7 @@ export const ImageEditorView: React.FC = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col border-t-4 border-teal-400">
+                <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col border-t-4 border-rose-400">
                     <div
                         className="flex-grow flex items-center justify-center border-2 border-dashed border-slate-300/80 rounded-lg cursor-pointer hover:border-teal-400 transition-colors"
                         onClick={() => fileInputRef.current?.click()}

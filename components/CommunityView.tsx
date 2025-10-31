@@ -22,7 +22,7 @@ const Avatar: React.FC<{ name: string }> = ({ name }) => {
 
 const UserCard: React.FC<{ user: CommunityUser }> = ({ user }) => {
     return (
-        <div className="bg-white border-t-4 border-teal-400 p-5 rounded-xl shadow-lg flex flex-col h-full transform hover:-translate-y-1 transition-transform duration-300">
+        <div className="bg-white border-t-4 border-rose-400 p-5 rounded-xl shadow-lg flex flex-col h-full transform hover:-translate-y-1 transition-transform duration-300">
             <div className="flex items-center gap-x-4 mb-4">
                 <Avatar name={user.name} />
                 <div>

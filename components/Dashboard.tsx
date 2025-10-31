@@ -37,12 +37,12 @@ const LearningPathNode: React.FC<{
             icon = <StarIcon className="w-8 h-8"/>;
             break;
         case 'active':
-            bgColor = 'bg-sky-500';
-            textColor = 'text-sky-800';
-            shadowColor = 'shadow-sky-300';
-            borderColor = 'border-sky-600';
+            bgColor = 'bg-rose-500';
+            textColor = 'text-rose-800';
+            shadowColor = 'shadow-rose-300';
+            borderColor = 'border-rose-600';
             iconColor = 'text-white';
-            statusRingColor = 'ring-sky-300';
+            statusRingColor = 'ring-rose-300';
             icon = item.type === 'lesson' ? <BookOpenIcon className="w-8 h-8"/> : <ChatBubbleIcon className="w-8 h-8" />;
             break;
         case 'locked':
@@ -179,7 +179,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
 
             {/* Right Sidebar */}
             <div className="w-full lg:w-80 lg:sticky top-8 self-start space-y-6">
-                 <div className="bg-white p-5 rounded-xl shadow-lg border-t-4 border-yellow-400">
+                 <div className="bg-white p-5 rounded-xl shadow-lg border-t-4 border-rose-400">
                     <h3 className="font-bold font-poppins text-gray-800 mb-3">Unlock Leaderboards!</h3>
                     <div className="flex items-center gap-4">
                         <div className="p-3 bg-slate-100 rounded-full">

@@ -105,7 +105,7 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
     };
     
     return (
-        <div className="flex flex-col h-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg border-t-4 border-teal-400">
+        <div className="flex flex-col h-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg border-t-4 border-rose-400">
             <div className="p-4 border-b border-gray-200">
                 <h2 className="text-xl font-bold font-poppins text-gray-800">{scenario.emoji} {scenario.title}</h2>
                 <p className="text-sm text-gray-600">{scenario.description}</p>
@@ -116,7 +116,7 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                            {msg.role === 'model' && <span className="text-2xl">🦜</span>}
-                           <div className={`rounded-xl px-4 py-2 max-w-md shadow-sm ${msg.role === 'user' ? 'bg-teal-500 text-white' : 'bg-slate-100 text-gray-800'}`}>
+                           <div className={`rounded-xl px-4 py-2 max-w-md shadow-sm ${msg.role === 'user' ? 'bg-rose-500 text-white' : 'bg-slate-100 text-gray-800'}`}>
                                <p>{msg.text}</p>
                            </div>
                            {msg.role === 'user' && msg.grammarFeedback && (
@@ -167,7 +167,7 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                     <button
                         onClick={handleSend}
                         disabled={isLoading || !input.trim()}
-                        className="p-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                        className="p-2 bg-rose-500 text-white rounded-full hover:bg-rose-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                         title="Send Chirp"
                     >
                         <SendIcon className="w-5 h-5" />

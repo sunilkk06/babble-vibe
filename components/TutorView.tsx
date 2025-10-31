@@ -10,7 +10,7 @@ const getLanguageName = (code: string): string => {
 };
 
 const TutorCard: React.FC<{ tutor: Tutor }> = ({ tutor }) => (
-    <div className="bg-white border-t-4 border-sky-400 p-5 rounded-xl shadow-lg flex flex-col h-full transform hover:-translate-y-1 transition-transform duration-300">
+    <div className="bg-white border-t-4 border-rose-400 p-5 rounded-xl shadow-lg flex flex-col h-full transform hover:-translate-y-1 transition-transform duration-300">
         <div className="relative flex items-center gap-x-4 mb-4">
             <img src={tutor.avatarUrl} alt={tutor.name} className="w-20 h-20 rounded-full object-cover" />
             {tutor.isOnline && (

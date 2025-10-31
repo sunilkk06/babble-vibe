@@ -28,8 +28,8 @@ const NavLink: React.FC<{
             }}
             className={`w-full flex items-center gap-x-4 px-4 py-3 rounded-xl font-bold text-base transition-all duration-300 uppercase tracking-wider transform hover:scale-105 ${
                 isCurrent
-                    ? 'bg-teal-400 text-white shadow-lg shadow-teal-500/30'
-                    : 'text-gray-500 hover:bg-teal-100 hover:text-teal-700'
+                    ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
+                    : 'text-gray-500 hover:bg-rose-100 hover:text-rose-700'
             }`}
         >
             <view.icon

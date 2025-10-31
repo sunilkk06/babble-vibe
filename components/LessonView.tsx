@@ -60,8 +60,8 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
     const getButtonClass = (option: string) => {
         if (!showFeedback) {
             return selectedOption === option
-                ? 'bg-sky-200 border-sky-400'
-                : 'bg-white hover:bg-sky-100';
+                ? 'bg-rose-200 border-rose-400'
+                : 'bg-white hover:bg-rose-100';
         }
         if (currentQuestion && option === currentQuestion.answer) {
             return 'bg-green-200 border-green-400 text-green-900';
@@ -74,7 +74,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
 
     return (
         <div className="max-w-4xl mx-auto animate-fade-in">
-            <div className="bg-white rounded-lg shadow-lg border-t-4 border-sky-400 p-6 mb-8">
+            <div className="bg-white rounded-lg shadow-lg border-t-4 border-rose-400 p-6 mb-8">
                  <h1 className="text-3xl font-bold font-poppins text-gray-800">{lesson.emoji} {lesson.title}</h1>
                  <p className="text-lg text-gray-600 mt-1">{lesson.level} Level</p>
             </div>

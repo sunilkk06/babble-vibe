@@ -1,12 +1,47 @@
-
 import React from 'react';
 
 export const ParrotIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-        <path d="M14.5 9.5C14.5 12.5 12.5 15.5 9.5 17.5C6.5 19.5 3.5 19.5 3.5 16.5C3.5 13.5 6.5 10.5 9.5 8.5C12.5 6.5 14.5 6.5 14.5 9.5Z" fill="#34D399"/>
-        <path d="M9.5 8.5C10.5 5.5 12.5 3.5 15.5 3.5C18.5 3.5 20.5 5.5 20.5 8.5C20.5 11.5 18.5 13.5 15.5 13.5" fill="#10B981"/>
-        <path d="M15.5 3.5C15.5 3.5 16.5 2.5 18 3C19.5 3.5 20 5 20 5C20 5 19 6 17.5 5.5C16 5 15.5 3.5 15.5 3.5Z" fill="#EF4444"/>
-        <circle cx="16.5" cy="7.5" r="1.5" fill="white"/>
-        <circle cx="16.5" cy="7.5" r="0.75" fill="black"/>
-    </svg>
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <defs>
+      <linearGradient id="vibo-head" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#34D399"/>
+        <stop offset="100%" stopColor="#10B981"/>
+      </linearGradient>
+      <linearGradient id="vibo-wing" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#6EE7B7"/>
+        <stop offset="100%" stopColor="#A7F3D0"/>
+      </linearGradient>
+    </defs>
+
+    {/* Shadow */}
+    <path d="M150 90 A55 80 0 0 1 40 90 A55 80 0 0 1 150 90 Z" 
+        fill="#047857" 
+        transform="rotate(15 95 90) translate(5 10)"
+    />
+
+    {/* Main Body/Head */}
+    <path d="M150 90 A55 80 0 0 1 40 90 A55 80 0 0 1 150 90 Z" 
+        fill="url(#vibo-head)" 
+        transform="rotate(15 95 90)"
+    />
+
+    {/* Wing/Belly Patch */}
+    <path d="M90 140 A30 40 0 0 1 130 110 C 130 110 110 150 90 140Z" 
+        fill="url(#vibo-wing)" 
+        transform="rotate(10 95 90)"
+    />
+
+    {/* Beak */}
+    <path d="M40 90 C 10 90, 20 50, 50 60 C 70 70, 60 90, 40 90 Z" 
+        fill="#FBBF24"
+        stroke="#F59E0B"
+        strokeWidth="5"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+    />
+
+    {/* Eye */}
+    <circle cx="95" cy="70" r="18" fill="white" />
+    <circle cx="100" cy="70" r="10" fill="#1F2937" />
+  </svg>
 );

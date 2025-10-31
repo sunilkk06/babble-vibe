@@ -98,7 +98,7 @@ export const GrammarClinicView: React.FC = () => {
             {/* Grammar and Proofreading Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Instant Grammar Check */}
-                <section className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-teal-400">
+                <section className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-rose-400">
                     <h2 className="text-2xl font-bold font-poppins mb-4 text-gray-800">Instant Grammar Check</h2>
                     <p className="text-gray-600 mb-4 text-sm">Get a detailed grammatical breakdown of any text. Powered by Gemini 2.5 Pro.</p>
                     <textarea
