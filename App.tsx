@@ -125,7 +125,8 @@ export default function App() {
         onScenarioSelect: handleScenarioSelect,
         onLessonSelect: handleLessonSelect,
         scenarios: SCENARIOS.filter(s => s.lang === currentLanguage.code),
-        lessons: LESSONS.filter(l => l.lang === currentLanguage.code)
+        lessons: LESSONS.filter(l => l.lang === currentLanguage.code),
+        onNavigate: handleViewChange
     };
 
     switch (currentView.id) {

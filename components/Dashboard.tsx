@@ -1,9 +1,9 @@
 
 import React from 'react';
-import type { Scenario, Lesson } from '../types';
+import type { Scenario, Lesson, View } from '../types';
 import { ParrotIcon } from './icons/ParrotIcon';
 import { StarIcon, BookOpenIcon, LockIcon, ChestIcon, LeaderboardIcon, QuestIcon, ChatBubbleIcon } from './icons/Icons';
-import { SCENARIOS, LESSONS } from '../constants';
+import { SCENARIOS, LESSONS, VIEWS } from '../constants';
 
 
 type LearningItem = (Lesson | Scenario) & { type: 'lesson' | 'scenario' };
@@ -13,6 +13,7 @@ interface DashboardProps {
   onLessonSelect: (lesson: Lesson) => void;
   scenarios: Scenario[];
   lessons: Lesson[];
+  onNavigate: (view: View) => void;
 }
 
 const LearningPathNode: React.FC<{ 
@@ -83,7 +84,7 @@ const LearningPathNode: React.FC<{
     );
 };
 
-export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLessonSelect, scenarios, lessons }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLessonSelect, scenarios, lessons, onNavigate }) => {
     
     // Determine current language from the lessons passed in, which are pre-filtered by language.
     // Fallback to English if no lessons are available for the selected language.
@@ -190,7 +191,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                  <div className="bg-white p-5 rounded-xl shadow-lg border-t-4 border-teal-400">
                      <div className="flex justify-between items-center mb-3">
                          <h3 className="font-bold font-poppins text-gray-800">Daily Quests</h3>
-                         <a href="#" className="text-sm font-semibold text-teal-600 hover:text-teal-500">View All</a>
+                         <a href="#" onClick={(e) => { e.preventDefault(); onNavigate(VIEWS.CHALLENGES); }} className="text-sm font-semibold text-teal-600 hover:text-teal-500">View All</a>
                      </div>
                      <div className="space-y-4">
                         <div className="flex items-center gap-4">
