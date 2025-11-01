@@ -1,20 +1,35 @@
+
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
 import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop } from './types';
-import { HomeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon } from './components/icons/SidebarIcons';
+import { HomeIcon, GlobeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon } from './components/icons/SidebarIcons';
 import { ChatBubbleIcon } from './components/icons/Icons';
 
-export const LANGUAGES: Language[] = [
-  { code: 'en', name: 'English' },
-  { code: 'es', name: 'Spanish' },
-  { code: 'fr', name: 'French' },
-  { code: 'de', name: 'German' },
-  { code: 'ja', name: 'Japanese' },
-  { code: 'sa', name: 'Sanskrit' },
-  { code: 'hi', name: 'Hindi' },
-  { code: 'ta', name: 'Tamil' },
-  { code: 'kn', name: 'Kannada' },
+export const LANGUAGES_CONFIG: (Language & { emoji: string })[] = [
+  { code: 'en', name: 'English', emoji: '🇬🇧' },
+  { code: 'es', name: 'Spanish', emoji: '🇪🇸' },
+  { code: 'fr', name: 'French', emoji: '🇫🇷' },
+  { code: 'de', name: 'German', emoji: '🇩🇪' },
+  { code: 'ja', name: 'Japanese', emoji: '🇯🇵' },
+  { code: 'sa', name: 'Sanskrit', emoji: '🕉️' },
+  { code: 'hi', name: 'Hindi', emoji: '🇮🇳' },
+  { code: 'ta', name: 'Tamil', emoji: '🇮🇳' },
+  { code: 'kn', name: 'Kannada', emoji: '🇮🇳' },
+  { code: 'te', name: 'Telugu', emoji: '🇮🇳' },
+  { code: 'ml', name: 'Malayalam', emoji: '🇮🇳' },
+  { code: 'mr', name: 'Marathi', emoji: '🇮🇳' },
+  { code: 'or', name: 'Odia', emoji: '🇮🇳' },
+  { code: 'gu', name: 'Gujarati', emoji: '🇮🇳' },
+  { code: 'bn', name: 'Bengali', emoji: '🇧🇩' },
+  { code: 'it', name: 'Italian', emoji: '🇮🇹' },
+  { code: 'nl', name: 'Dutch', emoji: '🇳🇱' },
+  { code: 'da', name: 'Danish', emoji: '🇩🇰' },
+  { code: 'pt', name: 'Portuguese', emoji: '🇵🇹' },
+  { code: 'fi', name: 'Finnish', emoji: '🇫🇮' },
 ];
+
+export const LANGUAGES: Language[] = LANGUAGES_CONFIG.map(({ code, name }) => ({ code, name }));
+
 
 export const MOTIVATIONAL_QUOTES: string[] = [
     "A new language is a new life.",
@@ -268,6 +283,216 @@ export const LESSONS: Lesson[] = [
             { question: "What does 'ಧನ್ಯವಾದಗಳು' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
             { question: "How do you say 'Hello' in Kannada?", options: ["ಶುಭರಾತ್ರಿ", "ನಮಸ್ಕಾರ", "ಧನ್ಯವಾದಗಳು"], answer: "ನಮಸ್ಕಾರ" }
         ]
+    },
+    {
+        lesson_id: "te_01",
+        language: "Telugu",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Telugu with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'te',
+        category: 'Lesson',
+        content: [
+            { word: "నమస్కారం", transliteration: "Namaskāram", meaning: "Hello", example: "నమస్కారం, మీరు ఎలా ఉన్నారు?", audio: "audio/namaskaram_te.mp3" },
+            { word: "ధన్యవాదాలు", transliteration: "Dhan'yavādālu", meaning: "Thank you", example: "చాలా ధన్యవాదాలు.", audio: "audio/dhanyavadalu_te.mp3" },
+            { word: "శుభ రాత్రి", transliteration: "Śubha rātri", meaning: "Good night", example: "శుభ రాత్రి, రేపు కలుద్దాం.", audio: "audio/subharatri_te.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'ధన్యవాదాలు' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Telugu?", options: ["శుభ రాత్రి", "నమస్కారం", "ధన్యవాదాలు"], answer: "నమస్కారం" }
+        ]
+    },
+    {
+        lesson_id: "ml_01",
+        language: "Malayalam",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Malayalam with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'ml',
+        category: 'Lesson',
+        content: [
+            { word: "നമസ്കാരം", transliteration: "Namaskāram", meaning: "Hello", example: "നമസ്കാരം, സുഖമാണോ?", audio: "audio/namaskaram_ml.mp3" },
+            { word: "നന്ദി", transliteration: "Nandi", meaning: "Thank you", example: "വളരെ നന്ദി.", audio: "audio/nandi_ml.mp3" },
+            { word: "ശുഭരാത്രി", transliteration: "Śubharātri", meaning: "Good night", example: "ശുഭരാത്രി, നാളെ കാണാം.", audio: "audio/subharatri_ml.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'നന്ദി' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Malayalam?", options: ["ശുഭരാത്രി", "നമസ്കാരം", "നന്ദി"], answer: "നമസ്കാരം" }
+        ]
+    },
+    {
+        lesson_id: "mr_01",
+        language: "Marathi",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Marathi with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'mr',
+        category: 'Lesson',
+        content: [
+            { word: "नमस्कार", transliteration: "Namaskār", meaning: "Hello", example: "नमस्कार, तुम्ही कसे आहात?", audio: "audio/namaskar_mr.mp3" },
+            { word: "धन्यवाद", transliteration: "Dhan'yavād", meaning: "Thank you", example: "खूप धन्यवाद.", audio: "audio/dhanyavad_mr.mp3" },
+            { word: "शुभ रात्री", transliteration: "Śubha rātrī", meaning: "Good night", example: "शुभ रात्री, उद्या भेटूया.", audio: "audio/subharatri_mr.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'धन्यवाद' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Marathi?", options: ["शुभ रात्री", "नमस्कार", "धन्यवाद"], answer: "नमस्कार" }
+        ]
+    },
+    {
+        lesson_id: "or_01",
+        language: "Odia",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Odia with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'or',
+        category: 'Lesson',
+        content: [
+            { word: "ନମସ୍କାର", transliteration: "Namaskāra", meaning: "Hello", example: "ନମସ୍କାର, ଆପଣ କେମିତି ଅଛନ୍ତି?", audio: "audio/namaskar_or.mp3" },
+            { word: "ଧନ୍ୟବାଦ", transliteration: "Dhan'yabāda", meaning: "Thank you", example: "ବହୁତ ଧନ୍ୟବାଦ।", audio: "audio/dhanyabada_or.mp3" },
+            { word: "ଶୁଭ ରାତ୍ରି", transliteration: "Śubha rātri", meaning: "Good night", example: "ଶୁଭ ରାତ୍ରି, କାଲି ଦେଖାହେବା।", audio: "audio/subharatri_or.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'ଧନ୍ୟବାଦ' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Odia?", options: ["ଶୁଭ ରାତ୍ରି", "ନମସ୍କାର", "ଧନ୍ୟବାଦ"], answer: "ନମସ୍କାର" }
+        ]
+    },
+    {
+        lesson_id: "gu_01",
+        language: "Gujarati",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Gujarati with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'gu',
+        category: 'Lesson',
+        content: [
+            { word: "નમસ્તે", transliteration: "Namaste", meaning: "Hello", example: "નમસ્તે, તમે કેમ છો?", audio: "audio/namaste_gu.mp3" },
+            { word: "આભાર", transliteration: "Ābhāra", meaning: "Thank you", example: "खૂબ ખૂબ આભાર.", audio: "audio/abhara_gu.mp3" },
+            { word: "શુભ રાત્રી", transliteration: "Śubha rātrī", meaning: "Good night", example: "શુભ રાત્રી, કાલે મળીશું.", audio: "audio/subharatri_gu.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'આભાર' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Gujarati?", options: ["શુભ રાત્રી", "નમસ્તે", "આભાર"], answer: "નમસ્તે" }
+        ]
+    },
+    {
+        lesson_id: "bn_01",
+        language: "Bengali",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Bengali with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'bn',
+        category: 'Lesson',
+        content: [
+            { word: "নমস্কার", transliteration: "Nômôśkār", meaning: "Hello", example: "নমস্কার, আপনি কেমন আছেন?", audio: "audio/nomoskar_bn.mp3" },
+            { word: "ধন্যবাদ", transliteration: "Dhonnobād", meaning: "Thank you", example: "অনেক ধন্যবাদ।", audio: "audio/dhonnobad_bn.mp3" },
+            { word: "শুভ রাত্রি", transliteration: "Śubhô rātri", meaning: "Good night", example: "শুভ রাত্রি, কাল দেখা হবে।", audio: "audio/subhoratri_bn.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'ধন্যবাদ' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Bengali?", options: ["শুভ রাত্রি", "নমস্কার", "ধন্যবাদ"], answer: "নমস্কার" }
+        ]
+    },
+    {
+        lesson_id: "it_01",
+        language: "Italian",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Italian with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'it',
+        category: 'Lesson',
+        content: [
+            { word: "Ciao", transliteration: "Ciao", meaning: "Hello", example: "Ciao, come stai?", audio: "audio/ciao_it.mp3" },
+            { word: "Grazie", transliteration: "Grazie", meaning: "Thank you", example: "Grazie mille.", audio: "audio/grazie_it.mp3" },
+            { word: "Buona notte", transliteration: "Buona notte", meaning: "Good night", example: "Buona notte, a domani.", audio: "audio/buonanotte_it.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Grazie' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Italian?", options: ["Buona notte", "Ciao", "Grazie"], answer: "Ciao" }
+        ]
+    },
+    {
+        lesson_id: "nl_01",
+        language: "Dutch",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Dutch with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'nl',
+        category: 'Lesson',
+        content: [
+            { word: "Hallo", transliteration: "Hallo", meaning: "Hello", example: "Hallo, hoe gaat het?", audio: "audio/hallo_nl.mp3" },
+            { word: "Dank je", transliteration: "Dank je", meaning: "Thank you", example: "Dank je wel.", audio: "audio/dankje_nl.mp3" },
+            { word: "Goedenacht", transliteration: "Goedenacht", meaning: "Good night", example: "Goedenacht, tot morgen.", audio: "audio/goedenacht_nl.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Dank je' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Dutch?", options: ["Goedenacht", "Hallo", "Dank je"], answer: "Hallo" }
+        ]
+    },
+    {
+        lesson_id: "da_01",
+        language: "Danish",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Danish with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'da',
+        category: 'Lesson',
+        content: [
+            { word: "Hej", transliteration: "Hej", meaning: "Hello", example: "Hej, hvordan har du det?", audio: "audio/hej_da.mp3" },
+            { word: "Tak", transliteration: "Tak", meaning: "Thank you", example: "Mange tak.", audio: "audio/tak_da.mp3" },
+            { word: "Godnat", transliteration: "Godnat", meaning: "Good night", example: "Godnat, vi ses i morgen.", audio: "audio/godnat_da.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Tak' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Danish?", options: ["Godnat", "Hej", "Tak"], answer: "Hej" }
+        ]
+    },
+    {
+        lesson_id: "pt_01",
+        language: "Portuguese",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Portuguese with a fun quiz.",
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'pt',
+        category: 'Lesson',
+        content: [
+            { word: "Olá", transliteration: "Olá", meaning: "Hello", example: "Olá, como você está?", audio: "audio/ola_pt.mp3" },
+            { word: "Obrigado/a", transliteration: "Obrigado/a", meaning: "Thank you", example: "Muito obrigado.", audio: "audio/obrigado_pt.mp3" },
+            { word: "Boa noite", transliteration: "Boa noite", meaning: "Good night", example: "Boa noite, até amanhã.", audio: "audio/boanoite_pt.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Obrigado/a' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Portuguese?", options: ["Boa noite", "Olá", "Obrigado/a"], answer: "Olá" }
+        ]
+    },
+    {
+        lesson_id: "fi_01",
+        language: "Finnish",
+        title: "Basic Greetings",
+        description: "Learn your first few greetings in Finnish with a fun quiz.",
+// Fix: Corrected typo in 'level' from 'Beginger' to 'Beginner'.
+        level: "Beginner",
+        emoji: "👋",
+        lang: 'fi',
+        category: 'Lesson',
+        content: [
+            { word: "Hei", transliteration: "Hei", meaning: "Hello", example: "Hei, mitä kuuluu?", audio: "audio/hei_fi.mp3" },
+            { word: "Kiitos", transliteration: "Kiitos", meaning: "Thank you", example: "Paljon kiitoksia.", audio: "audio/kiitos_fi.mp3" },
+            { word: "Hyvää yötä", transliteration: "Hyvää yötä", meaning: "Good night", example: "Hyvää yötä, nähdään huomenna.", audio: "audio/hyvaayota_fi.mp3" }
+        ],
+        quiz: [
+            { question: "What does 'Kiitos' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
+            { question: "How do you say 'Hello' in Finnish?", options: ["Hyvää yötä", "Hei", "Kiitos"], answer: "Hei" }
+        ]
     }
 ];
 
@@ -407,7 +632,7 @@ Here is the list to provide:
 - **गुरुः (Guruh)** - Teacher - *गुरुः ज्ञानं ददाति।* (The teacher gives knowledge.)
 - **फलम् (Phalam)** - Fruit - *अहं फलं खादामि।* (I eat fruit.)
 - **वृक्षः (Vr̥kṣaḥ)** - Tree - *उद्याने एकः वृक्षः अस्ति।* (There is a tree in the garden.)
-- **पुष्पम् (Puṣpam)** - Flower - *पुष्पं सुगन्धितम् अस्ति।* (The flower is fragrant.)
+- **पुष्पम् (Puṣpam)** - Flower - *पुष्पं सुగन्धितम् अस्ति।* (The flower is fragrant.)
 - **योगः (Yogaḥ)** - Yoga/Union - *योगः मनः शान्तं करोति।* (Yoga calms the mind.)
 - **शान्तिः (Śāntiḥ)** - Peace - *सर्वत्र शान्तिः भवतु।* (Let there be peace everywhere.)
 - **प्रेम (Prema)** - Love - *प्रेम सर्वत्र विजयते।* (Love conquers all.)
@@ -680,6 +905,7 @@ export const TUTORS: Tutor[] = [
 
 export const VIEWS = {
   DASHBOARD: { id: 'dashboard', label: 'Learn', icon: HomeIcon },
+  LANGUAGES_PAGE: { id: 'languages', label: 'Languages', icon: GlobeIcon },
   SCENARIO: { id: 'scenario', label: 'Scenarios', icon: ChatBubbleIcon },
   LESSON: { id: 'lesson', label: 'Lesson' },
   GRAMMAR: { id: 'grammar', label: 'Grammar', icon: GrammarIcon },
@@ -697,6 +923,7 @@ export const VIEWS = {
 
 export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> })[] = [
     VIEWS.DASHBOARD,
+    VIEWS.LANGUAGES_PAGE,
     VIEWS.GRAMMAR,
     VIEWS.IMAGE_EDITOR,
     VIEWS.WORD_BANK,

@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 // Duolingo-style colorful icon for the Dashboard
@@ -10,6 +11,17 @@ export const HomeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
       <path d="M17 25h6v10h-6z" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
     </g>
   </svg>
+);
+
+// Duolingo-style colorful icon for Languages Page
+export const GlobeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <g fill="none" fillRule="evenodd">
+            <circle stroke="#0891B2" strokeWidth="2" cx="20" cy="20" r="15"></circle>
+            <path d="M20 5v30M5 20h30" stroke="#06B6D4" strokeWidth="2" strokeLinecap="round"></path>
+            <ellipse stroke="#06B6D4" strokeWidth="2" cx="20" cy="20" rx="7.5" ry="15"></ellipse>
+        </g>
+    </svg>
 );
 
 // Duolingo-style colorful icon for Grammar Clinic

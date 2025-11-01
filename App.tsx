@@ -19,6 +19,7 @@ import { Footer } from './components/Footer';
 import { AboutView } from './components/AboutView';
 import { TermsView } from './components/TermsView';
 import { PrivacyView } from './components/PrivacyView';
+import { LanguagesView } from './components/LanguagesView';
 import type { View, Scenario, Language, Lesson } from './types';
 import { VIEWS, SCENARIOS, LANGUAGES, LESSONS } from './constants';
 
@@ -120,6 +121,11 @@ export default function App() {
     setCurrentLanguage(newLang);
   }
 
+  const handleLanguageSelectFromPage = (newLang: Language) => {
+    handleLanguageChange(newLang);
+    handleViewChange(VIEWS.DASHBOARD);
+  };
+
   const renderView = () => {
     const dashboardProps = {
         onScenarioSelect: handleScenarioSelect,
@@ -132,6 +138,8 @@ export default function App() {
     switch (currentView.id) {
       case VIEWS.DASHBOARD.id:
         return <Dashboard {...dashboardProps} />;
+      case VIEWS.LANGUAGES_PAGE.id:
+        return <LanguagesView onLanguageSelect={handleLanguageSelectFromPage} lessons={LESSONS} />;
       case VIEWS.SCENARIO.id:
         return currentScenario ? <ScenarioView scenario={currentScenario} language={currentLanguage} /> : <Dashboard {...dashboardProps} />;
       case VIEWS.LESSON.id:
