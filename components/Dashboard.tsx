@@ -1,9 +1,9 @@
 
-import React from 'react';
-import type { Scenario, Lesson, View } from '../types';
+import React, { useState, useEffect } from 'react';
+import type { Scenario, Lesson, View, Challenge } from '../types';
 import { ParrotIcon } from './icons/ParrotIcon';
-import { StarIcon, BookOpenIcon, LockIcon, ChestIcon, LeaderboardIcon, QuestIcon, ChatBubbleIcon } from './icons/Icons';
-import { SCENARIOS, LESSONS, VIEWS } from '../constants';
+import { StarIcon, BookOpenIcon, LockIcon, ChestIcon, LeaderboardIcon, ChatBubbleIcon, CheckBadgeIcon } from './icons/Icons';
+import { SCENARIOS, LESSONS, VIEWS, CHALLENGES } from '../constants';
 
 
 type LearningItem = (Lesson | Scenario) & { type: 'lesson' | 'scenario' };
@@ -135,6 +135,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         }
     };
     
+    const [dailyGoal, setDailyGoal] = useState<Challenge | null>(null);
+
+    useEffect(() => {
+        const dailyChallenges = CHALLENGES.filter(c => c.type === 'daily');
+        if (dailyChallenges.length > 0) {
+            const randomChallenge = dailyChallenges[Math.floor(Math.random() * dailyChallenges.length)];
+            setDailyGoal(randomChallenge);
+        }
+    }, []);
+
     return (
         <div className="flex flex-col lg:flex-row gap-8">
             {/* Main Content: Learning Path */}
@@ -190,19 +200,23 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                  </div>
                  <div className="bg-white p-5 rounded-xl shadow-lg border-t-4 border-teal-400">
                      <div className="flex justify-between items-center mb-3">
-                         <h3 className="font-bold font-poppins text-gray-800">Daily Quests</h3>
+                         <h3 className="font-bold font-poppins text-gray-800">Daily Goal</h3>
                          <a href="#" onClick={(e) => { e.preventDefault(); onNavigate(VIEWS.CHALLENGES); }} className="text-sm font-semibold text-teal-600 hover:text-teal-500">View All</a>
                      </div>
                      <div className="space-y-4">
-                        <div className="flex items-center gap-4">
-                            <QuestIcon className="w-8 h-8 text-amber-500"/>
-                            <div>
-                                <p className="font-semibold text-gray-700">Earn 10 XP</p>
-                                <div className="w-full bg-slate-200 rounded-full h-2 mt-1">
-                                    <div className="bg-amber-400 h-2 rounded-full" style={{width: '70%'}}></div>
+                        {dailyGoal ? (
+                            <div className="flex items-center gap-4">
+                                <CheckBadgeIcon className="w-8 h-8 text-amber-500"/>
+                                <div>
+                                    <p className="font-semibold text-gray-700">{dailyGoal.title}</p>
+                                    <div className="w-full bg-slate-200 rounded-full h-2 mt-1">
+                                        <div className="bg-amber-400 h-2 rounded-full" style={{width: '70%'}}></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        ) : (
+                           <p className="text-sm text-gray-500">No daily goals right now. Check back later!</p>
+                        )}
                      </div>
                  </div>
                  <div className="bg-white p-5 rounded-xl shadow-lg text-center border-t-4 border-sky-400">
