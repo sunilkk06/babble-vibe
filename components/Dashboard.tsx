@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import type { Scenario, Lesson, View, Challenge } from '../types';
 import { ParrotIcon } from './icons/ParrotIcon';
@@ -104,7 +103,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         'chat-de',       // German Scenario
         'restaurant-en', // English Scenario
         'interview-de',  // German Career Scenario
-        'market-es',     // Spanish Scenario
+        'market-hi',     // Hindi Cultural Scenario
     ];
 
     const combinedLearningItems: LearningItem[] = curatedPathIds.map(id => {

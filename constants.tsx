@@ -1,7 +1,6 @@
-
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
-import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop } from './types';
+import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop, PhraseCategory } from './types';
 import { HomeIcon, GlobeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon } from './components/icons/SidebarIcons';
 import { ChatBubbleIcon } from './components/icons/Icons';
 
@@ -611,6 +610,33 @@ Then, as Lukas, say the first line and wait for the user's response: "Hallo, ich
     systemPrompt: "You are a host at a popular restaurant. The user is calling to make a dinner reservation. Guide them through the process, asking for the date, time, and number of guests. Be polite and helpful."
   },
   {
+    id: 'market-hi',
+    title: 'A Market in Delhi',
+    description: 'Experience a bustling Delhi market. Practice bargaining and learn about local spices in Hindi.',
+    emoji: '🌶️',
+    lang: 'hi',
+    category: 'Cultural Immersion',
+    systemPrompt: "You are a friendly shopkeeper in a bustling Delhi market. The user is a visitor wanting to buy spices and learn about local culture. Interact with them in conversational Hindi (Hinglish is okay). Teach them how to bargain politely, explain the uses of different masalas (spices), and share a cultural tip about Indian hospitality. Be warm, a bit cheeky, and encouraging."
+  },
+  {
+    id: 'wedding-ta',
+    title: 'A Tamil Wedding',
+    description: 'You are invited to a wedding in Chennai! Learn how to greet elders and what to say during the ceremony.',
+    emoji: '💒',
+    lang: 'ta',
+    category: 'Cultural Immersion',
+    systemPrompt: "You are a close family friend at a traditional Tamil wedding in Chennai. The user is a guest who is new to the culture. Your role is to be their guide. Greet them with 'Vaanga, vaanga!' (Welcome, welcome!). Gently teach them how to greet elders by saying 'Vanakkam'. Explain the significance of the 'thaali' (mangalsutra). Suggest a polite compliment to say to the couple, like 'Jodi porutham romba nalla irukku' (You make a great couple). Respond in simple Tamil and provide English translations for key phrases."
+  },
+  {
+    id: 'temple-kn',
+    title: 'Temple Etiquette in Bangalore',
+    description: 'Learn the dos and don\'ts of visiting a Hindu temple in Karnataka.',
+    emoji: '🙏',
+    lang: 'kn',
+    category: 'Cultural Immersion',
+    systemPrompt: "You are a local guide at a temple in Bangalore. The user is a tourist visiting for the first time. Your goal is to teach them temple etiquette in a friendly manner. Start by telling them in Kannada to remove their shoes ('Chappali bicchi idabeku'). Explain the concept of 'pradakshina' (circumambulating the shrine). Teach them a simple phrase to receive 'prasada' (blessed food offering), like 'Prasada kodi'. Be respectful and informative. Use simple Kannada with English explanations."
+  },
+  {
     id: 'vocab-sa',
     title: 'First Words in Sanskrit',
     description: 'Learn 20 essential Sanskrit words to begin your journey.',
@@ -933,3 +959,60 @@ export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> 
     VIEWS.CHALLENGES,
     VIEWS.TUTORS,
 ];
+
+export const MULTILINGUAL_PHRASES: Record<string, PhraseCategory[]> = {
+    en: [
+        {
+            category: "Greetings & Politeness",
+            phrases: [
+                { id: 'en-1', phrase: "How are you doing today?", translation: "How are you doing today?", audio_prompt: "Say 'How are you doing today?' in English." },
+                { id: 'en-2', phrase: "Thank you so much, I appreciate it.", translation: "Thank you so much, I appreciate it.", audio_prompt: "Say 'Thank you so much, I appreciate it.' in English." },
+                { id: 'en-3', phrase: "Excuse me, could you help me please?", translation: "Excuse me, could you help me please?", audio_prompt: "Say 'Excuse me, could you help me please?' in English." },
+            ]
+        },
+        {
+            category: "At a Restaurant",
+            phrases: [
+                { id: 'en-4', phrase: "A table for two, please.", translation: "A table for two, please.", audio_prompt: "Say 'A table for two, please.' in English." },
+                { id: 'en-5', phrase: "Could I see the menu, please?", translation: "Could I see the menu, please?", audio_prompt: "Say 'Could I see the menu, please?' in English." },
+                { id: 'en-6', phrase: "I would like to order the pasta.", translation: "I would like to order the pasta.", audio_prompt: "Say 'I would like to order the pasta.' in English." },
+            ]
+        }
+    ],
+    fr: [
+        {
+            category: "Greetings & Politeness",
+            phrases: [
+                { id: 'fr-1', phrase: "Comment allez-vous aujourd'hui ?", translation: "How are you doing today?", audio_prompt: "Say 'Comment allez-vous aujourd'hui ?' in French." },
+                { id: 'fr-2', phrase: "Merci beaucoup, j'apprécie.", translation: "Thank you so much, I appreciate it.", audio_prompt: "Say 'Merci beaucoup, j'apprécie.' in French." },
+                { id: 'fr-3', phrase: "Excusez-moi, pourriez-vous m'aider s'il vous plaît ?", translation: "Excuse me, could you help me please?", audio_prompt: "Say 'Excusez-moi, pourriez-vous m'aider s'il vous plaît ?' in French." },
+            ]
+        },
+        {
+            category: "At a Restaurant",
+            phrases: [
+                { id: 'fr-4', phrase: "Une table pour deux, s'il vous plaît.", translation: "A table for two, please.", audio_prompt: "Say 'Une table pour deux, s'il vous plaît.' in French." },
+                { id: 'fr-5', phrase: "Pourrais-je voir le menu, s'il vous plaît ?", translation: "Could I see the menu, please?", audio_prompt: "Say 'Pourrais-je voir le menu, s'il vous plaît ?' in French." },
+                { id: 'fr-6', phrase: "Je voudrais commander les pâtes.", translation: "I would like to order the pasta.", audio_prompt: "Say 'Je voudrais commander les pâtes.' in French." },
+            ]
+        }
+    ],
+    es: [
+        {
+            category: "Greetings & Politeness",
+            phrases: [
+                { id: 'es-1', phrase: "¿Cómo estás hoy?", translation: "How are you doing today?", audio_prompt: "Say '¿Cómo estás hoy?' in Spanish." },
+                { id: 'es-2', phrase: "Muchas gracias, te lo agradezco.", translation: "Thank you so much, I appreciate it.", audio_prompt: "Say 'Muchas gracias, te lo agradezco.' in Spanish." },
+                { id: 'es-3', phrase: "Disculpe, ¿podría ayudarme por favor?", translation: "Excuse me, could you help me please?", audio_prompt: "Say 'Disculpe, ¿podría ayudarme por favor?' in Spanish." },
+            ]
+        },
+        {
+            category: "At a Restaurant",
+            phrases: [
+                { id: 'es-4', phrase: "Una mesa para dos, por favor.", translation: "A table for two, please.", audio_prompt: "Say 'Una mesa para dos, por favor.' in Spanish." },
+                { id: 'es-5', phrase: "¿Podría ver el menú, por favor?", translation: "Could I see the menu, please?", audio_prompt: "Say '¿Podría ver el menú, por favor?' in Spanish." },
+                { id: 'es-6', phrase: "Me gustaría pedir la pasta.", translation: "I would like to order the pasta.", audio_prompt: "Say 'Me gustaría pedir la pasta.' in Spanish." },
+            ]
+        }
+    ],
+};

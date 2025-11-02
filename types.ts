@@ -10,7 +10,7 @@ export interface Scenario {
   emoji: string;
   systemPrompt: string;
   lang: string;
-  category: 'Conversation' | 'Career Focus';
+  category: 'Conversation' | 'Career Focus' | 'Cultural Immersion';
 }
 
 export interface Message {
@@ -131,4 +131,16 @@ export interface ImageVocabularyWord {
   word: string;
   transliteration: string;
   meaning: string;
+}
+
+export interface PracticePhrase {
+    id: string;
+    phrase: string;
+    translation: string;
+    audio_prompt: string;
+}
+
+export interface PhraseCategory {
+    category: string;
+    phrases: PracticePhrase[];
 }
