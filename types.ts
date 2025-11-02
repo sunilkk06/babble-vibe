@@ -126,3 +126,9 @@ export interface TranscriptionFeedback {
   transcription: string;
   feedback: string;
 }
+
+export interface ImageVocabularyWord {
+  word: string;
+  transliteration: string;
+  meaning: string;
+}

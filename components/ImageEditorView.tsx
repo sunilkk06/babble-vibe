@@ -1,9 +1,10 @@
 
 import React, { useState, useRef } from 'react';
-import { editImage } from '../services/geminiService';
+import { generateVocabularyFromImage } from '../services/geminiService';
 import { Spinner } from './common/Spinner';
 import { Button } from './common/Button';
-import { ImageIcon } from './icons/Icons';
+import { ImageIcon, SpeakerWaveIcon } from './icons/Icons';
+import type { Language, ImageVocabularyWord } from '../types';
 
 const fileToGenerativePart = async (file: File): Promise<{ mimeType: string; base64: string }> => {
     return new Promise((resolve, reject) => {
@@ -17,11 +18,14 @@ const fileToGenerativePart = async (file: File): Promise<{ mimeType: string; bas
     });
 };
 
-export const ImageEditorView: React.FC = () => {
-    const [prompt, setPrompt] = useState('');
-    const [originalImage, setOriginalImage] = useState<string | null>(null);
-    const [editedImage, setEditedImage] = useState<string | null>(null);
+interface ImageEditorViewProps {
+    language: Language;
+}
+
+export const ImageEditorView: React.FC<ImageEditorViewProps> = ({ language }) => {
+    const [image, setImage] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [vocabulary, setVocabulary] = useState<ImageVocabularyWord[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -35,30 +39,31 @@ export const ImageEditorView: React.FC = () => {
             }
             setError('');
             setImageFile(file);
-            setOriginalImage(URL.createObjectURL(file));
-            setEditedImage(null);
+            setImage(URL.createObjectURL(file));
+            setVocabulary([]); // Reset vocab on new image
         }
     };
 
-    const handleEdit = async () => {
-        if (!imageFile || !prompt.trim()) {
-            setError('Please upload an image and provide an editing prompt.');
+    const handleGenerate = async () => {
+        if (!imageFile) {
+            setError('Please upload an image first.');
             return;
         }
         setError('');
         setIsLoading(true);
-        setEditedImage(null);
+        setVocabulary([]);
         
         try {
             const { mimeType, base64 } = await fileToGenerativePart(imageFile);
-            const result = await editImage(base64, mimeType, prompt);
-            if (result) {
-                setEditedImage(`data:${mimeType};base64,${result}`);
+            const result = await generateVocabularyFromImage(base64, mimeType, language.name);
+            
+            if (result && result.length > 0) {
+                setVocabulary(result);
             } else {
-                setError('Could not generate the edited image. Please try again.');
+                setError('Could not identify any objects to generate vocabulary. Try another image.');
             }
         } catch (err) {
-            setError('An error occurred during image editing. Please try again.');
+            setError('An error occurred during vocabulary generation. Please try again.');
             console.error(err);
         } finally {
             setIsLoading(false);
@@ -66,24 +71,25 @@ export const ImageEditorView: React.FC = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">Vocabulary</h1>
-                <p className="mt-2 text-lg text-gray-600">Edit images with text prompts. Try "add a retro filter" or "make the sky purple".</p>
+                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">Visual Vocabulary Builder</h1>
+                <p className="mt-2 text-lg text-gray-600">Learn new words in {language.name} from your own images.</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                {/* Left side: Image and controls */}
                 <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col border-t-4 border-rose-400">
                     <div
-                        className="flex-grow flex items-center justify-center border-2 border-dashed border-slate-300/80 rounded-lg cursor-pointer hover:border-teal-400 transition-colors"
+                        className="flex-grow flex items-center justify-center border-2 border-dashed border-slate-300/80 rounded-lg cursor-pointer hover:border-teal-400 transition-colors aspect-video"
                         onClick={() => fileInputRef.current?.click()}
                     >
-                        {originalImage ? (
-                            <img src={originalImage} alt="Original" className="max-h-96 object-contain rounded-md" />
+                        {image ? (
+                            <img src={image} alt="Uploaded" className="max-h-full max-w-full object-contain rounded-md" />
                         ) : (
-                            <div className="text-center text-gray-500">
+                            <div className="text-center text-gray-500 p-4">
                                 <ImageIcon className="mx-auto h-12 w-12" />
-                                <p className="mt-2">Click to upload an image</p>
+                                <p className="mt-2 font-semibold">Click to upload an image</p>
                                 <p className="text-xs">PNG, JPG, WEBP up to 4MB</p>
                             </div>
                         )}
@@ -95,35 +101,42 @@ export const ImageEditorView: React.FC = () => {
                             className="hidden"
                         />
                     </div>
-                    <div className="mt-4">
-                        <input
-                            type="text"
-                            value={prompt}
-                            onChange={(e) => setPrompt(e.target.value)}
-                            placeholder="e.g., Add a smiling sun in the corner"
-                            className="w-full p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
-                            disabled={isLoading}
-                        />
-                    </div>
-                    {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                    {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
                     <div className="mt-4 flex justify-end">
-                        <Button onClick={handleEdit} disabled={isLoading || !imageFile}>
-                             {isLoading ? <><Spinner size="sm" /> Generating...</> : 'Magic Edit!'}
+                        <Button onClick={handleGenerate} disabled={isLoading || !imageFile}>
+                             {isLoading ? <><Spinner size="sm" /> Learning words...</> : 'Generate Vocabulary'}
                         </Button>
                     </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-center border-t-4 border-sky-400">
+                {/* Right side: Vocabulary List */}
+                <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-sky-400 min-h-[200px]">
+                    <h2 className="text-xl font-bold font-poppins text-gray-700 mb-4">Words from your image</h2>
                     {isLoading ? (
-                        <div className="text-center">
+                        <div className="text-center py-10">
                             <Spinner />
-                            <p className="mt-2 text-gray-600">Gemini is creating your image...</p>
+                            <p className="mt-2 text-gray-600">Identifying objects...</p>
                         </div>
-                    ) : editedImage ? (
-                        <img src={editedImage} alt="Edited" className="max-h-full object-contain rounded-md animate-fade-in" />
+                    ) : vocabulary.length > 0 ? (
+                        <div className="space-y-3 animate-fade-in">
+                            {vocabulary.map((item, index) => (
+                                <div key={index} className="p-3 bg-sky-50 rounded-lg border border-sky-200/50 flex items-center">
+                                    <div className="flex-grow">
+                                        <div className="flex items-baseline gap-x-3">
+                                            <p className="text-xl font-bold text-sky-800">{item.word}</p>
+                                            <p className="text-md text-gray-500 font-mono">({item.transliteration})</p>
+                                        </div>
+                                        <p className="text-gray-700 mt-1 capitalize">{item.meaning}</p>
+                                    </div>
+                                    <button title="Play audio (coming soon)" disabled className="p-2 rounded-full bg-sky-100 text-sky-700 ml-4 cursor-not-allowed">
+                                        <SpeakerWaveIcon className="w-5 h-5" />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
                     ) : (
-                        <div className="text-center text-gray-400">
-                            <p>Your edited image will appear here.</p>
+                        <div className="text-center text-gray-400 py-10">
+                            <p>Your new vocabulary words will appear here.</p>
                         </div>
                     )}
                 </div>

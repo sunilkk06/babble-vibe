@@ -1,6 +1,6 @@
 
-import { GoogleGenAI, Chat, GenerateContentResponse, Modality } from "@google/genai";
-import type { Message } from '../types';
+import { GoogleGenAI, Chat, GenerateContentResponse, Modality, Type } from "@google/genai";
+import type { Message, ImageVocabularyWord } from '../types';
 
 if (!process.env.API_KEY) {
     throw new Error("API_KEY environment variable not set");
@@ -87,6 +87,57 @@ export const editImage = async (base64Image: string, mimeType: string, prompt: s
         return null;
     }
 };
+
+export const generateVocabularyFromImage = async (base64Image: string, mimeType: string, languageName: string): Promise<ImageVocabularyWord[] | null> => {
+    const prompt = `Identify the main objects in this image. Provide a list of up to 7 vocabulary words for these objects in ${languageName}.
+    Provide the response as a JSON array of objects. Each object must have three keys:
+    1. "word": The vocabulary word in ${languageName}.
+    2. "transliteration": A simple phonetic transliteration for pronunciation.
+    3. "meaning": The English translation of the word.
+    
+    If you cannot identify any objects, return an empty array.`;
+
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: {
+                parts: [
+                    {
+                        inlineData: {
+                            data: base64Image,
+                            mimeType: mimeType,
+                        },
+                    },
+                    { text: prompt },
+                ],
+            },
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: Type.ARRAY,
+                    items: {
+                        type: Type.OBJECT,
+                        properties: {
+                            word: { type: Type.STRING },
+                            transliteration: { type: Type.STRING },
+                            meaning: { type: Type.STRING },
+                        },
+                        required: ["word", "transliteration", "meaning"],
+                    },
+                },
+            },
+        });
+
+        const jsonString = response.text.trim();
+        const vocabularyList = JSON.parse(jsonString);
+        return vocabularyList as ImageVocabularyWord[];
+
+    } catch (error) {
+        console.error("Error generating vocabulary from image:", error);
+        return null;
+    }
+};
+
 
 export const generateSpeech = async (prompt: string): Promise<string | null> => {
     try {

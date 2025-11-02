@@ -147,7 +147,7 @@ export default function App() {
       case VIEWS.GRAMMAR.id:
         return <GrammarClinicView />;
       case VIEWS.IMAGE_EDITOR.id:
-        return <ImageEditorView />;
+        return <ImageEditorView language={currentLanguage} />;
       case VIEWS.WORD_BANK.id:
         return <WordBankView language={currentLanguage} />;
       case VIEWS.ACCENT_TRAINING.id:
