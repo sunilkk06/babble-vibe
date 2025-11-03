@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
@@ -15,6 +14,7 @@ import { Onboarding } from './components/Onboarding';
 import { LoginPage } from './components/LoginPage';
 import { TutorView } from './components/TutorView';
 import { AccentTrainingView } from './components/AccentTrainingView';
+import { KanjiLairView } from './components/KanjiLairView';
 import { Footer } from './components/Footer';
 import { AboutView } from './components/AboutView';
 import { TermsView } from './components/TermsView';
@@ -150,6 +150,8 @@ export default function App() {
         return <ImageEditorView language={currentLanguage} />;
       case VIEWS.WORD_BANK.id:
         return <WordBankView language={currentLanguage} />;
+      case VIEWS.KANJI_LAIR.id:
+        return <KanjiLairView language={currentLanguage} />;
       case VIEWS.ACCENT_TRAINING.id:
         return <AccentTrainingView language={currentLanguage} />;
       case VIEWS.COMMUNITY.id:

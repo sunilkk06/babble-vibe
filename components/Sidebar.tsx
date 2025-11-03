@@ -1,4 +1,3 @@
-
 import React, { Fragment } from 'react';
 import { ParrotIcon } from './icons/ParrotIcon';
 import type { View, Language } from '../types';
@@ -45,7 +44,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
     
     const getTranslatedLabel = (label: string): string => {
         const langCode = currentLanguage.code;
-        return TRANSLATIONS[langCode]?.[label] || label;
+        return TRANSLATIONS[langCode]?.[label] || TRANSLATIONS['en']?.[label] || label;
     };
     
     const navigationContent = (
@@ -65,15 +64,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
                 <ul role="list" className="flex flex-1 flex-col gap-y-2">
                     <li>
                         <ul role="list" className="space-y-2">
-                            {ALL_VIEWS.map((view) => (
-                                <NavLink
-                                    key={view.id}
-                                    view={view}
-                                    isCurrent={currentView.id === view.id}
-                                    onClick={() => onNavigate(view)}
-                                    label={getTranslatedLabel(view.label)}
-                                />
-                            ))}
+                            {ALL_VIEWS.map((view) => {
+                                // Hide Kanji Lair if the language is not Japanese
+                                if (view.id === VIEWS.KANJI_LAIR.id && currentLanguage.code !== 'ja') {
+                                    return null;
+                                }
+                                return (
+                                    <NavLink
+                                        key={view.id}
+                                        view={view}
+                                        isCurrent={currentView.id === view.id}
+                                        onClick={() => onNavigate(view)}
+                                        label={getTranslatedLabel(view.label)}
+                                    />
+                                );
+                            })}
                         </ul>
                     </li>
                 </ul>

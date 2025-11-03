@@ -14,6 +14,24 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'Start': 'Start',
     'Profile': 'Profile',
     'Leaderboard': 'Leaderboard',
+    'Kanji Lair': 'Kanji Lair',
+  },
+  ja: {
+    'Learn': '学習',
+    'Grammar': '文法',
+    'Vocabulary': '語彙',
+    'Word Bank': '単語帳',
+    'Community': 'コミュニティ',
+    'Achievements': '実績',
+    'Media': 'メディア',
+    'Challenges': '挑戦',
+    'Start': 'スタート',
+    'Profile': 'プロフィール',
+    'Leaderboard': 'ランキング',
+    'Kanji Lair': '漢字の隠れ家',
+    'Accent Training': 'アクセント練習',
+    'Languages': '言語',
+    'Tutors': 'チューター',
   },
   hi: { // Hindi
     'Learn': 'सीखें',
@@ -27,6 +45,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'Start': 'शुरू करें',
     'Profile': 'प्रोफ़ाइल',
     'Leaderboard': 'लीडरबोर्ड',
+    'Kanji Lair': 'कांजी अड्डा',
   },
   kn: { // Kannada
     'Learn': 'ಕಲಿಯಿರಿ',
@@ -40,6 +59,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'Start': 'ಪ್ರಾರಂಭಿಸಿ',
     'Profile': 'ಪ್ರೊಫೈಲ್',
     'Leaderboard': 'ಲೀಡರ್‌ಬೋರ್ಡ್',
+    'Kanji Lair': 'ಕಾಂಜಿ ಗುಹೆ',
   },
   ta: { // Tamil
     'Learn': 'கற்க',
@@ -53,5 +73,6 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'Start': 'தொடங்கு',
     'Profile': 'சுயவிவரம்',
     'Leaderboard': 'தரவரிசை',
+    'Kanji Lair': 'காஞ்சி குகை',
   }
 };

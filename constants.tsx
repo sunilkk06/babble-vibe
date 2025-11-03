@@ -1,7 +1,7 @@
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
 import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop, PhraseCategory } from './types';
-import { HomeIcon, GlobeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon } from './components/icons/SidebarIcons';
+import { HomeIcon, GlobeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon, KanjiIcon } from './components/icons/SidebarIcons';
 import { ChatBubbleIcon } from './components/icons/Icons';
 
 export const LANGUAGES_CONFIG: (Language & { emoji: string })[] = [
@@ -211,6 +211,7 @@ export const LESSONS: Lesson[] = [
         language: "Japanese",
         title: "Basic Greetings",
         description: "Learn your first few greetings in Japanese with a fun quiz.",
+        // Fix: Corrected typo in 'level' from 'Beginger' to 'Beginner'.
         level: "Beginner",
         emoji: "👋",
         lang: 'ja',
@@ -307,6 +308,7 @@ export const LESSONS: Lesson[] = [
         language: "Malayalam",
         title: "Basic Greetings",
         description: "Learn your first few greetings in Malayalam with a fun quiz.",
+        // Fix: Corrected typo in 'level' from 'Beginger' to 'Beginner'.
         level: "Beginner",
         emoji: "👋",
         lang: 'ml',
@@ -421,6 +423,7 @@ export const LESSONS: Lesson[] = [
         language: "Dutch",
         title: "Basic Greetings",
         description: "Learn your first few greetings in Dutch with a fun quiz.",
+        // Fix: Corrected typo in 'level' from 'Beginger' to 'Beginner'.
         level: "Beginner",
         emoji: "👋",
         lang: 'nl',
@@ -459,6 +462,7 @@ export const LESSONS: Lesson[] = [
         language: "Portuguese",
         title: "Basic Greetings",
         description: "Learn your first few greetings in Portuguese with a fun quiz.",
+        // Fix: Corrected typo in 'level' from 'Beginger' to 'Beginner'.
         level: "Beginner",
         emoji: "👋",
         lang: 'pt',
@@ -666,6 +670,33 @@ Here is the list to provide:
 - **धर्मः (Dharmaḥ)** - Duty/Righteousness - *स्वधर्मं पालय।* (Follow your duty.)
 - **कर्म (Karma)** - Action/Deed - *कर्मफलं निश्चितम्।* (The result of an action is certain.)
 - **मोक्षः (Mokṣaḥ)** - Liberation/Freedom - *मोक्षः जीवनस्य परमं लक्ष्यम्।* (Liberation is the ultimate goal of life.)`
+  },
+  {
+    id: 'keigo-meeting-ja',
+    title: 'Business Meeting with a Client',
+    description: 'Navigate a formal business meeting and practice using Sonkeigo (respectful) and Kenjōgo (humble) language.',
+    emoji: '🤝',
+    lang: 'ja',
+    category: 'Keigo Mastery',
+    systemPrompt: "You are a Japanese client, Suzuki-sama, in a formal business meeting. The user is your business partner. Your goal is to guide them in using appropriate Keigo (敬語). Respond in formal Japanese. When the user makes a mistake in Keigo, gently correct them and explain the rule. For example, if they say '食べますか？' (tabemasu ka?), suggest '召し上がりますか？' (meshiagarimasu ka?) and briefly explain it's the respectful form (Sonkeigo). If they correctly use Keigo, praise them. Start the conversation by saying: '本日はお時間をいただき、ありがとうございます。よろしくお願いいたします。' (Honjitsu wa o-jikan o itadaki, arigatō gozaimasu. Yoroshiku onegai itashimasu.)"
+  },
+  {
+    id: 'keigo-boss-ja',
+    title: 'Reporting to Your Manager',
+    description: 'Practice speaking to a superior by giving a progress report to your department head.',
+    emoji: '📈',
+    lang: 'ja',
+    category: 'Keigo Mastery',
+    systemPrompt: "You are Tanaka-buchō, a department manager in a Japanese company. The user is your subordinate reporting to you. Your tone should be professional but approachable. You must guide the user to use Kenjōgo (humble language) when talking about their own actions and Sonkeigo (respectful language) when talking about yours. For example, if they say '私が行きました' (watashi ga ikimashita), correct them to '私が参りました' (watashi ga mairimashita). Explain why. Start the conversation by asking: '佐藤くん、例の件、進捗を報告してくれるかな？' (Satō-kun, rei no ken, shinchoku o hōkoku shite kureru ka na?)"
+  },
+  {
+    id: 'keigo-store-ja',
+    title: 'At a Luxury Department Store',
+    description: 'Interact with a highly polite store clerk and practice understanding and using Teineigo (polite language).',
+    emoji: '🛍️',
+    lang: 'ja',
+    category: 'Keigo Mastery',
+    systemPrompt: "You are a very polite and helpful clerk at a high-end department store in Ginza. The user is a customer. You must use high-level Teineigo and Keigo consistently. For example, use 'でございます' (de gozaimasu) instead of 'です' (desu). Address the user as 'お客様' (okyakusama). Your goal is to help the user while exposing them to natural, polite customer service Japanese. If the user's Japanese is polite, respond positively. If it's too casual, gently guide them. Start by greeting the user with 'いらっしゃいませ。何かお探しでございますか？' (Irasshaimase. Nani ka o-sagashi de gozaimasu ka?)"
   }
 ];
 
@@ -937,6 +968,7 @@ export const VIEWS = {
   GRAMMAR: { id: 'grammar', label: 'Grammar', icon: GrammarIcon },
   IMAGE_EDITOR: { id: 'image_editor', label: 'Vocabulary', icon: VocabularyIcon },
   WORD_BANK: { id: 'word_bank', label: 'Word Bank', icon: WordBankIcon },
+  KANJI_LAIR: { id: 'kanji_lair', label: 'Kanji Lair', icon: KanjiIcon },
   ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon },
   COMMUNITY: { id: 'community', label: 'Community', icon: CommunityIcon },
   ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', icon: AchievementsIcon },
@@ -953,6 +985,7 @@ export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> 
     VIEWS.GRAMMAR,
     VIEWS.IMAGE_EDITOR,
     VIEWS.WORD_BANK,
+    VIEWS.KANJI_LAIR,
     VIEWS.ACCENT_TRAINING,
     VIEWS.COMMUNITY,
     VIEWS.ACHIEVEMENTS,

@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 // Duolingo-style colorful icon for the Dashboard
@@ -53,6 +52,21 @@ export const WordBankIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => 
       <path d="M9 32V8a3 3 0 013-3h16a3 3 0 013 3v24l-11-6-11 6z" stroke="#0891B2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
       <path d="M9 5h22" stroke="#06B6D4" strokeWidth="2" strokeLinecap="round"></path>
       <path d="M16 15h8M16 21h8" stroke="#10B981" strokeWidth="2" strokeLinecap="round"></path>
+    </g>
+  </svg>
+);
+
+// Duolingo-style colorful icon for Kanji Lair
+export const KanjiIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g fill="none" fillRule="evenodd">
+      <rect x="5" y="5" width="30" height="30" rx="4" stroke="#475569" strokeWidth="2"></rect>
+      {/* Kanji for "Learn" - 学 */}
+      <path d="M12.5 13.5s1 1.5 2.5 1.5 2.5-1.5 2.5-1.5m5 0s1 1.5 2.5 1.5 2.5-1.5 2.5-1.5" stroke="#34D399" strokeWidth="2" strokeLinecap="round"></path>
+      <path d="M20 18v-4" stroke="#34D399" strokeWidth="2" strokeLinecap="round"></path>
+      <path d="M16 22h8" stroke="#10B981" strokeWidth="2" strokeLinecap="round"></path>
+      <path d="M13 28l4-4 4 4" stroke="#10B981" strokeWidth="2" strokeLinecap="round"></path>
+      <path d="M12 21a8 8 0 0116 0" stroke="#10B981" strokeWidth="2" strokeLinecap="round"></path>
     </g>
   </svg>
 );

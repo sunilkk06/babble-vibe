@@ -10,7 +10,7 @@ export interface Scenario {
   emoji: string;
   systemPrompt: string;
   lang: string;
-  category: 'Conversation' | 'Career Focus' | 'Cultural Immersion';
+  category: 'Conversation' | 'Career Focus' | 'Cultural Immersion' | 'Keigo Mastery';
 }
 
 export interface Message {
@@ -143,4 +143,18 @@ export interface PracticePhrase {
 export interface PhraseCategory {
     category: string;
     phrases: PracticePhrase[];
+}
+
+export interface Kanji {
+  character: string;
+  meaning: string;
+  onyomi: string[];
+  kunyomi: string[];
+  jlpt: number;
+  mnemonic: string;
+  examples: {
+    word: string;
+    reading: string;
+    meaning: string;
+  }[];
 }
