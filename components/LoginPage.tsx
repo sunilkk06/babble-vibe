@@ -13,8 +13,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       <div className="w-full max-w-sm p-8 space-y-8 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30 text-center animate-fade-in">
         <div className="flex flex-col items-center">
           <ParrotIcon className="h-20 w-20" />
-          <h1 className="mt-4 font-poppins text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-teal-500">
-            Babble Vibe
+          <h1 className="mt-4 font-poppins text-3xl font-bold text-slate-800">
+            Chir<span className="text-rose-500">P</span>olly
           </h1>
           <p className="mt-2 text-gray-600">Your language journey starts here.</p>
         </div>
@@ -26,7 +26,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               <input id="email-address" name="email" type="email" autoComplete="email" required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-slate-300 placeholder-slate-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
-                defaultValue="demo@babble.com"
+                defaultValue="demo@chirpolly.com"
               />
             </div>
             <div>

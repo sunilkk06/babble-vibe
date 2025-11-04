@@ -15,7 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <a href="#" onClick={(e) => { e.preventDefault(); onNavigate(VIEWS.TERMS); }} className="hover:text-teal-600 transition-colors">Terms of Service</a>
                 <a href="#" onClick={(e) => { e.preventDefault(); onNavigate(VIEWS.PRIVACY); }} className="hover:text-teal-600 transition-colors">Privacy Policy</a>
             </div>
-            <p className="mt-4">© {new Date().getFullYear()} Babble Vibe. All rights reserved.</p>
+            <p className="mt-4">© {new Date().getFullYear()} ChirPolly. All rights reserved.</p>
         </footer>
     );
 };

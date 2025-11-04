@@ -1,5 +1,5 @@
 {
-  "name": "Babble Vibe",
+  "name": "ChirPolly",
   "description": "An interactive language learning app that goes beyond Duolingo by blending real-life conversational scenarios, adaptive AI feedback, and expert grammar clinics. It uses Gemini to power its learning experiences, from conversational practice to image-based vocabulary lessons.",
   "requestFramePermissions": [
     "microphone"

@@ -10,7 +10,7 @@ interface OnboardingProps {
 
 const onboardingSteps = [
   {
-    title: "Welcome to Babble Vibe!",
+    title: "Welcome to ChirPolly!",
     subtitle: "Meet Vibo — your friendly green parrot guide.",
     body: "Vibo speaks dozens of languages and is excited to help you master one chirp at a time!",
     icon: <ParrotIcon className="w-24 h-24 mx-auto mb-4" />,

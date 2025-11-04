@@ -23,7 +23,7 @@ export const PrivacyView: React.FC = () => (
             <p>We are committed to protecting your data and complying with data protection regulations, including the General Data Protection Regulation (GDPR). As a user, you have the right to access, correct, or delete your personal data. If you are in the European Union, you have additional rights under the GDPR, which we are committed to upholding. All data is processed securely, and we implement technical and organizational measures to prevent unauthorized access.</p>
             
             <h2>Contact Us</h2>
-            <p>If you have any questions about this Privacy Policy, please contact us at privacy@babblevibe.com.</p>
+            <p>If you have any questions about this Privacy Policy, please contact us at privacy@chirpolly.com.</p>
         </div>
     </div>
 );

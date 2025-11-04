@@ -66,7 +66,7 @@ export const TutorView: React.FC = () => {
                     </div>
                     <div>
                         <h3 className="font-bold font-poppins text-lg">Unlock Premium Tutoring</h3>
-                        <p className="text-sm mt-1">Upgrade to Babble Vibe Pro to book unlimited sessions with our top-rated tutors!</p>
+                        <p className="text-sm mt-1">Upgrade to ChirPolly Pro to book unlimited sessions with our top-rated tutors!</p>
                         <button className="mt-3 inline-flex items-center justify-center gap-x-2 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-teal-700 shadow-sm hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white transition-colors">
                             Upgrade Now
                         </button>

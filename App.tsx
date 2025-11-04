@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
@@ -34,7 +35,7 @@ export default function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      const hasOnboarded = localStorage.getItem('babbleVibeOnboarded');
+      const hasOnboarded = localStorage.getItem('chirPollyOnboarded');
       if (hasOnboarded !== 'true') {
         setShowOnboarding(true);
       }
@@ -50,7 +51,7 @@ export default function App() {
   };
 
   const handleOnboardingComplete = () => {
-    localStorage.setItem('babbleVibeOnboarded', 'true');
+    localStorage.setItem('chirPollyOnboarded', 'true');
     setShowOnboarding(false);
   };
 

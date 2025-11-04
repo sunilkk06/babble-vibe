@@ -1,3 +1,4 @@
+
 import React, { Fragment } from 'react';
 import { ParrotIcon } from './icons/ParrotIcon';
 import type { View, Language } from '../types';
@@ -58,7 +59,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
                 className="flex h-16 shrink-0 items-center gap-x-3 cursor-pointer"
             >
                 <ParrotIcon className="h-10 w-10"/>
-                <span className="font-poppins text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sky-500 to-teal-500">Babble Vibe</span>
+                <span className="font-poppins text-2xl font-bold text-slate-800">
+                    Chir<span className="text-rose-500">P</span>olly
+                </span>
             </a>
             <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-2">
