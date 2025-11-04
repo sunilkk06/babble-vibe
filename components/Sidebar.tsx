@@ -1,6 +1,6 @@
 
 import React, { Fragment } from 'react';
-import { ParrotIcon } from './icons/ParrotIcon';
+import { Logo } from './icons/Logo';
 import type { View, Language } from '../types';
 import { ALL_VIEWS, VIEWS } from '../constants';
 import { TRANSLATIONS } from '../i18n/translations';
@@ -56,12 +56,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
                     e.preventDefault();
                     onNavigate(VIEWS.DASHBOARD);
                 }}
-                className="flex h-16 shrink-0 items-center gap-x-3 cursor-pointer"
+                className="flex h-16 shrink-0 items-center cursor-pointer"
             >
-                <ParrotIcon className="h-10 w-10"/>
-                <span className="font-poppins text-2xl font-bold text-slate-800">
-                    Chir<span className="text-rose-500">P</span>olly
-                </span>
+                <Logo className="h-12 w-auto"/>
             </a>
             <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-2">

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ParrotIcon } from './icons/ParrotIcon';
+import { Logo } from './icons/Logo';
 import { Button } from './common/Button';
 
 interface LoginPageProps {
@@ -12,11 +12,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-sky-200 via-teal-100 to-yellow-100">
       <div className="w-full max-w-sm p-8 space-y-8 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30 text-center animate-fade-in">
         <div className="flex flex-col items-center">
-          <ParrotIcon className="h-20 w-20" />
-          <h1 className="mt-4 font-poppins text-3xl font-bold text-slate-800">
-            Chir<span className="text-rose-500">P</span>olly
-          </h1>
-          <p className="mt-2 text-gray-600">Your language journey starts here.</p>
+          <Logo className="h-16 w-auto" />
+          <p className="mt-4 text-gray-600">Your language journey starts here.</p>
         </div>
         
         <form className="mt-8 space-y-6" onSubmit={(e) => { e.preventDefault(); onLogin(); }}>
