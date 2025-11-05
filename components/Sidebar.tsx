@@ -1,6 +1,5 @@
-
 import React, { Fragment } from 'react';
-import { Logo } from './icons/Logo';
+import { ParrotIcon } from './icons/ParrotIcon';
 import type { View, Language } from '../types';
 import { ALL_VIEWS, VIEWS } from '../constants';
 import { TRANSLATIONS } from '../i18n/translations';
@@ -56,9 +55,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
                     e.preventDefault();
                     onNavigate(VIEWS.DASHBOARD);
                 }}
-                className="flex h-16 shrink-0 items-center cursor-pointer"
+                // The ParrotIcon now contains the entire logo (parrot + text), so we render it directly
+                // and give it appropriate sizing and positioning within the sidebar header.
+                className="flex h-16 shrink-0 items-center justify-center cursor-pointer px-0 py-0" // Adjusted padding to fit the new larger icon
             >
-                <Logo className="h-12 w-auto"/>
+                <ParrotIcon className="h-14 w-auto"/> {/* Adjust height as needed for visual balance */}
             </a>
             <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-2">

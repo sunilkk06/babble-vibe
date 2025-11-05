@@ -1,7 +1,7 @@
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
 import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop, PhraseCategory } from './types';
-import { HomeIcon, GlobeIcon, GrammarIcon, VocabularyIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon, KanjiIcon } from './components/icons/SidebarIcons';
+import { HomeIcon, GlobeIcon, GrammarIcon, VocabularyIcon, ImageGeneratorIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon, KanjiIcon } from './components/icons/SidebarIcons';
 import { ChatBubbleIcon } from './components/icons/Icons';
 
 export const LANGUAGES_CONFIG: (Language & { emoji: string })[] = [
@@ -377,7 +377,7 @@ export const LESSONS: Lesson[] = [
         ],
         quiz: [
             { question: "What does 'આભાર' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
-            { question: "How do you say 'Hello' in Gujarati?", options: ["શુભ રાત્રી", "નમસ્તે", "આભાર"], answer: "નમસ્તે" }
+            { question: "How do you say 'Hello' in Gujarati?", options: ["શુભ રાત્રી", "નમસ્તે", "ଆભાર"], answer: "નમસ્તે" }
         ]
     },
     {
@@ -687,7 +687,7 @@ Here is the list to provide:
     emoji: '📈',
     lang: 'ja',
     category: 'Keigo Mastery',
-    systemPrompt: "You are Tanaka-buchō, a department manager in a Japanese company. The user is your subordinate reporting to you. Your tone should be professional but approachable. You must guide the user to use Kenjōgo (humble language) when talking about their own actions and Sonkeigo (respectful language) when talking about yours. For example, if they say '私が行きました' (watashi ga ikimashita), correct them to '私が参りました' (watashi ga mairimashita). Explain why. Start the conversation by asking: '佐藤くん、例の件、進捗を報告してくれるかな？' (Satō-kun, rei no ken, shinchoku o hōkoku shite kureru ka na?)"
+    systemPrompt: "You are a department manager in a Japanese company. The user is your subordinate reporting to you. Your tone should be professional but approachable. You must guide the user to use Kenjōgo (humble language) when talking about their own actions and Sonkeigo (respectful language) when talking about yours. For example, if they say '私が行きました' (watashi ga ikimashita), correct them to '私が参りました' (watashi ga mairimashita). Explain why. Start the conversation by asking: '佐藤くん、例の件、進捗を報告してくれるかな？' (Satō-kun, rei no ken, shinchoku o hōkoku shite kureru ka na?)"
   },
   {
     id: 'keigo-store-ja',
@@ -967,6 +967,7 @@ export const VIEWS = {
   LESSON: { id: 'lesson', label: 'Lesson' },
   GRAMMAR: { id: 'grammar', label: 'Grammar', icon: GrammarIcon },
   IMAGE_EDITOR: { id: 'image_editor', label: 'Vocabulary', icon: VocabularyIcon },
+  IMAGE_GENERATOR: { id: 'image_generator', label: 'Image Generator', icon: ImageGeneratorIcon },
   WORD_BANK: { id: 'word_bank', label: 'Word Bank', icon: WordBankIcon },
   KANJI_LAIR: { id: 'kanji_lair', label: 'Kanji Lair', icon: KanjiIcon },
   ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon },
@@ -984,6 +985,7 @@ export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> 
     VIEWS.LANGUAGES_PAGE,
     VIEWS.GRAMMAR,
     VIEWS.IMAGE_EDITOR,
+    VIEWS.IMAGE_GENERATOR,
     VIEWS.WORD_BANK,
     VIEWS.KANJI_LAIR,
     VIEWS.ACCENT_TRAINING,

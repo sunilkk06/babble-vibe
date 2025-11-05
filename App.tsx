@@ -7,6 +7,7 @@ import { ScenarioView } from './components/ScenarioView';
 import { LessonView } from './components/LessonView';
 import { GrammarClinicView } from './components/GrammarClinicView';
 import { ImageEditorView } from './components/ImageEditorView';
+import { ImageGeneratorView } from './components/ImageGeneratorView';
 import { ChallengesView } from './components/ChallengesView';
 import { CommunityView } from './components/CommunityView';
 import { AchievementsView } from './components/AchievementsView';
@@ -117,6 +118,11 @@ export default function App() {
             handleViewChange(VIEWS.DASHBOARD);
         }
     }
+
+    // If the user is in the Kanji Lair and switches away from Japanese, navigate to the dashboard.
+    if (currentView.id === VIEWS.KANJI_LAIR.id && newLang.code !== 'ja') {
+        handleViewChange(VIEWS.DASHBOARD);
+    }
     
     // Finally, update the language state
     setCurrentLanguage(newLang);
@@ -149,6 +155,8 @@ export default function App() {
         return <GrammarClinicView />;
       case VIEWS.IMAGE_EDITOR.id:
         return <ImageEditorView language={currentLanguage} />;
+      case VIEWS.IMAGE_GENERATOR.id:
+        return <ImageGeneratorView />;
       case VIEWS.WORD_BANK.id:
         return <WordBankView language={currentLanguage} />;
       case VIEWS.KANJI_LAIR.id:

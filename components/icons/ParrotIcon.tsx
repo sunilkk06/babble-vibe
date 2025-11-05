@@ -1,47 +1,37 @@
+
 import React from 'react';
 
+// Updated logo for ChirPolly, featuring a unique color for each letter to create a vibrant, playful look,
+// as requested by the user.
 export const ParrotIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <defs>
-      <linearGradient id="vibo-head" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="#34D399"/>
-        <stop offset="100%" stopColor="#10B981"/>
-      </linearGradient>
-      <linearGradient id="vibo-wing" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="#6EE7B7"/>
-        <stop offset="100%" stopColor="#A7F3D0"/>
-      </linearGradient>
-    </defs>
-
-    {/* Shadow */}
-    <path d="M150 90 A55 80 0 0 1 40 90 A55 80 0 0 1 150 90 Z" 
-        fill="#047857" 
-        transform="rotate(15 95 90) translate(5 10)"
-    />
-
-    {/* Main Body/Head */}
-    <path d="M150 90 A55 80 0 0 1 40 90 A55 80 0 0 1 150 90 Z" 
-        fill="url(#vibo-head)" 
-        transform="rotate(15 95 90)"
-    />
-
-    {/* Wing/Belly Patch */}
-    <path d="M90 140 A30 40 0 0 1 130 110 C 130 110 110 150 90 140Z" 
-        fill="url(#vibo-wing)" 
-        transform="rotate(10 95 90)"
-    />
-
-    {/* Beak */}
-    <path d="M40 90 C 10 90, 20 50, 50 60 C 70 70, 60 90, 40 90 Z" 
-        fill="#FBBF24"
-        stroke="#F59E0B"
-        strokeWidth="5"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-    />
-
-    {/* Eye */}
-    <circle cx="95" cy="70" r="18" fill="white" />
-    <circle cx="100" cy="70" r="10" fill="#1F2937" />
+  <svg viewBox="0 0 250 65" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <text
+      x="50%"
+      y="60%"
+      fontFamily="Poppins, sans-serif"
+      fontSize="40"
+      fontWeight="700"
+      textAnchor="middle"
+      dominantBaseline="middle"
+    >
+      <tspan fill="#0F766E">C</tspan>
+      <tspan fill="#06B6D4">h</tspan>
+      <tspan fill="#10B981">i</tspan>
+      <tspan fill="#F59E0B">r</tspan>
+      <tspan fill="#E11D48">P</tspan>
+      <tspan fill="#8B5CF6">o</tspan>
+      <tspan fill="#3B82F6">l</tspan>
+      <tspan fill="#EC4899">l</tspan>
+      <tspan fill="#0F766E">y</tspan>
+    </text>
+    {/* The parrot icon, its colors adjusted to complement the new letter colors. */}
+    <g transform="translate(130, 12)">
+      {/* Parrot Body - Color matches 'r' */}
+      <path d="M5,0 C -5,5 -5,12 5,15 C 10,12 10,5 5,0 Z" fill="#F59E0B" />
+      {/* Red Beak - Color matches 'P' */}
+      <path d="M4,-2 L9,1 L4,4 Z" fill="#E11D48" />
+      {/* Eye */}
+      <circle cx="4" cy="5" r="1.2" fill="#111827" />
+    </g>
   </svg>
 );

@@ -13,7 +13,7 @@ const onboardingSteps = [
     title: "Welcome to ChirPolly!",
     subtitle: "Meet Vibo — your friendly green parrot guide.",
     body: "Vibo speaks dozens of languages and is excited to help you master one chirp at a time!",
-    icon: <ParrotIcon className="w-24 h-24 mx-auto mb-4" />,
+    icon: <ParrotIcon className="h-12 w-auto mx-auto mb-4" />,
   },
   {
     title: "Learn with Joy",
@@ -36,7 +36,7 @@ const onboardingSteps = [
     subtitle: "",
     body: "",
     buttonText: "Let’s Chirp!",
-    icon: <ParrotIcon className="w-24 h-24 mx-auto mb-4" />,
+    icon: <ParrotIcon className="h-12 w-auto mx-auto mb-4" />,
   },
 ];
 

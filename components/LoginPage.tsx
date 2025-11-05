@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Logo } from './icons/Logo';
+import { ParrotIcon } from './icons/ParrotIcon';
 import { Button } from './common/Button';
 
 interface LoginPageProps {
@@ -12,8 +12,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-sky-200 via-teal-100 to-yellow-100">
       <div className="w-full max-w-sm p-8 space-y-8 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30 text-center animate-fade-in">
         <div className="flex flex-col items-center">
-          <Logo className="h-16 w-auto" />
-          <p className="mt-4 text-gray-600">Your language journey starts here.</p>
+          <ParrotIcon className="h-20 w-auto" /> {/* ParrotIcon now contains the full logo, including text */}
+          <p className="mt-2 text-gray-600">Your language journey starts here.</p>
         </div>
         
         <form className="mt-8 space-y-6" onSubmit={(e) => { e.preventDefault(); onLogin(); }}>

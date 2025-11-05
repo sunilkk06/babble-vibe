@@ -1,3 +1,4 @@
+
 export interface Language {
   code: string;
   name: string;
@@ -90,6 +91,21 @@ export interface VocabularyWord {
   transliteration: string;
   meaning: string;
   audio_prompt: string;
+}
+
+export interface LessonUnit {
+    unitId: string;
+    title: string;
+    emoji: string;
+    words: VocabularyWord[];
+    isLocked?: boolean;
+}
+
+export interface LearningModule {
+    level: string;
+    theme: string;
+    description: string;
+    units: LessonUnit[];
 }
 
 export interface MediaItem {

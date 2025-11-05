@@ -45,6 +45,18 @@ export const VocabularyIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) =
   </svg>
 );
 
+// Duolingo-style colorful icon for Image Generator
+export const ImageGeneratorIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <g fill="none" fillRule="evenodd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M29.5,8.2l-15,15" stroke="#0891B2"></path>
+      <path d="M22.5,8.2l-2.8,2.8" stroke="#06B6D4"></path>
+      <path d="M12,11 l-2,-2 M18,8 l-2,-2 M8,16 l-2,-2" stroke="#FBBF24"></path>
+      <polygon points="5,25 10,35 15,25" stroke="#10B981" strokeWidth="2"></polygon>
+    </g>
+  </svg>
+);
+
 // Duolingo-style colorful icon for Word Bank
 export const WordBankIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" {...props}>
