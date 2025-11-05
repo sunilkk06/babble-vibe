@@ -1,7 +1,7 @@
 
 
 import React, { useState, useRef } from 'react';
-import { generateVocabularyFromImage, editImage } from '../services/geminiService';
+import { generateVocabularyFromImage, editImage, generateImage } from '../services/geminiService';
 import { Spinner } from './common/Spinner';
 import { Button } from './common/Button';
 import { ImageIcon, SpeakerWaveIcon } from './icons/Icons';
@@ -18,9 +18,12 @@ export const ImageEditorView: React.FC<{ language: Language }> = ({ language }) 
     const [vocabulary, setVocabulary] = useState<ImageVocabularyWord[]>([]);
     const [isLoadingVocab, setIsLoadingVocab] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [isGenerating, setIsGenerating] = useState(false);
     const [vocabError, setVocabError] = useState('');
     const [editError, setEditError] = useState('');
+    const [generateError, setGenerateError] = useState('');
     const [editPrompt, setEditPrompt] = useState('');
+    const [generatePrompt, setGeneratePrompt] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +35,7 @@ export const ImageEditorView: React.FC<{ language: Language }> = ({ language }) 
             }
             setVocabError('');
             setEditError('');
+            setGenerateError('');
 
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -43,10 +47,39 @@ export const ImageEditorView: React.FC<{ language: Language }> = ({ language }) 
             reader.readAsDataURL(file);
         }
     };
+    
+    const handleGenerate = async () => {
+        if (!generatePrompt.trim()) {
+            setGenerateError('Please enter a prompt to generate an image.');
+            return;
+        }
+        setGenerateError('');
+        setVocabError('');
+        setEditError('');
+        setIsGenerating(true);
+        setVocabulary([]); // Reset vocab on new image
+
+        try {
+            const result = await generateImage(generatePrompt);
+            if (result) {
+                const mimeType = 'image/jpeg';
+                setImageData({ base64: result, mimeType });
+                setImage(`data:${mimeType};base64,${result}`);
+                setGeneratePrompt(''); // Clear prompt
+            } else {
+                setGenerateError('Could not generate the image. Please try a different prompt.');
+            }
+        } catch (err) {
+            setGenerateError('An error occurred during image generation. Please try again.');
+            console.error(err);
+        } finally {
+            setIsGenerating(false);
+        }
+    };
 
     const handleGenerateVocab = async () => {
         if (!imageData) {
-            setVocabError('Please upload an image first.');
+            setVocabError('Please upload or generate an image first.');
             return;
         }
         setVocabError('');
@@ -71,7 +104,7 @@ export const ImageEditorView: React.FC<{ language: Language }> = ({ language }) 
 
     const handleEditImage = async () => {
         if (!imageData) {
-            setEditError('Please upload an image first.');
+            setEditError('Please upload or generate an image first.');
             return;
         }
         if (!editPrompt.trim()) {
@@ -104,8 +137,8 @@ export const ImageEditorView: React.FC<{ language: Language }> = ({ language }) 
     return (
         <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">Visual Vocabulary & AI Image Editor</h1>
-                <p className="mt-2 text-lg text-gray-600">Learn from your images, then transform them with AI.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">Visual Learning Studio</h1>
+                <p className="mt-2 text-lg text-gray-600">Create images with AI, then use them to learn.</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -116,12 +149,12 @@ export const ImageEditorView: React.FC<{ language: Language }> = ({ language }) 
                         onClick={() => fileInputRef.current?.click()}
                     >
                         {image ? (
-                            <img src={image} alt="Uploaded" className="max-h-full max-w-full object-contain rounded-md" />
+                            <img src={image} alt="Uploaded or Generated" className="max-h-full max-w-full object-contain rounded-md" />
                         ) : (
                             <div className="text-center text-gray-500 p-4">
                                 <ImageIcon className="mx-auto h-12 w-12" />
                                 <p className="mt-2 font-semibold">Click to upload an image</p>
-                                <p className="text-xs">PNG, JPG, WEBP up to 4MB</p>
+                                <p className="text-xs">or use the AI generator below</p>
                             </div>
                         )}
                         <input
@@ -131,6 +164,25 @@ export const ImageEditorView: React.FC<{ language: Language }> = ({ language }) 
                             accept="image/png, image/jpeg, image/webp"
                             className="hidden"
                         />
+                    </div>
+                    
+                    {/* Image Generation */}
+                    <div className="border-t border-slate-200 pt-6">
+                        <h3 className="text-xl font-bold font-poppins text-gray-700 mb-2">Generate Image</h3>
+                        <p className="text-sm text-gray-600 mb-4">Describe an image you want to create with AI.</p>
+                        <textarea
+                            value={generatePrompt}
+                            onChange={(e) => setGeneratePrompt(e.target.value)}
+                            placeholder="e.g., 'A photorealistic image of a cat playing a tiny banjo.'"
+                            className="w-full h-20 p-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                            disabled={isGenerating}
+                        />
+                        {generateError && <p className="text-red-500 text-sm mt-2">{generateError}</p>}
+                        <div className="mt-4 flex justify-end">
+                             <Button onClick={handleGenerate} disabled={isGenerating}>
+                                {isGenerating ? <><Spinner size="sm" /> Generating...</> : 'Generate Image'}
+                            </Button>
+                        </div>
                     </div>
                     
                     {/* Image Editor Section */}

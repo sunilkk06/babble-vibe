@@ -52,6 +52,12 @@ export interface QuizQuestion {
   answer: string;
 }
 
+export interface CultureCapsule {
+  title: string;
+  icon: string; // emoji
+  content: string; // Markdown content
+}
+
 export interface Lesson {
   lesson_id: string;
   language: string;
@@ -63,6 +69,7 @@ export interface Lesson {
   emoji: string;
   lang: string;
   category: 'Lesson';
+  cultureCapsule?: CultureCapsule;
 }
 
 export interface AchievementBadge {

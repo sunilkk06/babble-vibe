@@ -1,30 +1,26 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { ParrotIcon } from './icons/ParrotIcon';
 import type { View, Language } from '../types';
 import { ALL_VIEWS, VIEWS } from '../constants';
 import { TRANSLATIONS } from '../i18n/translations';
 
 interface SidebarProps {
-    currentView: View;
-    onNavigate: (view: View) => void;
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
     currentLanguage: Language;
 }
 
 const NavLink: React.FC<{
-    view: View & { icon: React.FC<React.SVGProps<SVGSVGElement>> };
+    view: any; // Using `any` due to the dynamic structure of the view object from constants.
     isCurrent: boolean;
     onClick: () => void;
     label: string;
 }> = ({ view, isCurrent, onClick, label }) => (
     <li>
-        <a
-            href="#"
-            onClick={(e) => {
-                e.preventDefault();
-                onClick();
-            }}
+        <Link
+            to={view.path}
+            onClick={onClick}
             className={`w-full flex items-center gap-x-4 px-4 py-3 rounded-xl font-bold text-base transition-all duration-300 uppercase tracking-wider transform hover:scale-105 ${
                 isCurrent
                     ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
@@ -36,11 +32,12 @@ const NavLink: React.FC<{
                 aria-hidden="true"
             />
             {label}
-        </a>
+        </Link>
     </li>
 );
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpen, setIsOpen, currentLanguage }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, currentLanguage }) => {
+    const location = useLocation();
     
     const getTranslatedLabel = (label: string): string => {
         const langCode = currentLanguage.code;
@@ -49,33 +46,39 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onNavigate, isOpe
     
     const navigationContent = (
          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-slate-50 px-4 pb-4 border-r border-slate-200/80">
-            <a
-                href="#"
-                onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate(VIEWS.DASHBOARD);
-                }}
-                // The ParrotIcon now contains the entire logo (parrot + text), so we render it directly
-                // and give it appropriate sizing and positioning within the sidebar header.
-                className="flex h-16 shrink-0 items-center justify-center cursor-pointer px-0 py-0" // Adjusted padding to fit the new larger icon
+            <Link
+                to="/"
+                onClick={() => setIsOpen(false)}
+                className="flex h-16 shrink-0 items-center justify-center cursor-pointer px-0 py-0"
             >
-                <ParrotIcon className="h-14 w-auto"/> {/* Adjust height as needed for visual balance */}
-            </a>
+                <ParrotIcon className="h-14 w-auto"/>
+            </Link>
             <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-2">
                     <li>
                         <ul role="list" className="space-y-2">
                             {ALL_VIEWS.map((view) => {
-                                // Hide Kanji Lair if the language is not Japanese
+                                // Find the full view data with path from the VIEWS constant
+                                const viewData = Object.values(VIEWS).find(v => v.id === view.id);
+                                // Fix: Use a type guard to ensure `icon` exists on `viewData` before accessing it.
+                                // The type of `viewData` is a union, and some views (like Lesson) don't have an icon.
+                                if (!viewData || !('path' in viewData) || !('icon' in viewData)) return null;
+
                                 if (view.id === VIEWS.KANJI_LAIR.id && currentLanguage.code !== 'ja') {
                                     return null;
                                 }
+
+                                const currentBasePath = location.pathname.split('/')[1];
+                                const viewBasePath = (viewData.path as string).split('/')[1];
+                                // Determine if the link is active. Handle the root path as a special case.
+                                const isCurrent = location.pathname === '/' ? viewData.path === '/' : viewBasePath && currentBasePath === viewBasePath;
+
                                 return (
                                     <NavLink
                                         key={view.id}
-                                        view={view}
-                                        isCurrent={currentView.id === view.id}
-                                        onClick={() => onNavigate(view)}
+                                        view={viewData}
+                                        isCurrent={isCurrent}
+                                        onClick={() => setIsOpen(false)}
                                         label={getTranslatedLabel(view.label)}
                                     />
                                 );

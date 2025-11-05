@@ -83,13 +83,18 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           )}
         </div>
         
-        <div className="flex justify-center gap-x-2 mt-8">
-          {onboardingSteps.map((_, index) => (
-            <div
-              key={index}
-              className={`w-2.5 h-2.5 rounded-full transition-colors ${step === index ? 'bg-cyan-600' : 'bg-slate-300'}`}
-            />
-          ))}
+        <div className="mt-8">
+            <div className="flex justify-center gap-x-2">
+                {onboardingSteps.map((_, index) => (
+                    <div
+                    key={index}
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${step === index ? 'bg-cyan-600' : 'bg-slate-300'}`}
+                    />
+                ))}
+            </div>
+            <p className="text-xs text-slate-500 mt-2">
+                Step {step + 1} of {onboardingSteps.length}
+            </p>
         </div>
       </div>
     </div>

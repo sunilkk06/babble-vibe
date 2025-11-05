@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import type { Lesson } from '../types';
 import { Button } from './common/Button';
 import { SpeakerWaveIcon } from './icons/Icons';
+import { marked } from 'marked';
 // Fix: Corrected import name to match the exported member from constants.
 import { POST_LESSON_Messages } from '../constants';
 
@@ -13,6 +14,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
     const [showFeedback, setShowFeedback] = useState(false);
     const [quizFinished, setQuizFinished] = useState(false);
     const [viboMessage, setViboMessage] = useState('');
+    const [cultureCapsuleHtml, setCultureCapsuleHtml] = useState('');
 
 
     useEffect(() => {
@@ -22,6 +24,16 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
             setViboMessage(randomMessage.message);
         }
     }, [quizFinished]);
+
+    useEffect(() => {
+        if (lesson.cultureCapsule?.content) {
+            const parseContent = async () => {
+                const html = await marked.parse(lesson.cultureCapsule.content);
+                setCultureCapsuleHtml(html);
+            }
+            parseContent();
+        }
+    }, [lesson.cultureCapsule]);
 
     const hasQuiz = lesson.quiz && lesson.quiz.length > 0;
     const currentQuestion = hasQuiz ? lesson.quiz[currentQuestionIndex] : null;
@@ -99,6 +111,13 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
                     ))}
                 </div>
             </div>
+
+            {lesson.cultureCapsule && (
+                <div className="bg-white rounded-lg shadow-lg border-t-4 border-emerald-400 p-6 mb-8">
+                    <h2 className="text-2xl font-bold font-poppins text-gray-700 mb-4">{lesson.cultureCapsule.icon} {lesson.cultureCapsule.title}</h2>
+                    <div className="prose prose-teal max-w-none prose-p:text-gray-600" dangerouslySetInnerHTML={{ __html: cultureCapsuleHtml }} />
+                </div>
+            )}
 
             <div className="bg-white rounded-lg shadow-lg border-t-4 border-yellow-400 p-6">
                 <h2 className="text-2xl font-bold font-poppins text-gray-700 mb-4">Mini-Quiz!</h2>

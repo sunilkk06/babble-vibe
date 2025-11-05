@@ -1,12 +1,12 @@
-
 import React, { useState } from 'react';
 import { generateImage } from '../services/geminiService';
 import { Spinner } from './common/Spinner';
 import { Button } from './common/Button';
-import { ImageIcon } from './icons/Icons';
+import { ImageIcon, LockIcon } from './icons/Icons';
 
 export const ImageGeneratorView: React.FC = () => {
     const [prompt, setPrompt] = useState('');
+    const [description, setDescription] = useState('');
     const [generatedImage, setGeneratedImage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -19,6 +19,7 @@ export const ImageGeneratorView: React.FC = () => {
         setError('');
         setIsLoading(true);
         setGeneratedImage(null);
+        setDescription(''); // Reset description field
 
         try {
             const result = await generateImage(prompt);
@@ -45,50 +46,72 @@ export const ImageGeneratorView: React.FC = () => {
     return (
         <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">AI Image Generator</h1>
-                <p className="mt-2 text-lg text-gray-600">Bring your ideas to life. Describe anything you can imagine.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-gray-800 sm:text-4xl font-poppins">Creative Studio</h1>
+                <p className="mt-2 text-lg text-gray-600">Visualize vocabulary and practice describing what you see.</p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-rose-400 mb-8">
-                 <h2 className="text-xl font-bold font-poppins text-gray-700 mb-2">Enter your prompt</h2>
-                 <p className="text-sm text-gray-600 mb-4">Be as descriptive as possible for the best results. Powered by Imagen 4.</p>
-                 <textarea
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="e.g., A robot holding a red skateboard."
-                    className="w-full h-28 p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
-                    disabled={isLoading}
-                />
-                <div className="text-xs text-gray-500 mt-2 mb-4">
-                    Try one of our examples:
-                    <div className="flex flex-wrap gap-2 mt-1">
-                        {examplePrompts.map(p => (
-                            <button key={p} onClick={() => setPrompt(p)} className="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-md transition-colors">{p.split(' ')[2]}...</button>
-                        ))}
+            <div className="space-y-8">
+                {/* Step 1: Create Image */}
+                <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-rose-400">
+                     <h2 className="text-xl font-bold font-poppins text-gray-700 mb-2">1. Create Your Image</h2>
+                     <p className="text-sm text-gray-600 mb-4">First, enter a prompt in English to generate a unique image with Imagen 4.</p>
+                     <textarea
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        placeholder="e.g., A robot holding a red skateboard."
+                        className="w-full h-28 p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                        disabled={isLoading}
+                    />
+                    <div className="text-xs text-gray-500 mt-2 mb-4">
+                        Try one of our examples:
+                        <div className="flex flex-wrap gap-2 mt-1">
+                            {examplePrompts.map((p, i) => (
+                                <button key={i} onClick={() => setPrompt(p)} className="px-2 py-1 text-left bg-slate-100 hover:bg-slate-200 rounded-md transition-colors text-slate-700">"{p.substring(0, 40)}..."</button>
+                            ))}
+                        </div>
+                    </div>
+                    {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                    <div className="mt-4 flex justify-end">
+                        <Button onClick={handleGenerate} disabled={isLoading}>
+                            {isLoading ? <><Spinner size="sm" /> Generating...</> : 'Generate Image'}
+                        </Button>
                     </div>
                 </div>
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-                <div className="mt-4 flex justify-end">
-                    <Button onClick={handleGenerate} disabled={isLoading}>
-                        {isLoading ? <><Spinner size="sm" /> Generating...</> : 'Generate Image'}
-                    </Button>
-                </div>
-            </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-sky-400 min-h-[400px] flex items-center justify-center">
-                {isLoading ? (
-                    <div className="text-center">
-                        <Spinner size="lg" />
-                        <p className="mt-4 text-gray-600">Your masterpiece is being created...</p>
-                    </div>
-                ) : generatedImage ? (
-                    <img src={generatedImage} alt="Generated by AI" className="max-w-full max-h-[500px] rounded-lg shadow-md animate-fade-in"/>
-                ) : (
-                    <div className="text-center text-gray-400">
-                        <ImageIcon className="mx-auto h-16 w-16" />
-                        <p className="mt-4">Your generated image will appear here.</p>
-                    </div>
-                )}
+                {/* Step 2: Practice */}
+                <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-sky-400 min-h-[400px] flex items-center justify-center">
+                    {isLoading ? (
+                        <div className="text-center">
+                            <Spinner size="lg" />
+                            <p className="mt-4 text-gray-600">Your masterpiece is being created...</p>
+                        </div>
+                    ) : generatedImage ? (
+                        <div className="w-full animate-fade-in space-y-6">
+                             <h2 className="text-xl font-bold font-poppins text-gray-700 mb-2">2. Practice Your Skills</h2>
+                             <img src={generatedImage} alt="Generated by AI" className="w-full rounded-lg shadow-md"/>
+                             <div>
+                                 <h3 className="font-semibold text-gray-700">Describe the Scene</h3>
+                                 <p className="text-sm text-gray-600 mb-2">Now, write a description of the image in your target language. Try to use as much detail as possible!</p>
+                                 <textarea
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    placeholder="e.g., 'C'est un robot rouge avec une planche à roulettes...'"
+                                    className="w-full h-24 p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                                />
+                                <div className="mt-2 flex justify-end">
+                                    <Button disabled>
+                                        <LockIcon className="w-4 h-4 mr-2"/> Get Feedback (Pro)
+                                    </Button>
+                                </div>
+                             </div>
+                        </div>
+                    ) : (
+                        <div className="text-center text-gray-400">
+                            <ImageIcon className="mx-auto h-16 w-16" />
+                            <p className="mt-4">Your generated image will appear here.</p>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

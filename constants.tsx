@@ -39,6 +39,11 @@ export const MOTIVATIONAL_QUOTES: string[] = [
     "Practice makes progress, not perfect. Keep chirping!",
 ];
 
+export const AI_TUTOR_PROMPT = `You are Vibo, a friendly, encouraging, and expert AI language tutor from ChirPolly. The user is learning {languageName}. 
+Your goal is to help them practice conversationally. You can chat about any topic they want, answer their grammar questions, explain cultural nuances, or suggest things to talk about if they're stuck.
+Keep your responses natural, supportive, and not too long to encourage a back-and-forth conversation. Adapt your language complexity to the user's level based on their messages. Always be patient and positive. Start the conversation with a warm welcome.`;
+
+
 export const COMMUNITY_USERS: CommunityUser[] = [
     {
         id: '1',
@@ -166,7 +171,12 @@ export const LESSONS: Lesson[] = [
         quiz: [
             { question: "What does 'Gracias' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
             { question: "How do you say 'Hello' in Spanish?", options: ["Buenas noches", "Hola", "Gracias"], answer: "Hola" }
-        ]
+        ],
+        cultureCapsule: {
+            title: "La Sobremesa",
+            icon: "☕",
+            content: "`La Sobremesa` is the cherished Spanish tradition of relaxing at the table after a meal. It's not about eating more, but about enjoying conversation with family and friends, savoring the moment. This can last for hours and is a key part of Spanish hospitality."
+        }
     },
     {
         lesson_id: "fr_01",
@@ -185,7 +195,12 @@ export const LESSONS: Lesson[] = [
         quiz: [
             { question: "What does 'Merci' mean?", options: ["Hello", "Good evening", "Thank you"], answer: "Thank you" },
             { question: "How do you say 'Hello' in French?", options: ["Bonsoir", "Bonjour", "Merci"], answer: "Bonjour" }
-        ]
+        ],
+        cultureCapsule: {
+            title: "La Bise",
+            icon: "🥐",
+            content: "In France, greeting friends and family often involves 'la bise,' a kiss on each cheek. The number of kisses (usually two, but sometimes one, three, or four!) varies by region. It's a warm, friendly gesture central to French social life."
+        }
     },
     {
         lesson_id: "de_01",
@@ -224,7 +239,12 @@ export const LESSONS: Lesson[] = [
         quiz: [
             { question: "What does 'ありがとう' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
             { question: "How do you say 'Hello' in Japanese?", options: ["おやすみなさい", "こんにちは", "ありがとう"], answer: "こんにちは" }
-        ]
+        ],
+        cultureCapsule: {
+            title: "The Art of Bowing",
+            icon: "🙇",
+            content: "Bowing, or 'ojigi' (お辞儀), is a fundamental part of Japanese etiquette. The depth and duration of the bow depend on the social status and situation. A slight nod is casual, while a deep, long bow shows great respect. It's used for greetings, apologies, and showing gratitude."
+        }
     },
     {
         lesson_id: "hi_01",
@@ -659,7 +679,7 @@ Here is the list to provide:
 - **पुस्तकम् (Pustakam)** - Book - *अहं पुस्तकं पठामi।* (I am reading a book.)
 - **गृहम् (Gr̥ham)** - House - *मम गृहं सुन्दरम् अस्ति।* (My house is beautiful.)
 - **मित्रम् (Mitram)** - Friend - *सः मम मित्रम् अस्ति।* (He is my friend.)
-- **गुरुः (Guruh)** - Teacher - *गुरुः ज्ञानं ददाति।* (The teacher gives knowledge.)
+- **गुरुः (Guruh)** - Teacher - *गुरुः ज्ञानं దదాతి।* (The teacher gives knowledge.)
 - **फलम् (Phalam)** - Fruit - *अहं फलं खादामि।* (I eat fruit.)
 - **वृक्षः (Vr̥kṣaḥ)** - Tree - *उद्याने एकः वृक्षः अस्ति।* (There is a tree in the garden.)
 - **पुष्पम् (Puṣpam)** - Flower - *पुष्पं सुగन्धितम् अस्ति।* (The flower is fragrant.)
@@ -961,23 +981,22 @@ export const TUTORS: Tutor[] = [
 
 
 export const VIEWS = {
-  DASHBOARD: { id: 'dashboard', label: 'Learn', icon: HomeIcon },
-  LANGUAGES_PAGE: { id: 'languages', label: 'Languages', icon: GlobeIcon },
-  SCENARIO: { id: 'scenario', label: 'Scenarios', icon: ChatBubbleIcon },
-  LESSON: { id: 'lesson', label: 'Lesson' },
-  GRAMMAR: { id: 'grammar', label: 'Grammar', icon: GrammarIcon },
-  IMAGE_EDITOR: { id: 'image_editor', label: 'Vocabulary', icon: VocabularyIcon },
-  IMAGE_GENERATOR: { id: 'image_generator', label: 'Image Generator', icon: ImageGeneratorIcon },
-  WORD_BANK: { id: 'word_bank', label: 'Word Bank', icon: WordBankIcon },
-  KANJI_LAIR: { id: 'kanji_lair', label: 'Kanji Lair', icon: KanjiIcon },
-  ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon },
-  COMMUNITY: { id: 'community', label: 'Community', icon: CommunityIcon },
-  ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', icon: AchievementsIcon },
-  CHALLENGES: { id: 'challenges', label: 'Challenges', icon: ChallengesIcon },
-  TUTORS: { id: 'tutors', label: 'Tutors', icon: TutorIcon },
-  ABOUT: { id: 'about', label: 'About Us' },
-  TERMS: { id: 'terms', label: 'Terms of Service' },
-  PRIVACY: { id: 'privacy', label: 'Privacy Policy' },
+  DASHBOARD: { id: 'dashboard', label: 'Learn', icon: HomeIcon, path: '/' },
+  LANGUAGES_PAGE: { id: 'languages', label: 'Languages', icon: GlobeIcon, path: '/languages' },
+  SCENARIO: { id: 'scenario', label: 'Scenarios', icon: ChatBubbleIcon, path: '/scenario/:id' },
+  LESSON: { id: 'lesson', label: 'Lesson', path: '/lesson/:id' },
+  GRAMMAR: { id: 'grammar', label: 'Grammar', icon: GrammarIcon, path: '/grammar' },
+  IMAGE_EDITOR: { id: 'image_editor', label: 'Vocabulary', icon: VocabularyIcon, path: '/vocabulary-builder' },
+  WORD_BANK: { id: 'word_bank', label: 'Word Bank', icon: WordBankIcon, path: '/word-bank' },
+  KANJI_LAIR: { id: 'kanji_lair', label: 'Kanji Lair', icon: KanjiIcon, path: '/kanji-lair' },
+  ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon, path: '/accent-training' },
+  COMMUNITY: { id: 'community', label: 'Community', icon: CommunityIcon, path: '/community' },
+  ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', icon: AchievementsIcon, path: '/achievements' },
+  CHALLENGES: { id: 'challenges', label: 'Challenges', icon: ChallengesIcon, path: '/challenges' },
+  TUTORS: { id: 'tutors', label: 'Tutors', icon: TutorIcon, path: '/tutors' },
+  ABOUT: { id: 'about', label: 'About Us', path: '/about' },
+  TERMS: { id: 'terms', label: 'Terms of Service', path: '/terms' },
+  PRIVACY: { id: 'privacy', label: 'Privacy Policy', path: '/privacy' },
 };
 
 export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> })[] = [
@@ -985,7 +1004,6 @@ export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> 
     VIEWS.LANGUAGES_PAGE,
     VIEWS.GRAMMAR,
     VIEWS.IMAGE_EDITOR,
-    VIEWS.IMAGE_GENERATOR,
     VIEWS.WORD_BANK,
     VIEWS.KANJI_LAIR,
     VIEWS.ACCENT_TRAINING,

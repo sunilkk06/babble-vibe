@@ -13,7 +13,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       <div className="w-full max-w-sm p-8 space-y-8 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30 text-center animate-fade-in">
         <div className="flex flex-col items-center">
           <ParrotIcon className="h-20 w-auto" /> {/* ParrotIcon now contains the full logo, including text */}
-          <p className="mt-2 text-gray-600">Your language journey starts here.</p>
+          <p className="mt-2 text-teal-700 font-semibold italic">Chirp Your Way to Fluency</p>
         </div>
         
         <form className="mt-8 space-y-6" onSubmit={(e) => { e.preventDefault(); onLogin(); }}>
