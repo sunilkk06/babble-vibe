@@ -2,11 +2,15 @@
 import { GoogleGenAI, Chat, GenerateContentResponse, Modality, Type } from "@google/genai";
 import type { Message, ImageVocabularyWord } from '../types';
 
-if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable not set");
-}
+const getAIInstance = () => {
+    const apiKey = import.meta.env.VITE_API_KEY;
+    if (!apiKey) {
+        throw new Error("VITE_API_KEY environment variable not set");
+    }
+    return new GoogleGenAI({ apiKey });
+};
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+let ai: GoogleGenAI | null = null;
 let activeChat: Chat | null = null;
 
 const grammarCheckPrompt = `
@@ -20,8 +24,8 @@ If there are no errors, do not include the grammar check section.
 `;
 
 export const startChat = (systemPrompt: string) => {
+    if (!ai) ai = getAIInstance();
     activeChat = ai.chats.create({
-        // Fix: Updated model name to 'gemini-flash-lite-latest' as per the coding guidelines for 'flash lite' models.
         model: 'gemini-flash-lite-latest',
         config: {
             systemInstruction: systemPrompt,
@@ -40,6 +44,7 @@ export const sendMessage = async (message: string, includeGrammarCheck: boolean)
 
 export const analyzeGrammar = async (text: string): Promise<string> => {
     try {
+        if (!ai) ai = getAIInstance();
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
             contents: `You are an expert language tutor. Provide a detailed grammatical breakdown of the following text. Explain verb tenses, sentence structure, parts of speech, and any potential errors or areas for improvement. Format your response using markdown. Text: "${text}"`,
@@ -56,6 +61,7 @@ export const analyzeGrammar = async (text: string): Promise<string> => {
 
 export const editImage = async (base64Image: string, mimeType: string, prompt: string): Promise<string | null> => {
     try {
+        if (!ai) ai = getAIInstance();
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash-image',
             contents: {
@@ -98,6 +104,7 @@ export const generateVocabularyFromImage = async (base64Image: string, mimeType:
     If you cannot identify any objects, return an empty array.`;
 
     try {
+        if (!ai) ai = getAIInstance();
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
             contents: {
@@ -141,6 +148,7 @@ export const generateVocabularyFromImage = async (base64Image: string, mimeType:
 
 export const generateSpeech = async (prompt: string): Promise<string | null> => {
     try {
+        if (!ai) ai = getAIInstance();
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-preview-tts",
             contents: [{ parts: [{ text: prompt }] }],
@@ -167,6 +175,7 @@ Provide a short, constructive analysis of their pronunciation based on the trans
 - Do not grade them or give a score.`;
 
     try {
+        if (!ai) ai = getAIInstance();
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-pro',
             contents: prompt,
