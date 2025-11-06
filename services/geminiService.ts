@@ -1,6 +1,7 @@
 
+
 import { GoogleGenAI, Chat, GenerateContentResponse, Modality, Type } from "@google/genai";
-import type { Message, ImageVocabularyWord } from '../types';
+import type { Message, ImageVocabularyWord, QuizQuestion, VocabularyWord } from '../types';
 
 if (!process.env.API_KEY) {
     throw new Error("API_KEY environment variable not set");
@@ -197,5 +198,49 @@ Provide a short, constructive analysis of their pronunciation based on the trans
     } catch (error) {
         console.error("Error getting pronunciation feedback:", error);
         return "Sorry, I couldn't provide feedback at this time.";
+    }
+};
+
+export const generateQuizForUnit = async (words: VocabularyWord[], languageName: string): Promise<QuizQuestion[] | null> => {
+    const prompt = `You are a language learning assistant. Based on the following list of vocabulary words in ${languageName}, generate a multiple-choice quiz.
+For each word in the provided list, create one question. The "question" field should contain the English meaning of the word. The "options" field should be an array of four unique words in ${languageName}, one of which is the correct answer. The other three options should be distractors, also chosen from the provided list of words. The "answer" field must be the correct ${languageName} word.
+Ensure the options for each question are unique and shuffled.
+
+Vocabulary List:
+${JSON.stringify(words.map(w => ({ word: w.word, meaning: w.meaning })))}
+
+Return the quiz as a JSON array.`;
+
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: Type.ARRAY,
+                    items: {
+                        type: Type.OBJECT,
+                        properties: {
+                            question: { type: Type.STRING },
+                            options: {
+                                type: Type.ARRAY,
+                                items: { type: Type.STRING }
+                            },
+                            answer: { type: Type.STRING },
+                        },
+                        required: ["question", "options", "answer"],
+                    },
+                },
+            },
+        });
+
+        const jsonString = response.text.trim();
+        const quizData = JSON.parse(jsonString);
+        return quizData as QuizQuestion[];
+
+    } catch (error) {
+        console.error("Error generating quiz:", error);
+        return null;
     }
 };
