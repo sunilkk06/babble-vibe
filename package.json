@@ -14,7 +14,9 @@
     "react-dom": "^19.2.0",
     "marked": "^16.4.1",
     "react-router-dom": "^6.25.1",
-    "react-router": "^6.25.1"
+    "react-router": "^6.25.1",
+    "@capacitor/status-bar": "^7.0.3",
+    "@capacitor/core": "^7.4.4"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

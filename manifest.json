@@ -1,0 +1,17 @@
+{
+  "name": "ChirPolly",
+  "short_name": "ChirPolly",
+  "description": "An interactive language learning app that goes beyond Duolingo by blending real-life conversational scenarios, adaptive AI feedback, and expert grammar clinics. It uses Gemini to power its learning experiences, from conversational practice to image-based vocabulary lessons.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0fdfa",
+  "theme_color": "#0D9488",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

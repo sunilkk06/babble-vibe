@@ -5,6 +5,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0D9488" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ChirPolly" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    
     <title>ChirPolly</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +41,9 @@
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "marked": "https://aistudiocdn.com/marked@^16.4.1",
     "react-router-dom": "https://aistudiocdn.com/react-router-dom@^6.25.1",
-    "react-router": "https://aistudiocdn.com/react-router@^6.25.1"
+    "react-router": "https://aistudiocdn.com/react-router@^6.25.1",
+    "@capacitor/status-bar": "https://aistudiocdn.com/@capacitor/status-bar@^7.0.3",
+    "@capacitor/core": "https://aistudiocdn.com/@capacitor/core@^7.4.4"
   }
 }
 </script>
@@ -40,5 +51,20 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+              console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

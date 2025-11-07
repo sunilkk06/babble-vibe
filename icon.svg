@@ -1,0 +1,10 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <!-- Parrot Body -->
+    <path d="M55,40 C 45,45 45,52 55,55 C 60,52 60,45 55,40 Z" fill="#10B981" />
+    <!-- Red Beak -->
+    <path d="M54,38 L59,41 L54,44 Z" fill="#E11D48" />
+    <!-- Eye -->
+    <circle cx="54" cy="45" r="2" fill="#111827" />
+  </g>
+</svg>
