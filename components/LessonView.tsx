@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import type { Lesson } from '../types';
 import { Button } from './common/Button';
@@ -13,7 +12,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
     const [score, setScore] = useState(0);
     const [showFeedback, setShowFeedback] = useState(false);
     const [quizFinished, setQuizFinished] = useState(false);
-    const [viboMessage, setViboMessage] = useState('');
+    const [pollyMessage, setPollyMessage] = useState('');
     const [cultureCapsuleHtml, setCultureCapsuleHtml] = useState('');
 
 
@@ -21,7 +20,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
         if (quizFinished) {
             // Fix: Corrected constant name to match the import.
             const randomMessage = POST_LESSON_Messages[Math.floor(Math.random() * POST_LESSON_Messages.length)];
-            setViboMessage(randomMessage.message);
+            setPollyMessage(randomMessage.message);
         }
     }, [quizFinished]);
 
@@ -75,12 +74,22 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
                 ? 'bg-rose-200 border-rose-400'
                 : 'bg-white hover:bg-rose-100';
         }
-        if (currentQuestion && option === currentQuestion.answer) {
+    
+        // When feedback is shown:
+        const isCorrect = currentQuestion && option === currentQuestion.answer;
+        const isSelected = option === selectedOption;
+    
+        if (isCorrect) {
+            // The correct answer is always green
             return 'bg-green-200 border-green-400 text-green-900';
         }
-        if (option === selectedOption) {
+        
+        if (isSelected && !isCorrect) {
+            // The selected incorrect answer is red
             return 'bg-red-200 border-red-400 text-red-900';
         }
+        
+        // All other incorrect options are grayed out
         return 'bg-slate-100 border-slate-300 text-gray-500';
     };
 
@@ -131,7 +140,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
                         <p className="text-lg text-gray-600 mt-2">Your Score: <span className="font-bold text-teal-600">{score}</span> / {lesson.quiz.length}</p>
                         
                         <div className="mt-6 p-4 bg-green-100 border border-green-300/80 rounded-lg animate-fade-in">
-                            <p className="text-green-800 font-semibold">🦜 Vibo says: "{viboMessage}"</p>
+                            <p className="text-green-800 font-semibold">🦜 Polly says: "{pollyMessage}"</p>
                         </div>
 
                         <div className="mt-6">

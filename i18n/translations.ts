@@ -5,7 +5,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   en: {
     'Learn': 'Learn',
     'Grammar': 'Grammar',
-    'Vocabulary': 'Vocabulary',
+    'Visual Vocabulary': 'Visual Vocabulary',
     'Word Bank': 'Word Bank',
     'Community': 'Community',
     'Achievements': 'Achievements',
@@ -19,7 +19,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   ja: {
     'Learn': '学習',
     'Grammar': '文法',
-    'Vocabulary': '語彙',
+    'Visual Vocabulary': 'ビジュアル語彙',
     'Word Bank': '単語帳',
     'Community': 'コミュニティ',
     'Achievements': '実績',
@@ -36,7 +36,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   hi: { // Hindi
     'Learn': 'सीखें',
     'Grammar': 'व्याकरण',
-    'Vocabulary': 'शब्दावली',
+    'Visual Vocabulary': 'दृश्य शब्दावली',
     'Word Bank': 'शब्द बैंक',
     'Community': 'समुदाय',
     'Achievements': 'उपलब्धियां',
@@ -50,7 +50,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   kn: { // Kannada
     'Learn': 'ಕಲಿಯಿರಿ',
     'Grammar': 'ವ್ಯಾಕರಣ',
-    'Vocabulary': 'ಶಬ್ದಕೋಶ',
+    'Visual Vocabulary': 'ದೃಶ್ಯ ಶಬ್ದಕೋಶ',
     'Word Bank': 'ಪದಗಳ ಬ್ಯಾಂಕ್',
     'Community': 'ಸಮುದಾಯ',
     'Achievements': 'ಸಾಧನೆಗಳು',
@@ -64,7 +64,7 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   ta: { // Tamil
     'Learn': 'கற்க',
     'Grammar': 'இலக்கணம்',
-    'Vocabulary': 'சொல்லகராதி',
+    'Visual Vocabulary': 'காட்சி சொல்லகராதி',
     'Word Bank': 'சொல் வங்கி',
     'Community': 'சமூகம்',
     'Achievements': 'சாதனைகள்',

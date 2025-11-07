@@ -1,4 +1,6 @@
 
+
+
 import type { LearningModule } from '../types';
 
 export const LEARNING_PATH: Record<string, LearningModule[]> = {
@@ -51,9 +53,9 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
       theme: 'Useful Expressions',
       description: 'Build on your basics with phrases for everyday situations.',
       units: [
-         { unitId: 'en-a2-u1', title: 'Asking Directions', emoji: '🗺️', words: [], isLocked: true },
-         { unitId: 'en-a2-u2', title: 'Telling Time', emoji: '⏰', words: [], isLocked: true },
-         { unitId: 'en-a2-u3', title: 'Daily Routine', emoji: '☕', words: [], isLocked: true },
+         { unitId: 'en-a2-u1', title: 'Asking Directions', emoji: '🗺️', words: [] },
+         { unitId: 'en-a2-u2', title: 'Telling Time', emoji: '⏰', words: [] },
+         { unitId: 'en-a2-u3', title: 'Daily Routine', emoji: '☕', words: [] },
       ]
     },
   ],
@@ -101,6 +103,16 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
         }
       ]
     },
+    {
+        level: 'A2',
+        theme: 'Expresiones Útiles',
+        description: 'Amplía tus conocimientos básicos con frases para situaciones cotidianas.',
+        units: [
+            { unitId: 'es-a2-u1', title: 'Pedir Direcciones', emoji: '🗺️', words: [] },
+            { unitId: 'es-a2-u2', title: 'Decir la Hora', emoji: '⏰', words: [] },
+            { unitId: 'es-a2-u3', title: 'Rutina Diaria', emoji: '☕', words: [] },
+        ]
+    }
   ],
   ja: [
       {
@@ -136,6 +148,16 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
                   ]
               },
           ]
+      },
+      {
+        level: 'A2',
+        theme: '便利な表現',
+        description: '日常の状況で使えるフレーズで基礎を固めましょう。',
+        units: [
+            { unitId: 'ja-a2-u1', title: '道を尋ねる', emoji: '🗺️', words: [] },
+            { unitId: 'ja-a2-u2', title: '時間を言う', emoji: '⏰', words: [] },
+            { unitId: 'ja-a2-u3', title: '日常の習慣', emoji: '☕', words: [] },
+        ]
       }
   ],
   fr: [
@@ -152,8 +174,31 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
             { word: "Bonjour", transliteration: "Bonjour", meaning: "Hello", audio_prompt: "Say 'Bonjour', the French word for Hello." },
             { word: "Merci", transliteration: "Merci", meaning: "Thank you", audio_prompt: "Say 'Merci', the French word for Thank you." },
             { word: "Bonsoir", transliteration: "Bonsoir", meaning: "Good evening", audio_prompt: "Say 'Bonsoir', the French word for Good evening." },
+            { word: "Oui", transliteration: "Oui", meaning: "Yes", audio_prompt: "Say 'Oui', the French word for Yes." },
+            { word: "Non", transliteration: "Non", meaning: "No", audio_prompt: "Say 'Non', the French word for No." },
+          ]
+        },
+        {
+          unitId: 'fr-a1-u2',
+          title: 'Noms de Base',
+          emoji: '📦',
+          words: [
+            { word: "Soleil", transliteration: "Soleil", meaning: "Sun", audio_prompt: "Say 'Soleil', the French word for Sun." },
+            { word: "Eau", transliteration: "Eau", meaning: "Water", audio_prompt: "Say 'Eau', the French word for Water." },
+            { word: "Ami", transliteration: "Ami", meaning: "Friend", audio_prompt: "Say 'Ami', the French word for Friend." },
+            { word: "Livre", transliteration: "Livre", meaning: "Book", audio_prompt: "Say 'Livre', the French word for Book." },
+            { word: "Maison", transliteration: "Maison", meaning: "House", audio_prompt: "Say 'Maison', the French word for House." },
           ]
         }
+      ]
+    },
+    {
+      level: 'A2',
+      theme: 'Expressions Utiles',
+      description: 'Développez vos bases avec des phrases pour les situations de tous les jours.',
+      units: [
+         { unitId: 'fr-a2-u1', title: 'Demander son chemin', emoji: '🗺️', words: [] },
+         { unitId: 'fr-a2-u2', title: 'Dire l\'heure', emoji: '⏰', words: [] },
       ]
     }
   ],
@@ -171,9 +216,32 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
             { word: "Hallo", transliteration: "Hallo", meaning: "Hello", audio_prompt: "Say 'Hallo', the German word for Hello." },
             { word: "Danke", transliteration: "Danke", meaning: "Thank you", audio_prompt: "Say 'Danke', the German word for Thank you." },
             { word: "Gute Nacht", transliteration: "Gute Nacht", meaning: "Good night", audio_prompt: "Say 'Gute Nacht', the German for Good night." },
+            { word: "Ja", transliteration: "Ja", meaning: "Yes", audio_prompt: "Say 'Ja', the German word for Yes." },
+            { word: "Nein", transliteration: "Nein", meaning: "No", audio_prompt: "Say 'Nein', the German word for No." },
+          ]
+        },
+        {
+          unitId: 'de-a1-u2',
+          title: 'Grundnomen',
+          emoji: '📦',
+          words: [
+            { word: "Sonne", transliteration: "Sonne", meaning: "Sun", audio_prompt: "Say 'Sonne', the German word for Sun." },
+            { word: "Wasser", transliteration: "Wasser", meaning: "Water", audio_prompt: "Say 'Wasser', the German word for Water." },
+            { word: "Freund", transliteration: "Freund", meaning: "Friend", audio_prompt: "Say 'Freund', the German word for Friend." },
+            { word: "Buch", transliteration: "Buch", meaning: "Book", audio_prompt: "Say 'Buch', the German word for Book." },
+            { word: "Haus", transliteration: "Haus", meaning: "House", audio_prompt: "Say 'Haus', the German word for House." },
           ]
         }
       ]
+    },
+    {
+        level: 'A2',
+        theme: 'Nützliche Ausdrücke',
+        description: 'Bauen Sie auf Ihren Grundlagen mit Sätzen für alltägliche Situationen auf.',
+        units: [
+           { unitId: 'de-a2-u1', title: 'Nach dem Weg fragen', emoji: '🗺️', words: [] },
+           { unitId: 'de-a2-u2', title: 'Uhrzeit angeben', emoji: '⏰', words: [] },
+        ]
     }
   ],
   sa: [
@@ -223,6 +291,15 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
             { word: "मोक्षः", transliteration: "Mokṣaḥ", meaning: "Liberation/Freedom", audio_prompt: "Say 'Mokṣaḥ', the Sanskrit for Liberation." },
           ]
         }
+      ]
+    },
+    {
+      level: 'A2',
+      theme: 'व्यवहारिकवाक्यानि (Practical Sentences)',
+      description: 'Build on your basics with phrases for everyday situations.',
+      units: [
+         { unitId: 'sa-a2-u1', title: 'Asking Questions', emoji: '🗺️', words: [] },
+         { unitId: 'sa-a2-u2', title: 'Daily Actions', emoji: '☕', words: [] },
       ]
     }
   ],
@@ -344,7 +421,7 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
     {
       level: 'A1',
       theme: 'ଦୈନନ୍ଦିନ ମୌଳିକ',
-      description: 'ଓଡିଆର ଅତ୍ୟାବଶ୍ୟକ ମୌଳିକ ସହିତ ଆପଣଙ୍କର ଯାତ୍ରା ଆରମ୍ଭ କରନ୍ତୁ |',
+      description: 'ଓଡିଆର ଅତ୍ୟାବଶ୍ୟକ ମୌଳିକ ସହିତ ଆପଣଙ୍କର ଯାତ్రా ଆରମ୍ଭ କରନ୍ତୁ |',
       units: [
         {
           unitId: 'or-a1-u1',
@@ -430,9 +507,32 @@ export const LEARNING_PATH: Record<string, LearningModule[]> = {
             { word: "Hallo", transliteration: "Hallo", meaning: "Hello", audio_prompt: "Say 'Hallo', the Dutch for Hello." },
             { word: "Dank je", transliteration: "Dank je", meaning: "Thank you", audio_prompt: "Say 'Dank je', the Dutch for Thank you." },
             { word: "Goedenacht", transliteration: "Goedenacht", meaning: "Good night", audio_prompt: "Say 'Goedenacht', the Dutch for Good night." },
+            { word: "Ja", transliteration: "Ja", meaning: "Yes", audio_prompt: "Say 'Ja', the Dutch word for Yes." },
+            { word: "Nee", transliteration: "Nee", meaning: "No", audio_prompt: "Say 'Nee', the Dutch word for No." },
+          ]
+        },
+        {
+          unitId: 'nl-a1-u2',
+          title: 'Kern Nomen',
+          emoji: '📦',
+          words: [
+            { word: "Zon", transliteration: "Zon", meaning: "Sun", audio_prompt: "Say 'Zon', the Dutch word for Sun." },
+            { word: "Water", transliteration: "Water", meaning: "Water", audio_prompt: "Say 'Water', the Dutch word for Water." },
+            { word: "Vriend", transliteration: "Vriend", meaning: "Friend", audio_prompt: "Say 'Vriend', the Dutch word for Friend." },
+            { word: "Boek", transliteration: "Boek", meaning: "Book", audio_prompt: "Say 'Boek', the Dutch word for Book." },
+            { word: "Huis", transliteration: "Huis", meaning: "House", audio_prompt: "Say 'Huis', the Dutch word for House." },
           ]
         }
       ]
+    },
+    {
+        level: 'A2',
+        theme: 'Handige Uitdrukkingen',
+        description: 'Bouw voort op je basiskennis met zinnen voor alledaagse situaties.',
+        units: [
+           { unitId: 'nl-a2-u1', title: 'De weg vragen', emoji: '🗺️', words: [] },
+           { unitId: 'nl-a2-u2', title: 'Tijd vertellen', emoji: '⏰', words: [] },
+        ]
     }
   ],
   da: [

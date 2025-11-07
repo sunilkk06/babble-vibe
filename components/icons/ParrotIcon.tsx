@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 // Updated logo for ChirPolly, featuring a unique color for each letter to create a vibrant, playful look,
@@ -26,8 +25,8 @@ export const ParrotIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     </text>
     {/* The parrot icon, its colors adjusted to complement the new letter colors. */}
     <g transform="translate(130, 12)">
-      {/* Parrot Body - Color matches 'r' */}
-      <path d="M5,0 C -5,5 -5,12 5,15 C 10,12 10,5 5,0 Z" fill="#F59E0B" />
+      {/* Parrot Body - Color matches 'i' */}
+      <path d="M5,0 C -5,5 -5,12 5,15 C 10,12 10,5 5,0 Z" fill="#10B981" />
       {/* Red Beak - Color matches 'P' */}
       <path d="M4,-2 L9,1 L4,4 Z" fill="#E11D48" />
       {/* Eye */}

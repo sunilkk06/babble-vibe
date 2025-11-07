@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MenuIcon } from './icons/Icons';
 import { ParrotIcon } from './icons/ParrotIcon';
 import type { Language } from '../types';
@@ -21,9 +21,24 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage, setCurrentLanguage, onLogout }) => {
+    const [isProfileOpen, setProfileOpen] = useState(false);
+    const profileMenuRef = useRef<HTMLDivElement>(null);
+
     // Fake data for gamification
     const userLevel = 5;
     const levelProgress = 60; // 60%
+    
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+                setProfileOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     return (
         <header className="bg-white/80 backdrop-blur-md sticky top-0 z-10 flex h-16 shrink-0 items-center gap-x-4 border-b border-white/30 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -54,29 +69,55 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage
                 <div className="flex items-center gap-x-4 lg:gap-x-6">
                     <span className="h-6 w-px bg-gray-900/10" aria-hidden="true" />
 
-                    <div className="flex items-center">
-                        <div className="-m-1.5 flex items-center p-1.5">
-                            <span className="sr-only">Your profile</span>
-                             <div className="h-8 w-8 rounded-full bg-teal-600 flex items-center justify-center">
+                    {/* Profile dropdown */}
+                    <div className="relative" ref={profileMenuRef}>
+                        <button
+                            onClick={() => setProfileOpen(!isProfileOpen)}
+                            className="-m-1.5 flex items-center p-1.5 rounded-md hover:bg-gray-100 transition-colors"
+                            id="user-menu-button"
+                            aria-expanded={isProfileOpen}
+                            aria-haspopup="true"
+                        >
+                            <span className="sr-only">Open user menu</span>
+                            <div className="h-8 w-8 rounded-full bg-teal-600 flex items-center justify-center">
                                 <span className="text-sm font-semibold text-white">AD</span>
                             </div>
-                            <div className="hidden lg:flex lg:items-center ml-4 w-40">
-                                <div className="w-full">
+                            <div className="hidden lg:flex lg:items-center ml-4">
+                                <div className="w-full text-left">
                                     <span className="text-sm font-semibold leading-6 text-gray-800" aria-hidden="true">
                                         Alex Doe
                                     </span>
-                                    <div className="flex items-center gap-x-2">
+                                    <div className="flex items-center gap-x-2 w-40">
                                         <span className="text-xs font-medium text-yellow-600">Level {userLevel}</span>
                                         <ProgressBar progress={levelProgress} />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <button onClick={onLogout} title="Log Out" className="ml-4 text-gray-500 hover:text-gray-700 transition-colors">
-                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                            <svg className={`ml-2 h-5 w-5 text-gray-400 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                             </svg>
                         </button>
+                        
+                        {/* Dropdown panel */}
+                        {isProfileOpen && (
+                            <div
+                                className="absolute right-0 z-10 mt-2.5 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none transition ease-out duration-100"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="user-menu-button"
+                                tabIndex={-1}
+                            >
+                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex={-1}>
+                                    Your Profile
+                                </a>
+                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex={-1}>
+                                    Settings
+                                </a>
+                                <a href="#" onClick={(e) => { e.preventDefault(); onLogout(); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex={-1}>
+                                    Log out
+                                </a>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

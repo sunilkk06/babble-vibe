@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import type { Scenario, Message, Language, GrammarFeedback } from '../types';
 import { startChat, sendMessage } from '../services/geminiService';
@@ -131,7 +130,7 @@ export const ScenarioView: React.FC<{ scenario: Scenario; language: Language; }>
                     {isLoading && messages.length === 0 && (
                         <div className="flex items-center justify-center h-full">
                             <Spinner />
-                            <p className="ml-2 text-gray-600">Vibo is getting ready...</p>
+                            <p className="ml-2 text-gray-600">Polly is getting ready...</p>
                         </div>
                     )}
                     {isLoading && messages.length > 0 && (

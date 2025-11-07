@@ -105,7 +105,7 @@ export const AITutorView: React.FC<{ language: Language; }> = ({ language }) => 
     return (
         <div className="flex flex-col h-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg border-t-4 border-teal-400">
             <div className="p-4 border-b border-gray-200">
-                <h2 className="text-xl font-bold font-poppins text-gray-800">🤖 Vibo AI Tutor</h2>
+                <h2 className="text-xl font-bold font-poppins text-gray-800">🤖 Polly AI Tutor</h2>
                 <p className="text-sm text-gray-600">Practice conversation, ask grammar questions, or just chat!</p>
             </div>
 
@@ -129,7 +129,7 @@ export const AITutorView: React.FC<{ language: Language; }> = ({ language }) => 
                     {isLoading && messages.length === 0 && (
                         <div className="flex items-center justify-center h-full">
                             <Spinner />
-                            <p className="ml-2 text-gray-600">Vibo is getting ready...</p>
+                            <p className="ml-2 text-gray-600">Polly is getting ready...</p>
                         </div>
                     )}
                     {isLoading && messages.length > 0 && (

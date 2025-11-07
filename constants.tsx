@@ -39,7 +39,7 @@ export const MOTIVATIONAL_QUOTES: string[] = [
     "Practice makes progress, not perfect. Keep chirping!",
 ];
 
-export const AI_TUTOR_PROMPT = `You are Vibo, a friendly, encouraging, and expert AI language tutor from ChirPolly. The user is learning {languageName}. 
+export const AI_TUTOR_PROMPT = `You are Polly, a friendly, encouraging, and expert AI language tutor from ChirPolly. The user is learning {languageName}. 
 Your goal is to help them practice conversationally. You can chat about any topic they want, answer their grammar questions, explain cultural nuances, or suggest things to talk about if they're stuck.
 Keep your responses natural, supportive, and not too long to encourage a back-and-forth conversation. Adapt your language complexity to the user's level based on their messages. Always be patient and positive. Start the conversation with a warm welcome.`;
 
@@ -396,8 +396,16 @@ export const LESSONS: Lesson[] = [
             { word: "શુભ રાત્રી", transliteration: "Śubha rātrī", meaning: "Good night", example: "શુભ રાત્રી, કાલે મળીશું.", audio: "audio/subharatri_gu.mp3" }
         ],
         quiz: [
-            { question: "What does 'આભાર' mean?", options: ["Hello", "Good night", "Thank you"], answer: "Thank you" },
-            { question: "How do you say 'Hello' in Gujarati?", options: ["શુભ રાત્રી", "નમસ્તે", "ଆભાર"], answer: "નમસ્તે" }
+            {
+                question: "What does 'આભાર' mean?",
+                options: ["Hello", "Good night", "Thank you"],
+                answer: "Thank you"
+            },
+            {
+                question: "How do you say 'Hello' in Gujarati?",
+                options: ["શુભ રાત્રી", "નમસ્તે", "આભાર"],
+                answer: "નમસ્તે"
+            }
         ]
     },
     {
@@ -717,6 +725,115 @@ Here is the list to provide:
     lang: 'ja',
     category: 'Keigo Mastery',
     systemPrompt: "You are a very polite and helpful clerk at a high-end department store in Ginza. The user is a customer. You must use high-level Teineigo and Keigo consistently. For example, use 'でございます' (de gozaimasu) instead of 'です' (desu). Address the user as 'お客様' (okyakusama). Your goal is to help the user while exposing them to natural, polite customer service Japanese. If the user's Japanese is polite, respond positively. If it's too casual, gently guide them. Start by greeting the user with 'いらっしゃいませ。何かお探しでございますか？' (Irasshaimase. Nani ka o-sagashi de gozaimasu ka?)"
+  },
+  // --- Start of new scenarios ---
+  {
+    id: 'restaurant-te',
+    title: 'డిన్నర్ రిజర్వేషన్',
+    description: 'ఒక ప్రత్యేక సందర్భం కోసం ఒక టేబుల్ బుక్ చేయడానికి ఒక రెస్టారెంట్‌కు కాల్ చేయండి.',
+    emoji: '🍽️',
+    lang: 'te',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Hyderabad. The user is calling to make a dinner reservation in Telugu. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Telugu. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-ml',
+    title: 'അത്താഴത്തിനുള്ള റിസർവേഷൻ',
+    description: 'ഒരു പ്രത്യേക അവസരത്തിനായി ഒരു മേശ ബുക്ക് ചെയ്യാൻ ഒരു റെസ്റ്റോറന്റിലേക്ക് വിളിക്കുക.',
+    emoji: '🍽️',
+    lang: 'ml',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Kochi. The user is calling to make a dinner reservation in Malayalam. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Malayalam. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-mr',
+    title: 'डिनर आरक्षण',
+    description: 'एका विशेष प्रसंगासाठी टेबल बुक करण्यासाठी रेस्टॉरंटला कॉल करा.',
+    emoji: '🍽️',
+    lang: 'mr',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Mumbai. The user is calling to make a dinner reservation in Marathi. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Marathi. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-or',
+    title: 'ରାତ୍ରୀ ଭୋଜନ ପାଇଁ ସଂରକ୍ଷଣ',
+    description: 'ଏକ ବିଶେଷ ଅବସର ପାଇଁ ଏକ ଟେବୁଲ୍ ବୁକ୍ କରିବାକୁ ଏକ ରେଷ୍ଟୁରାଣ୍ଟକୁ କଲ୍ କରନ୍ତୁ |',
+    emoji: '🍽️',
+    lang: 'or',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Bhubaneswar. The user is calling to make a dinner reservation in Odia. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Odia. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-gu',
+    title: 'ડિનર આરક્ષણ',
+    description: 'ખાસ પ્રસંગ માટે ટેબલ બુક કરવા માટે રેસ્ટોરન્ટને કૉલ કરો.',
+    emoji: '🍽️',
+    lang: 'gu',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Ahmedabad. The user is calling to make a dinner reservation in Gujarati. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Gujarati. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-bn',
+    title: 'ডিনার রিজার্ভেশন',
+    description: 'একটি বিশেষ অনুষ্ঠানের জন্য একটি টেবিল বুক করার জন্য একটি রেস্টুরেন্টে কল করুন।',
+    emoji: '🍽️',
+    lang: 'bn',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Kolkata. The user is calling to make a dinner reservation in Bengali. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Bengali. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-it',
+    title: 'Prenotazione per la cena',
+    description: 'Chiama un ristorante per prenotare un tavolo per un\'occasione speciale.',
+    emoji: '🍽️',
+    lang: 'it',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Rome. The user is calling to make a dinner reservation in Italian. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Italian. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-nl',
+    title: 'Dinerreservering',
+    description: 'Bel een restaurant om een tafel te reserveren voor een speciale gelegenheid.',
+    emoji: '🍽️',
+    lang: 'nl',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Amsterdam. The user is calling to make a dinner reservation in Dutch. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Dutch. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-da',
+    title: 'Bordreservation til middag',
+    description: 'Ring til en restaurant for at bestille bord til en særlig lejlighed.',
+    emoji: '🍽️',
+    lang: 'da',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Copenhagen. The user is calling to make a dinner reservation in Danish. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Danish. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-pt',
+    title: 'Reserva para jantar',
+    description: 'Ligue para um restaurante para reservar uma mesa para uma ocasião especial.',
+    emoji: '🍽️',
+    lang: 'pt',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Lisbon. The user is calling to make a dinner reservation in Portuguese. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Portuguese. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-fi',
+    title: 'Pöytävaraus illalliselle',
+    description: 'Soita ravintolaan ja varaa pöytä erityistä tilaisuutta varten.',
+    emoji: '🍽️',
+    lang: 'fi',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Helsinki. The user is calling to make a dinner reservation in Finnish. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Finnish. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-sa',
+    title: 'भोजनार्थम् आरक्षणम्',
+    description: 'विशेषप्रसङ्गाय भोजनशालायां पीठिकां आरक्षितुं दूरभाषां करोतु।',
+    emoji: '🍽️',
+    lang: 'sa',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a traditional restaurant where scholars converse in Sanskrit. The user is calling to make a dinner reservation in Sanskrit. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Sanskrit. Be polite and helpful."
   }
 ];
 
@@ -741,7 +858,7 @@ export const ACHIEVEMENT_BADGES: AchievementBadge[] = [
     },
     {
         badge_id: "b004",
-        name: "Vibo’s Favorite",
+        name: "Polly’s Favorite",
         description: "Score 90% or more on a quiz.",
         icon: "💚"
     },
@@ -962,110 +1079,73 @@ export const TUTORS: Tutor[] = [
         name: 'Lars Weber',
         nativeLanguage: 'de',
         specialty: 'German Grammar & Pronunciation',
-        bio: 'Guten Tag! German grammar can be tricky, but I have simple methods to help you understand it perfectly.',
-        isOnline: true,
-        pricePerSession: '$22 / 30 min',
-        avatarUrl: 'https://picsum.photos/seed/tutor4/200'
-    },
-    {
-        id: 'tutor-5',
-        name: 'Aarav Sharma',
-        nativeLanguage: 'hi',
-        specialty: 'Hindi Script & Daily Conversation',
-        bio: 'नमस्ते! Learn to read, write, and speak Hindi with confidence. We can practice dialogues for everyday situations.',
+        bio: 'Guten Tag! German grammar can be tricky, but I can make it click for you. Let\'s work through it together.',
         isOnline: false,
-        pricePerSession: '$18 / 30 min',
-        avatarUrl: 'https://picsum.photos/seed/tutor5/200'
-    },
-];
-
-
-export const VIEWS = {
-  DASHBOARD: { id: 'dashboard', label: 'Learn', icon: HomeIcon, path: '/' },
-  LANGUAGES_PAGE: { id: 'languages', label: 'Languages', icon: GlobeIcon, path: '/languages' },
-  SCENARIO: { id: 'scenario', label: 'Scenarios', icon: ChatBubbleIcon, path: '/scenario/:id' },
-  LESSON: { id: 'lesson', label: 'Lesson', path: '/lesson/:id' },
-  GRAMMAR: { id: 'grammar', label: 'Grammar', icon: GrammarIcon, path: '/grammar' },
-  IMAGE_EDITOR: { id: 'image_editor', label: 'Vocabulary', icon: VocabularyIcon, path: '/vocabulary-builder' },
-  WORD_BANK: { id: 'word_bank', label: 'Word Bank', icon: WordBankIcon, path: '/word-bank' },
-  KANJI_LAIR: { id: 'kanji_lair', label: 'Kanji Lair', icon: KanjiIcon, path: '/kanji-lair' },
-  ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon, path: '/accent-training' },
-  COMMUNITY: { id: 'community', label: 'Community', icon: CommunityIcon, path: '/community' },
-  ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', icon: AchievementsIcon, path: '/achievements' },
-  CHALLENGES: { id: 'challenges', label: 'Challenges', icon: ChallengesIcon, path: '/challenges' },
-  TUTORS: { id: 'tutors', label: 'Tutors', icon: TutorIcon, path: '/tutors' },
-  ABOUT: { id: 'about', label: 'About Us', path: '/about' },
-  TERMS: { id: 'terms', label: 'Terms of Service', path: '/terms' },
-  PRIVACY: { id: 'privacy', label: 'Privacy Policy', path: '/privacy' },
-};
-
-export const ALL_VIEWS: (View & { icon: React.FC<React.SVGProps<SVGSVGElement>> })[] = [
-    VIEWS.DASHBOARD,
-    VIEWS.LANGUAGES_PAGE,
-    VIEWS.GRAMMAR,
-    VIEWS.IMAGE_EDITOR,
-    VIEWS.WORD_BANK,
-    VIEWS.KANJI_LAIR,
-    VIEWS.ACCENT_TRAINING,
-    VIEWS.COMMUNITY,
-    VIEWS.ACHIEVEMENTS,
-    VIEWS.CHALLENGES,
-    VIEWS.TUTORS,
+        pricePerSession: '$20 / 30 min',
+        avatarUrl: 'https://picsum.photos/seed/tutor4/200'
+    }
 ];
 
 export const MULTILINGUAL_PHRASES: Record<string, PhraseCategory[]> = {
     en: [
         {
-            category: "Greetings & Politeness",
+            category: 'Common Greetings',
             phrases: [
-                { id: 'en-1', phrase: "How are you doing today?", translation: "How are you doing today?", audio_prompt: "Say 'How are you doing today?' in English." },
-                { id: 'en-2', phrase: "Thank you so much, I appreciate it.", translation: "Thank you so much, I appreciate it.", audio_prompt: "Say 'Thank you so much, I appreciate it.' in English." },
-                { id: 'en-3', phrase: "Excuse me, could you help me please?", translation: "Excuse me, could you help me please?", audio_prompt: "Say 'Excuse me, could you help me please?' in English." },
-            ]
-        },
-        {
-            category: "At a Restaurant",
-            phrases: [
-                { id: 'en-4', phrase: "A table for two, please.", translation: "A table for two, please.", audio_prompt: "Say 'A table for two, please.' in English." },
-                { id: 'en-5', phrase: "Could I see the menu, please?", translation: "Could I see the menu, please?", audio_prompt: "Say 'Could I see the menu, please?' in English." },
-                { id: 'en-6', phrase: "I would like to order the pasta.", translation: "I would like to order the pasta.", audio_prompt: "Say 'I would like to order the pasta.' in English." },
-            ]
-        }
-    ],
-    fr: [
-        {
-            category: "Greetings & Politeness",
-            phrases: [
-                { id: 'fr-1', phrase: "Comment allez-vous aujourd'hui ?", translation: "How are you doing today?", audio_prompt: "Say 'Comment allez-vous aujourd'hui ?' in French." },
-                { id: 'fr-2', phrase: "Merci beaucoup, j'apprécie.", translation: "Thank you so much, I appreciate it.", audio_prompt: "Say 'Merci beaucoup, j'apprécie.' in French." },
-                { id: 'fr-3', phrase: "Excusez-moi, pourriez-vous m'aider s'il vous plaît ?", translation: "Excuse me, could you help me please?", audio_prompt: "Say 'Excusez-moi, pourriez-vous m'aider s'il vous plaît ?' in French." },
-            ]
-        },
-        {
-            category: "At a Restaurant",
-            phrases: [
-                { id: 'fr-4', phrase: "Une table pour deux, s'il vous plaît.", translation: "A table for two, please.", audio_prompt: "Say 'Une table pour deux, s'il vous plaît.' in French." },
-                { id: 'fr-5', phrase: "Pourrais-je voir le menu, s'il vous plaît ?", translation: "Could I see the menu, please?", audio_prompt: "Say 'Pourrais-je voir le menu, s'il vous plaît ?' in French." },
-                { id: 'fr-6', phrase: "Je voudrais commander les pâtes.", translation: "I would like to order the pasta.", audio_prompt: "Say 'Je voudrais commander les pâtes.' in French." },
+                { id: 'en-1', phrase: 'How are you?', translation: 'How are you?', audio_prompt: 'Say "How are you?" in English.' },
+                { id: 'en-2', phrase: 'What is your name?', translation: 'What is your name?', audio_prompt: 'Say "What is your name?" in English.' },
             ]
         }
     ],
     es: [
         {
-            category: "Greetings & Politeness",
+            category: 'Saludos Comunes',
             phrases: [
-                { id: 'es-1', phrase: "¿Cómo estás hoy?", translation: "How are you doing today?", audio_prompt: "Say '¿Cómo estás hoy?' in Spanish." },
-                { id: 'es-2', phrase: "Muchas gracias, te lo agradezco.", translation: "Thank you so much, I appreciate it.", audio_prompt: "Say 'Muchas gracias, te lo agradezco.' in Spanish." },
-                { id: 'es-3', phrase: "Disculpe, ¿podría ayudarme por favor?", translation: "Excuse me, could you help me please?", audio_prompt: "Say 'Disculpe, ¿podría ayudarme por favor?' in Spanish." },
-            ]
-        },
-        {
-            category: "At a Restaurant",
-            phrases: [
-                { id: 'es-4', phrase: "Una mesa para dos, por favor.", translation: "A table for two, please.", audio_prompt: "Say 'Una mesa para dos, por favor.' in Spanish." },
-                { id: 'es-5', phrase: "¿Podría ver el menú, por favor?", translation: "Could I see the menu, please?", audio_prompt: "Say '¿Podría ver el menú, por favor?' in Spanish." },
-                { id: 'es-6', phrase: "Me gustaría pedir la pasta.", translation: "I would like to order the pasta.", audio_prompt: "Say 'Me gustaría pedir la pasta.' in Spanish." },
+                { id: 'es-1', phrase: '¿Cómo estás?', translation: 'How are you?', audio_prompt: 'Say "¿Cómo estás?" in Spanish.' },
+                { id: 'es-2', phrase: '¿Cuál es tu nombre?', translation: 'What is your name?', audio_prompt: 'Say "¿Cuál es tu nombre?" in Spanish.' },
             ]
         }
     ],
+    ja: [
+        {
+            category: '一般的な挨拶',
+            phrases: [
+                { id: 'ja-1', phrase: 'お元気ですか？', translation: 'How are you?', audio_prompt: 'Say "お元気ですか？" in Japanese.' },
+                { id: 'ja-2', phrase: 'お名前は何ですか？', translation: 'What is your name?', audio_prompt: 'Say "お名前は何ですか？" in Japanese.' },
+            ]
+        }
+    ]
 };
+
+export const VIEWS: { [key: string]: View & { path: string, icon?: any } } = {
+  DASHBOARD: { id: 'dashboard', label: 'Learn', path: '/', icon: HomeIcon },
+  LANGUAGES_PAGE: { id: 'languages_page', label: 'Languages', path: '/languages', icon: GlobeIcon },
+  SCENARIO: { id: 'scenario', label: 'Scenario', path: '/scenario/:id' }, // No icon, not in sidebar
+  LESSON: { id: 'lesson', label: 'Lesson', path: '/lesson/:id' }, // No icon, not in sidebar
+  GRAMMAR: { id: 'grammar_clinic', label: 'Grammar', path: '/grammar', icon: GrammarIcon },
+  IMAGE_EDITOR: { id: 'image_editor', label: 'Visual Vocabulary', path: '/visual-vocab', icon: VocabularyIcon },
+  WORD_BANK: { id: 'word_bank', label: 'Word Bank', path: '/word-bank', icon: WordBankIcon },
+  KANJI_LAIR: { id: 'kanji_lair', label: 'Kanji Lair', path: '/kanji-lair', icon: KanjiIcon },
+  ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', path: '/accent-training', icon: AccentTrainingIcon },
+  TUTORS: { id: 'ai_tutors', label: 'Tutors', path: '/tutors', icon: TutorIcon },
+  COMMUNITY: { id: 'community', label: 'Community', path: '/community', icon: CommunityIcon },
+  ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', path: '/achievements', icon: AchievementsIcon },
+  CHALLENGES: { id: 'challenges', label: 'Challenges', path: '/challenges', icon: ChallengesIcon },
+  ABOUT: { id: 'about', label: 'About', path: '/about' }, // No icon, for footer
+  TERMS: { id: 'terms', label: 'Terms', path: '/terms' }, // No icon, for footer
+  PRIVACY: { id: 'privacy', label: 'Privacy', path: '/privacy' }, // No icon, for footer
+};
+
+
+export const ALL_VIEWS: { id: string; label: string; icon: React.FC<React.SVGProps<SVGSVGElement>>; }[] = [
+    { id: 'dashboard', label: 'Learn', icon: HomeIcon },
+    { id: 'languages_page', label: 'Languages', icon: GlobeIcon },
+    { id: 'grammar_clinic', label: 'Grammar', icon: GrammarIcon },
+    { id: 'image_editor', label: 'Visual Vocabulary', icon: VocabularyIcon },
+    { id: 'word_bank', label: 'Word Bank', icon: WordBankIcon },
+    { id: 'kanji_lair', label: 'Kanji Lair', icon: KanjiIcon },
+    { id: 'accent_training', label: 'Accent Training', icon: AccentTrainingIcon },
+    { id: 'ai_tutors', label: 'Tutors', icon: TutorIcon },
+    { id: 'community', label: 'Community', icon: CommunityIcon },
+    { id: 'achievements', label: 'Achievements', icon: AchievementsIcon },
+    { id: 'challenges', label: 'Challenges', icon: ChallengesIcon },
+];

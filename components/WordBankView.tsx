@@ -1,6 +1,6 @@
 
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import type { Language, LearningModule, LessonUnit, VocabularyWord, QuizQuestion } from '../types';
 import { LEARNING_PATH } from '../i18n/learningPath';
 import { SpeakerWaveIcon, LockIcon } from './icons/Icons';
@@ -40,7 +40,7 @@ async function decodeAudioData(
 
 
 // --- Unit Detail Modal Component ---
-const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; language: Language }> = ({ unit, onClose, language }) => {
+const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; language: Language; onUnitComplete: (unitId: string) => void; }> = ({ unit, onClose, language, onUnitComplete }) => {
     const [loadingWord, setLoadingWord] = useState<string | null>(null);
     const audioCtxRef = useRef<AudioContext | null>(null);
 
@@ -131,6 +131,10 @@ const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; languag
         if (currentQuestionIndex < quizQuestions.length - 1) {
             setCurrentQuestionIndex(prev => prev + 1);
         } else {
+            // Quiz is finished. Score is already calculated for the last question.
+            if (quizQuestions.length > 0 && (score / quizQuestions.length) >= 0.5) {
+                onUnitComplete(unit.unitId);
+            }
             setQuizState('finished');
         }
     };
@@ -205,8 +209,11 @@ const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; languag
                     <div className="text-center py-8 animate-fade-in flex-grow flex flex-col justify-center items-center">
                         <h3 className="text-2xl font-bold text-gray-800">Quiz Complete!</h3>
                         <p className="text-lg text-gray-600 mt-2">Your Score: <span className="font-bold text-teal-600">{score}</span> / {quizQuestions.length} ({percentage}%)</p>
+                        {percentage >= 50 && (
+                            <p className="mt-2 font-semibold text-green-600">Great job! You've unlocked the next unit.</p>
+                        )}
                         <div className="mt-6 flex justify-center gap-x-4">
-                            <button onClick={backToWords} className="inline-flex items-center justify-center gap-x-2 rounded-md bg-transparent px-3.5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm hover:bg-slate-200 transition-colors">Back to Words</button>
+                            <button onClick={onClose} className="inline-flex items-center justify-center gap-x-2 rounded-md bg-transparent px-3.5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm hover:bg-slate-200 transition-colors">Close</button>
                             <Button onClick={restartQuiz}>
                                 Try Again
                             </Button>
@@ -279,10 +286,40 @@ const UnitDetailModal: React.FC<{ unit: LessonUnit; onClose: () => void; languag
 export const WordBankView: React.FC<{ language: Language }> = ({ language }) => {
     const modules = LEARNING_PATH[language.code] || [];
     const [selectedUnit, setSelectedUnit] = useState<LessonUnit | null>(null);
+    const [completedUnits, setCompletedUnits] = useState<Set<string>>(new Set());
+
+    const storageKey = `chirpolly-progress-${language.code}`;
+
+    useEffect(() => {
+        try {
+            const savedProgress = localStorage.getItem(storageKey);
+            if (savedProgress) {
+                setCompletedUnits(new Set(JSON.parse(savedProgress)));
+            }
+        } catch (error) {
+            console.error("Failed to load progress:", error);
+            setCompletedUnits(new Set());
+        }
+    }, [language.code, storageKey]);
+
+    const handleUnitComplete = (unitId: string) => {
+        setCompletedUnits(prev => {
+            const newProgress = new Set(prev);
+            newProgress.add(unitId);
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(Array.from(newProgress)));
+            } catch (error) {
+                console.error("Failed to save progress:", error);
+            }
+            return newProgress;
+        });
+    };
+    
+    const allUnits = useMemo(() => modules.flatMap(module => module.units), [modules]);
 
     return (
         <div className="max-w-4xl mx-auto animate-fade-in">
-            {selectedUnit && <UnitDetailModal unit={selectedUnit} onClose={() => setSelectedUnit(null)} language={language} />}
+            {selectedUnit && <UnitDetailModal unit={selectedUnit} onClose={() => setSelectedUnit(null)} language={language} onUnitComplete={handleUnitComplete} />}
             
             <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold font-poppins text-gray-800">Learning Path: {language.name}</h1>
@@ -299,19 +336,25 @@ export const WordBankView: React.FC<{ language: Language }> = ({ language }) => 
                                 <p className="text-gray-600 text-sm mt-1">{module.description}</p>
                             </div>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                {module.units.map(unit => (
-                                    <button 
-                                        key={unit.unitId}
-                                        onClick={() => setSelectedUnit(unit)}
-                                        disabled={unit.isLocked}
-                                        className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-left transition-all duration-200 hover:bg-teal-50 hover:border-teal-200 hover:shadow-sm disabled:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
-                                    >
-                                        <div className="flex items-center gap-x-2">
-                                            <span className="text-2xl">{unit.isLocked ? '🔒' : unit.emoji}</span>
-                                            <p className="font-semibold text-gray-700">{unit.title}</p>
-                                        </div>
-                                    </button>
-                                ))}
+                                {module.units.map(unit => {
+                                    const unitIndex = allUnits.findIndex(u => u.unitId === unit.unitId);
+                                    // The first unit is always unlocked. Others are unlocked if the previous one is complete.
+                                    const isLocked = unitIndex > 0 && !completedUnits.has(allUnits[unitIndex - 1].unitId);
+
+                                    return (
+                                        <button 
+                                            key={unit.unitId}
+                                            onClick={() => setSelectedUnit(unit)}
+                                            disabled={isLocked}
+                                            className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-left transition-all duration-200 hover:bg-teal-50 hover:border-teal-200 hover:shadow-sm disabled:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
+                                        >
+                                            <div className="flex items-center gap-x-2">
+                                                <span className="text-2xl">{isLocked ? '🔒' : unit.emoji}</span>
+                                                <p className="font-semibold text-gray-700">{unit.title}</p>
+                                            </div>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
                     ))}

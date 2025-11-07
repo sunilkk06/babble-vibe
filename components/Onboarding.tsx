@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ParrotIcon } from './icons/ParrotIcon';
 import { Button } from './common/Button';
@@ -11,8 +10,8 @@ interface OnboardingProps {
 const onboardingSteps = [
   {
     title: "Welcome to ChirPolly!",
-    subtitle: "Meet Vibo — your friendly green parrot guide.",
-    body: "Vibo speaks dozens of languages and is excited to help you master one chirp at a time!",
+    subtitle: "Meet Polly — your friendly green parrot guide.",
+    body: "Polly speaks dozens of languages and is excited to help you master one chirp at a time!",
     icon: <ParrotIcon className="h-12 w-auto mx-auto mb-4" />,
   },
   {
@@ -24,7 +23,7 @@ const onboardingSteps = [
   {
     title: "Stay Consistent",
     subtitle: "Practice just 5 minutes a day.",
-    body: "Vibo will remind you — gently, not squawk loudly (well, maybe a little).",
+    body: "Polly will remind you — gently, not squawk loudly (well, maybe a little).",
     icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-24 h-24 mx-auto mb-4 text-cyan-500">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
