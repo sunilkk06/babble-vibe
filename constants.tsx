@@ -39,9 +39,14 @@ export const MOTIVATIONAL_QUOTES: string[] = [
     "Practice makes progress, not perfect. Keep chirping!",
 ];
 
-export const AI_TUTOR_PROMPT = `You are Polly, a friendly, encouraging, and expert AI language tutor from ChirPolly. The user is learning {languageName}. 
-Your goal is to help them practice conversationally. You can chat about any topic they want, answer their grammar questions, explain cultural nuances, or suggest things to talk about if they're stuck.
-Keep your responses natural, supportive, and not too long to encourage a back-and-forth conversation. Adapt your language complexity to the user's level based on their messages. Always be patient and positive. Start the conversation with a warm welcome.`;
+export const AI_TUTOR_PROMPT = `You are Polly, a friendly, encouraging, and expert AI language tutor from ChirPolly. The user wants to practice conversing in {languageName}.
+
+Your SINGLE MOST IMPORTANT rule is to communicate exclusively in the user's target language, which is {languageName}.
+- If the target language is English, you MUST speak only English.
+- If the target language is French, you MUST speak only French.
+- Do NOT mix languages.
+
+Start the conversation by giving a warm, friendly welcome in {languageName}. Keep your responses natural, supportive, and not too long to encourage a back-and-forth conversation.`;
 
 
 export const COMMUNITY_USERS: CommunityUser[] = [
@@ -689,7 +694,7 @@ Then, as Lukas, say the first line and wait for the user's response: "Hallo, ich
 Here is the list to provide:
 - **नमस्ते (Namaste)** - Hello/Greetings - *नमस्ते, मित्र!* (Hello, friend!)
 - **धन्यवादः (Dhanyavādah)** - Thank you - *साहाय्यार्थं धन्यवादः।* (Thank you for the help.)
-- **जलम् (Jalam)** - Water - *कृपया मह्यं जलं ददातु।* (Please give me water.)
+- **जलम् (Jalam)** - Water - *कृपया मह्यं जलं దदातु।* (Please give me water.)
 - **सूर्यः (Sūryah)** - Sun - *सूर्यः आकाशे प्रकाशते।* (The sun shines in the sky.)
 - **चन्द्रः (Chandrah)** - Moon - *रात्रौ चन्द्रः दृश्यते।* (The moon is seen at night.)
 - **अग्निः (Agnih)** - Fire - *अग्निः उष्णः अस्ति।* (Fire is hot.)
@@ -735,15 +740,95 @@ Here is the list to provide:
     category: 'Keigo Mastery',
     systemPrompt: "You are a very polite and helpful clerk at a high-end department store in Ginza. The user is a customer. You must use high-level Teineigo and Keigo consistently. For example, use 'でございます' (de gozaimasu) instead of 'です' (desu). Address the user as 'お客様' (okyakusama). Your goal is to help the user while exposing them to natural, polite customer service Japanese. If the user's Japanese is polite, respond positively. If it's too casual, gently guide them. Start by greeting the user with 'いらっしゃいませ。何かお探しでございますか？' (Irasshaimase. Nani ka o-sagashi de gozaimasu ka?)"
   },
-  // --- Start of new scenarios ---
   {
-    id: 'restaurant-te',
-    title: 'డిన్నర్ రిజర్వేషన్',
-    description: 'ఒక ప్రత్యేక సందర్భం కోసం ఒక టేబుల్ బుక్ చేయడానికి ఒక రెస్టారెంట్‌కు కాల్ చేయండి.',
+    id: 'restaurant-bn',
+    title: 'ডিনার রিজার্ভেশন',
+    description: 'একটি বিশেষ অনুষ্ঠানের জন্য একটি টেবিল বুক করার জন্য একটি রেস্টুরেন্টে কল করুন।',
     emoji: '🍽️',
-    lang: 'te',
+    lang: 'bn',
     category: 'Conversation',
-    systemPrompt: "You are a host at a restaurant in Hyderabad. The user is calling to make a dinner reservation in Telugu. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Telugu. Be polite and helpful."
+    systemPrompt: "You are a host at a restaurant in Kolkata. The user is calling to make a dinner reservation in Bengali. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Bengali. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-da',
+    title: 'Bordreservation til middag',
+    description: 'Ring til en restaurant for at bestille bord til en særlig lejlighed.',
+    emoji: '🍽️',
+    lang: 'da',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Copenhagen. The user is calling to make a dinner reservation in Danish. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Danish. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-de',
+    title: 'Essen bestellen in Berlin',
+    description: 'Übe, wie man in einem Restaurant in Berlin Essen und Getränke bestellt.',
+    emoji: '🥨',
+    lang: 'de',
+    category: 'Conversation',
+    systemPrompt: "You are a friendly and patient waiter at a traditional German restaurant in Berlin. The user is a customer who wants to order food. Greet them in German, ask for their order, and respond naturally. If they seem to struggle, you can offer suggestions like 'Möchten Sie ein Schnitzel probieren?' (Would you like to try a Schnitzel?). Keep your German simple and clear for a learner. Respond ONLY in German. Start by welcoming the customer."
+  },
+  {
+    id: 'restaurant-es',
+    title: 'Reservar una mesa en Barcelona',
+    description: 'Practica cómo pedir comida y bebida en un restaurante en Barcelona.',
+    emoji: '🥘',
+    lang: 'es',
+    category: 'Conversation',
+    systemPrompt: "You are a friendly and patient waiter at a tapas restaurant in Barcelona. The user is a customer who wants to order food. Greet them in Spanish, ask for their order, and respond naturally. If they seem to struggle, you can offer suggestions like '¿Le gustaría probar nuestras patatas bravas?' (Would you like to try our patatas bravas?). Keep your Spanish simple and clear for a learner. Respond ONLY in Spanish. Start by welcoming the customer."
+  },
+  {
+    id: 'restaurant-fi',
+    title: 'Pöytävaraus illalliselle',
+    description: 'Soita ravintolaan ja varaa pöytä erityistä tilaisuutta varten.',
+    emoji: '🍽️',
+    lang: 'fi',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Helsinki. The user is calling to make a dinner reservation in Finnish. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Finnish. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-fr',
+    title: 'Dîner dans un bistro',
+    description: 'Appelez un bistro pour réserver une table pour une occasion spéciale.',
+    emoji: '🍷',
+    lang: 'fr',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a cozy bistro in Lyon. The user is calling to make a dinner reservation in French. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in French. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-gu',
+    title: 'ડિનર આરક્ષણ',
+    description: 'ખાસ પ્રસંગ માટે ટેબલ બુક કરવા માટે રેસ્ટોરન્ટને કૉલ કરો.',
+    emoji: '🍽️',
+    lang: 'gu',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Ahmedabad. The user is calling to make a dinner reservation in Gujarati. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Gujarati. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-hi',
+    title: 'डिनर आरक्षण',
+    description: 'एक विशेष अवसर के लिए एक टेबल बुक करने के लिए एक रेस्तरां को कॉल करें।',
+    emoji: '🍽️',
+    lang: 'hi',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Delhi. The user is calling to make a dinner reservation in Hindi. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Hindi. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-it',
+    title: 'Prenotazione per la cena',
+    description: 'Chiama un ristorante per prenotare un tavolo per un\'occasione speciale.',
+    emoji: '🍽️',
+    lang: 'it',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Rome. The user is calling to make a dinner reservation in Italian. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Italian. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-kn',
+    title: 'ಊಟದ ಕಾಯ್ದಿರಿಸುವಿಕೆ',
+    description: 'ವಿಶೇಷ ಸಂದರ್ಭಕ್ಕಾಗಿ ಟೇಬಲ್ ಕಾಯ್ದಿರಿಸಲು ರೆಸ್ಟೋರೆಂಟ್‌ಗೆ ಕರೆ ಮಾಡಿ.',
+    emoji: '🍽️',
+    lang: 'kn',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Bangalore. The user is calling to make a dinner reservation in Kannada. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Kannada. Be polite and helpful."
   },
   {
     id: 'restaurant-ml',
@@ -764,42 +849,6 @@ Here is the list to provide:
     systemPrompt: "You are a host at a restaurant in Mumbai. The user is calling to make a dinner reservation in Marathi. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Marathi. Be polite and helpful."
   },
   {
-    id: 'restaurant-or',
-    title: 'ରାତ୍ରୀ ଭୋଜନ ପାଇଁ ସଂରକ୍ଷଣ',
-    description: 'ଏକ ବିଶେଷ ଅବସର ପାଇଁ ଏକ ଟେବୁଲ୍ ବୁକ୍ କରିବାକୁ ଏକ ରେଷ୍ଟୁରାଣ୍ଟକୁ କଲ୍ କରନ୍ତୁ |',
-    emoji: '🍽️',
-    lang: 'or',
-    category: 'Conversation',
-    systemPrompt: "You are a host at a restaurant in Bhubaneswar. The user is calling to make a dinner reservation in Odia. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Odia. Be polite and helpful."
-  },
-  {
-    id: 'restaurant-gu',
-    title: 'ડિનર આરક્ષણ',
-    description: 'ખાસ પ્રસંગ માટે ટેબલ બુક કરવા માટે રેસ્ટોરન્ટને કૉલ કરો.',
-    emoji: '🍽️',
-    lang: 'gu',
-    category: 'Conversation',
-    systemPrompt: "You are a host at a restaurant in Ahmedabad. The user is calling to make a dinner reservation in Gujarati. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Gujarati. Be polite and helpful."
-  },
-  {
-    id: 'restaurant-bn',
-    title: 'ডিনার রিজার্ভেশন',
-    description: 'একটি বিশেষ অনুষ্ঠানের জন্য একটি টেবিল বুক করার জন্য একটি রেস্টুরেন্টে কল করুন।',
-    emoji: '🍽️',
-    lang: 'bn',
-    category: 'Conversation',
-    systemPrompt: "You are a host at a restaurant in Kolkata. The user is calling to make a dinner reservation in Bengali. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Bengali. Be polite and helpful."
-  },
-  {
-    id: 'restaurant-it',
-    title: 'Prenotazione per la cena',
-    description: 'Chiama un ristorante per prenotare un tavolo per un\'occasione speciale.',
-    emoji: '🍽️',
-    lang: 'it',
-    category: 'Conversation',
-    systemPrompt: "You are a host at a restaurant in Rome. The user is calling to make a dinner reservation in Italian. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Italian. Be polite and helpful."
-  },
-  {
     id: 'restaurant-nl',
     title: 'Dinerreservering',
     description: 'Bel een restaurant om een tafel te reserveren voor een speciale gelegenheid.',
@@ -809,13 +858,13 @@ Here is the list to provide:
     systemPrompt: "You are a host at a restaurant in Amsterdam. The user is calling to make a dinner reservation in Dutch. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Dutch. Be polite and helpful."
   },
   {
-    id: 'restaurant-da',
-    title: 'Bordreservation til middag',
-    description: 'Ring til en restaurant for at bestille bord til en særlig lejlighed.',
+    id: 'restaurant-or',
+    title: 'ରାତ୍ରୀ ଭୋଜନ ପାଇଁ ସଂରକ୍ଷଣ',
+    description: 'ଏକ ବିଶେଷ ଅବସର ପାଇଁ ଏକ ଟେବୁଲ୍ ବୁକ୍ କରିବାକୁ ଏକ ରେଷ୍ଟୁରାଣ୍ଟକୁ କଲ୍ କରନ୍ତୁ |',
     emoji: '🍽️',
-    lang: 'da',
+    lang: 'or',
     category: 'Conversation',
-    systemPrompt: "You are a host at a restaurant in Copenhagen. The user is calling to make a dinner reservation in Danish. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Danish. Be polite and helpful."
+    systemPrompt: "You are a host at a restaurant in Bhubaneswar. The user is calling to make a dinner reservation in Odia. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Odia. Be polite and helpful."
   },
   {
     id: 'restaurant-pt',
@@ -827,15 +876,6 @@ Here is the list to provide:
     systemPrompt: "You are a host at a restaurant in Lisbon. The user is calling to make a dinner reservation in Portuguese. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Portuguese. Be polite and helpful."
   },
   {
-    id: 'restaurant-fi',
-    title: 'Pöytävaraus illalliselle',
-    description: 'Soita ravintolaan ja varaa pöytä erityistä tilaisuutta varten.',
-    emoji: '🍽️',
-    lang: 'fi',
-    category: 'Conversation',
-    systemPrompt: "You are a host at a restaurant in Helsinki. The user is calling to make a dinner reservation in Finnish. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Finnish. Be polite and helpful."
-  },
-  {
     id: 'restaurant-sa',
     title: 'भोजनार्थम् आरक्षणम्',
     description: 'विशेषप्रसङ्गाय भोजनशालायां पीठिकां आरक्षितुं दूरभाषां करोतु।',
@@ -843,6 +883,24 @@ Here is the list to provide:
     lang: 'sa',
     category: 'Conversation',
     systemPrompt: "You are a host at a traditional restaurant where scholars converse in Sanskrit. The user is calling to make a dinner reservation in Sanskrit. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Sanskrit. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-ta',
+    title: 'இரவு உணவு முன்பதிவு',
+    description: 'ஒரு சிறப்பு சந்தர்ப்பத்திற்காக ஒரு மேசையை முன்பதிவு செய்ய ஒரு உணவகத்தை அழைக்கவும்.',
+    emoji: '🍽️',
+    lang: 'ta',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Chennai. The user is calling to make a dinner reservation in Tamil. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Tamil. Be polite and helpful."
+  },
+  {
+    id: 'restaurant-te',
+    title: 'డిన్నర్ రిజర్వేషన్',
+    description: 'ఒక ప్రత్యేక సందర్భం కోసం ఒక టేబుల్ బుక్ చేయడానికి ఒక రెస్టారెంట్‌కు కాల్ చేయండి.',
+    emoji: '🍽️',
+    lang: 'te',
+    category: 'Conversation',
+    systemPrompt: "You are a host at a restaurant in Hyderabad. The user is calling to make a dinner reservation in Telugu. Guide them through the process, asking for the date, time, and number of guests. Respond ONLY in Telugu. Be polite and helpful."
   }
 ];
 

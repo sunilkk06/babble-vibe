@@ -38,15 +38,16 @@ export const AITutorView: React.FC<{ language: Language; }> = ({ language }) => 
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const systemPrompt = AI_TUTOR_PROMPT.replace('{languageName}', language.name);
+        // Fix: Replaced `replaceAll` with `replace` and a global regex for broader compatibility.
+        const systemPrompt = AI_TUTOR_PROMPT.replace(/{languageName}/g, language.name);
         startChat(systemPrompt);
         setMessages([]);
 
         const fetchInitialMessage = async () => {
             setIsLoading(true);
             try {
-                // Send a simple prompt to get a warm greeting from the AI tutor.
-                const response = await sendMessage('Start the conversation.', false);
+                // Send an empty message to trigger the initial greeting based on the system prompt.
+                const response = await sendMessage('', false);
                 const { text } = parseResponse(response.text);
                 const initialModelMessage: Message = { role: 'model', text };
                 setMessages([initialModelMessage]);
