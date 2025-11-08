@@ -36,6 +36,7 @@ export interface CommunityUser {
   nativeLanguage: string; // Language code
   learningLanguage: string; // Language code
   bio: string;
+  isOnline: boolean;
 }
 
 export interface LessonContent {
@@ -86,6 +87,7 @@ export interface Challenge {
   description: string;
   icon: string;
   reward: string;
+  relatedViewId?: string;
 }
 
 export interface PostLessonMessage {

@@ -27,6 +27,10 @@ const UserCard: React.FC<{ user: CommunityUser }> = ({ user }) => {
                 <Avatar name={user.name} />
                 <div>
                     <h3 className="text-lg font-bold text-gray-800">{user.name}</h3>
+                     <div className={`flex items-center gap-1.5 text-xs font-semibold ${user.isOnline ? 'text-green-600' : 'text-gray-500'}`}>
+                        <div className={`w-2 h-2 rounded-full ${user.isOnline ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                        {user.isOnline ? 'Online' : 'Offline'}
+                    </div>
                 </div>
             </div>
             <div className="space-y-2 text-sm text-gray-600 mb-4">
@@ -35,8 +39,8 @@ const UserCard: React.FC<{ user: CommunityUser }> = ({ user }) => {
             </div>
             <p className="text-gray-500 text-sm flex-grow mb-4">"{user.bio}"</p>
             <div className="mt-auto">
-                <Button onClick={() => alert('Real-time chat is coming soon!')} className="w-full">
-                    Start a Chat
+                <Button onClick={() => alert('Real-time chat is coming soon!')} className="w-full" disabled={!user.isOnline}>
+                    {user.isOnline ? 'Start a Chat' : 'Offline'}
                 </Button>
             </div>
         </div>
@@ -47,14 +51,16 @@ const UserCard: React.FC<{ user: CommunityUser }> = ({ user }) => {
 export const CommunityView: React.FC = () => {
     const [speaksFilter, setSpeaksFilter] = useState('all');
     const [learningFilter, setLearningFilter] = useState('all');
+    const [showOnlineOnly, setShowOnlineOnly] = useState(false);
     
     const filteredUsers = useMemo(() => {
         return COMMUNITY_USERS.filter(user => {
             const speaksMatch = speaksFilter === 'all' || user.nativeLanguage === speaksFilter;
             const learningMatch = learningFilter === 'all' || user.learningLanguage === learningFilter;
-            return speaksMatch && learningMatch;
+            const onlineMatch = !showOnlineOnly || user.isOnline;
+            return speaksMatch && learningMatch && onlineMatch;
         });
-    }, [speaksFilter, learningFilter]);
+    }, [speaksFilter, learningFilter, showOnlineOnly]);
 
     return (
         <div className="animate-fade-in">
@@ -66,7 +72,7 @@ export const CommunityView: React.FC = () => {
             </div>
 
             {/* Filters */}
-            <div className="bg-white p-4 rounded-lg shadow-md mb-8 flex flex-col sm:flex-row gap-4">
+            <div className="bg-white p-4 rounded-lg shadow-md mb-8 flex flex-col sm:flex-row gap-4 items-center">
                 <div className="flex-1">
                     <label htmlFor="speaks-filter" className="block text-sm font-medium text-gray-700 mb-1">
                         Speaks
@@ -94,6 +100,25 @@ export const CommunityView: React.FC = () => {
                         <option value="all">Any Language</option>
                         {LANGUAGES.map(lang => <option key={lang.code} value={lang.code}>{lang.name}</option>)}
                     </select>
+                </div>
+                 <div className="flex-shrink-0 pt-6">
+                    <div className="flex items-center">
+                        <label htmlFor="online-filter" className="block text-sm font-medium text-gray-700 mr-2">
+                            Online only
+                        </label>
+                        <button
+                            type="button"
+                            className={`${showOnlineOnly ? 'bg-teal-500' : 'bg-gray-200'} relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2`}
+                            role="switch"
+                            aria-checked={showOnlineOnly}
+                            onClick={() => setShowOnlineOnly(!showOnlineOnly)}
+                        >
+                            <span
+                                aria-hidden="true"
+                                className={`${showOnlineOnly ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+                            />
+                        </button>
+                    </div>
                 </div>
             </div>
 

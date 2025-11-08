@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import type { Scenario, Lesson, Challenge } from '../types';
-import { CHALLENGES } from '../constants';
+import { CHALLENGES, VIEWS } from '../constants';
 import { FireIcon, StarIcon } from './icons/Icons';
 
 // --- Reusable Components ---
@@ -134,6 +134,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         }
     }, [parrotState]);
 
+    const handleStartChallenge = (challenge: Challenge) => {
+        const viewData = challenge.relatedViewId ? Object.values(VIEWS).find(v => v.id === challenge.relatedViewId) : null;
+        // If the challenge directs to the dashboard, or has no specific view, navigate to the main challenges page.
+        if (viewData?.path && viewData.id !== 'dashboard') {
+            navigate(viewData.path);
+        } else {
+            navigate(VIEWS.CHALLENGES.path);
+        }
+    };
+
     // Mock data for stats
     const dailyStreak = 4;
     const xpProgress = 150;
@@ -144,9 +154,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
             {/* Main Content Area (Lessons, Scenarios, and Parrot) */}
             <div className="xl:col-span-3 grid grid-cols-1 md:grid-cols-5 gap-8">
                 <main className="md:col-span-3 space-y-8">
-                    <header>
-                        <h1 className="text-4xl font-bold font-poppins text-slate-800">Your Dashboard</h1>
-                        <p className="text-lg text-slate-600 mt-1">Pick a lesson or scenario to start!</p>
+                    <header className="text-center md:text-left">
+                        <h1 className="text-4xl lg:text-5xl font-bold font-poppins text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-rose-500">
+                            Every Chirp Takes You Closer to Fluency!
+                        </h1>
                     </header>
                     
                     {lessons.length > 0 && (
@@ -202,7 +213,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                     >
                         <div className="flex items-center justify-between gap-4">
                             <p className="text-sm text-slate-600">{dailyChallenge.description}</p>
-                            <button className="px-4 py-2 text-sm font-bold text-slate-600 bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors flex-shrink-0">
+                            <button 
+                                onClick={() => dailyChallenge && handleStartChallenge(dailyChallenge)}
+                                className="px-4 py-2 text-sm font-bold text-slate-600 bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors flex-shrink-0">
                                 START
                             </button>
                         </div>

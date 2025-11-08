@@ -55,42 +55,48 @@ export const COMMUNITY_USERS: CommunityUser[] = [
         name: 'Maria Garcia',
         nativeLanguage: 'es',
         learningLanguage: 'fr',
-        bio: 'Hola! I love French cinema and want to practice my conversation skills. Let\'s chat!'
+        bio: 'Hola! I love French cinema and want to practice my conversation skills. Let\'s chat!',
+        isOnline: true,
     },
     {
         id: '2',
         name: 'John Smith',
         nativeLanguage: 'en',
         learningLanguage: 'ja',
-        bio: 'I\'m a beginner in Japanese, planning a trip to Tokyo next year. Happy to help with English in return.'
+        bio: 'I\'m a beginner in Japanese, planning a trip to Tokyo next year. Happy to help with English in return.',
+        isOnline: false,
     },
     {
         id: '3',
         name: 'Anne Dubois',
         nativeLanguage: 'fr',
         learningLanguage: 'de',
-        bio: 'Bonjour! I work in engineering and need to improve my technical German. I enjoy hiking and cooking.'
+        bio: 'Bonjour! I work in engineering and need to improve my technical German. I enjoy hiking and cooking.',
+        isOnline: true,
     },
     {
         id: '4',
         name: 'Ken Tanaka',
         nativeLanguage: 'ja',
         learningLanguage: 'en',
-        bio: 'こんにちは！Looking for a partner to discuss technology and current events in English.'
+        bio: 'こんにちは！Looking for a partner to discuss technology and current events in English.',
+        isOnline: true,
     },
     {
         id: '5',
         name: 'Lukas Müller',
         nativeLanguage: 'de',
         learningLanguage: 'es',
-        bio: 'Guten Tag! I lived in Madrid for a year and want to keep my Spanish fresh. Let\'s talk about travel.'
+        bio: 'Guten Tag! I lived in Madrid for a year and want to keep my Spanish fresh. Let\'s talk about travel.',
+        isOnline: false,
     },
     {
         id: '6',
         name: 'Chloe Wright',
         nativeLanguage: 'en',
         learningLanguage: 'fr',
-        bio: 'Hi! I\'m preparing for a proficiency exam in French. I can help you with English idioms and slang.'
+        bio: 'Hi! I\'m preparing for a proficiency exam in French. I can help you with English idioms and slang.',
+        isOnline: true,
     }
 ];
 
@@ -950,7 +956,8 @@ export const CHALLENGES: Challenge[] = [
         title: "Translate This!",
         description: "Translate 'Good morning, how are you?' into your target language without using a translator.",
         icon: "↔️",
-        reward: "20 XP"
+        reward: "20 XP",
+        relatedViewId: 'ai_tutor_chat'
     },
     {
         id: 'dc02',
@@ -958,23 +965,8 @@ export const CHALLENGES: Challenge[] = [
         title: "Adjective Adventure",
         description: "Describe your favorite food using 5 new adjectives you learned this week.",
         icon: "🍕",
-        reward: "25 XP"
-    },
-    {
-        id: 'dc03',
-        type: 'daily',
-        title: "Listen Up!",
-        description: "Listen to a song in your target language and write down 3 words you recognize.",
-        icon: "🎶",
-        reward: "15 XP"
-    },
-    {
-        id: 'dc04',
-        type: 'daily',
-        title: "Quick Query",
-        description: "Ask a question in a conversation scenario, like 'What time is it?' or 'Where is the library?'",
-        icon: "❓",
-        reward: "15 XP"
+        reward: "25 XP",
+        relatedViewId: 'ai_tutor_chat'
     },
     {
         id: 'dc05',
@@ -982,7 +974,8 @@ export const CHALLENGES: Challenge[] = [
         title: "Photo Flashcard",
         description: "Use the Vocabulary tool to add a label to a photo of something in your room.",
         icon: "🖼️",
-        reward: "20 XP"
+        reward: "20 XP",
+        relatedViewId: 'image_editor'
     },
     {
         id: 'wc01',
@@ -990,7 +983,8 @@ export const CHALLENGES: Challenge[] = [
         title: "Scenario Streak",
         description: "Complete 3 conversation scenarios in a week with 80% grammar accuracy.",
         icon: "💬",
-        reward: "100 XP & 💎"
+        reward: "100 XP & 💎",
+        relatedViewId: 'dashboard'
     },
     {
         id: 'wc02',
@@ -998,7 +992,8 @@ export const CHALLENGES: Challenge[] = [
         title: "Vocabulary Voyager",
         description: "Learn 20 new words using the Word Bank and score 90% on a lesson quiz.",
         icon: "📚",
-        reward: "120 XP"
+        reward: "120 XP",
+        relatedViewId: 'word_bank'
     },
     {
         id: 'ec01',
@@ -1006,7 +1001,8 @@ export const CHALLENGES: Challenge[] = [
         title: "Weekend Warrior",
         description: "Complete a lesson every day this weekend (Friday, Saturday, Sunday).",
         icon: "🗓️",
-        reward: "75 XP & ✨"
+        reward: "75 XP & ✨",
+        relatedViewId: 'dashboard'
     }
 ];
 
@@ -1161,6 +1157,13 @@ export const MULTILINGUAL_PHRASES: Record<string, PhraseCategory[]> = {
                 { id: 'en-1', phrase: 'How are you?', translation: 'How are you?', audio_prompt: 'Say "How are you?" in English.' },
                 { id: 'en-2', phrase: 'What is your name?', translation: 'What is your name?', audio_prompt: 'Say "What is your name?" in English.' },
             ]
+        },
+        {
+            category: 'Useful Phrases',
+            phrases: [
+                { id: 'en-3', phrase: 'I would like a coffee.', translation: 'I would like a coffee.', audio_prompt: 'Say "I would like a coffee." in English.' },
+                { id: 'en-4', phrase: 'Where is the bathroom?', translation: 'Where is the bathroom?', audio_prompt: 'Say "Where is the bathroom?" in English.' },
+            ]
         }
     ],
     es: [
@@ -1170,6 +1173,13 @@ export const MULTILINGUAL_PHRASES: Record<string, PhraseCategory[]> = {
                 { id: 'es-1', phrase: '¿Cómo estás?', translation: 'How are you?', audio_prompt: 'Say "¿Cómo estás?" in Spanish.' },
                 { id: 'es-2', phrase: '¿Cuál es tu nombre?', translation: 'What is your name?', audio_prompt: 'Say "¿Cuál es tu nombre?" in Spanish.' },
             ]
+        },
+        {
+            category: 'Frases Útiles',
+            phrases: [
+                { id: 'es-3', phrase: 'Quisiera un café.', translation: 'I would like a coffee.', audio_prompt: 'Say "Quisiera un café." in Spanish.' },
+                { id: 'es-4', phrase: '¿Dónde está el baño?', translation: 'Where is the bathroom?', audio_prompt: 'Say "¿Dónde está el baño?" in Spanish.' },
+            ]
         }
     ],
     ja: [
@@ -1178,6 +1188,63 @@ export const MULTILINGUAL_PHRASES: Record<string, PhraseCategory[]> = {
             phrases: [
                 { id: 'ja-1', phrase: 'お元気ですか？', translation: 'How are you?', audio_prompt: 'Say "お元気ですか？" in Japanese.' },
                 { id: 'ja-2', phrase: 'お名前は何ですか？', translation: 'What is your name?', audio_prompt: 'Say "お名前は何ですか？" in Japanese.' },
+            ]
+        },
+        {
+            category: '便利なフレーズ',
+            phrases: [
+                { id: 'ja-3', phrase: 'コーヒーをお願いします。', translation: 'I would like a coffee.', audio_prompt: 'Say "コーヒーをお願いします。" in Japanese.' },
+                { id: 'ja-4', phrase: 'トイレはどこですか？', translation: 'Where is the bathroom?', audio_prompt: 'Say "トイレはどこですか？" in Japanese.' },
+            ]
+        }
+    ],
+    fr: [
+        {
+            category: 'Salutations Courantes',
+            phrases: [
+                { id: 'fr-1', phrase: 'Comment ça va ?', translation: 'How are you?', audio_prompt: 'Say "Comment ça va ?" in French.' },
+                { id: 'fr-2', phrase: 'Quel est votre nom ?', translation: 'What is your name?', audio_prompt: 'Say "Quel est votre nom ?" in French.' },
+            ]
+        },
+        {
+            category: 'Expressions Utiles',
+            phrases: [
+                { id: 'fr-3', phrase: 'Je voudrais un café.', translation: 'I would like a coffee.', audio_prompt: 'Say "Je voudrais un café." in French.' },
+                { id: 'fr-4', phrase: 'Où sont les toilettes ?', translation: 'Where is the bathroom?', audio_prompt: 'Say "Où sont les toilettes ?" in French.' },
+            ]
+        }
+    ],
+    de: [
+        {
+            category: 'Allgemeine Begrüßungen',
+            phrases: [
+                { id: 'de-1', phrase: 'Wie geht es Ihnen?', translation: 'How are you?', audio_prompt: 'Say "Wie geht es Ihnen?" in German.' },
+                { id: 'de-2', phrase: 'Wie heißen Sie?', translation: 'What is your name?', audio_prompt: 'Say "Wie heißen Sie?" in German.' },
+            ]
+        },
+        {
+            category: 'Nützliche Sätze',
+            phrases: [
+                { id: 'de-3', phrase: 'Ich hätte gern einen Kaffee.', translation: 'I would like a coffee.', audio_prompt: 'Say "Ich hätte gern einen Kaffee." in German.' },
+                { id: 'de-4', phrase: 'Wo ist die Toilette?', translation: 'Where is the bathroom?', audio_prompt: 'Say "Wo ist die Toilette?" in German.' },
+            ]
+        }
+    ],
+    hi: [
+        {
+            category: 'आम अभिवादन',
+            phrases: [
+                { id: 'hi-1', phrase: 'आप कैसे हैं?', translation: 'How are you?', audio_prompt: 'Say "आप कैसे हैं?" in Hindi.' },
+                { id: 'hi-2', phrase: 'आपका नाम क्या है?', translation: 'What is your name?', audio_prompt: 'Say "आपका नाम क्या है?" in Hindi.' },
+            ]
+        }
+    ],
+    sa: [
+        {
+            category: 'सामान्य अभिवादनम्',
+            phrases: [
+                { id: 'sa-1', phrase: 'भवान् कथम् अस्ति?', translation: 'How are you? (to male)', audio_prompt: 'Say "भवान् कथम् अस्ति?" in Sanskrit.' },
+                { id: 'sa-2', phrase: 'भवत्याः नाम किम्?', translation: 'What is your name? (to female)', audio_prompt: 'Say "भवत्याः नाम किम्?" in Sanskrit.' },
             ]
         }
     ]

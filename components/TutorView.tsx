@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { TUTORS, LANGUAGES, VIEWS } from '../constants';
 import type { Tutor } from '../types';
 import { Button } from './common/Button';
-import { StarIcon, ChatBubbleIcon } from './icons/Icons';
+import { StarIcon, ChatBubbleIcon, LockIcon } from './icons/Icons';
 
 const getLanguageName = (code: string): string => {
     return LANGUAGES.find(lang => lang.code === code)?.name || code;
@@ -32,7 +32,7 @@ const TutorCard: React.FC<{ tutor: Tutor }> = ({ tutor }) => (
                 <p className="font-bold text-sky-800">{tutor.pricePerSession}</p>
             </div>
             <Button 
-                onClick={() => alert(`Booking a session with ${tutor.name}. Payment integration coming soon!`)} 
+                onClick={() => alert(`Booking a session with ${tutor.name}. Secure payment integration is coming soon!`)} 
                 className="w-full"
                 disabled={!tutor.isOnline}
             >
@@ -64,13 +64,15 @@ const AITutorCard: React.FC = () => (
 
 export const TutorView: React.FC = () => {
     const [languageFilter, setLanguageFilter] = useState('all');
+    const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
     const filteredTutors = useMemo(() => {
-        if (languageFilter === 'all') {
-            return TUTORS;
-        }
-        return TUTORS.filter(tutor => tutor.nativeLanguage === languageFilter);
-    }, [languageFilter]);
+        return TUTORS.filter(tutor => {
+            const languageMatch = languageFilter === 'all' || tutor.nativeLanguage === languageFilter;
+            const onlineMatch = !showOnlineOnly || tutor.isOnline;
+            return languageMatch && onlineMatch;
+        });
+    }, [languageFilter, showOnlineOnly]);
 
     return (
         <div className="animate-fade-in">
@@ -88,7 +90,7 @@ export const TutorView: React.FC = () => {
                     </div>
                     <div>
                         <h3 className="font-bold font-poppins text-lg">Unlock Premium Tutoring</h3>
-                        <p className="text-sm mt-1">Upgrade to ChirPolly Pro to book unlimited sessions with our top-rated tutors!</p>
+                        <p className="text-sm mt-1">Upgrade to ChirPolly Pro to unlock secure payments and book unlimited sessions with our top-rated tutors!</p>
                         <button className="mt-3 inline-flex items-center justify-center gap-x-2 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-teal-700 shadow-sm hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white transition-colors">
                             Upgrade Now
                         </button>
@@ -101,19 +103,35 @@ export const TutorView: React.FC = () => {
             {/* Filters */}
             <div className="bg-white p-4 rounded-lg shadow-md mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <h2 className="text-2xl font-bold text-gray-700 font-poppins">Live Native Tutors</h2>
-                <div className="w-full sm:w-64">
-                    <label htmlFor="language-filter" className="sr-only">
-                        Find a tutor for:
-                    </label>
-                    <select
-                        id="language-filter"
-                        value={languageFilter}
-                        onChange={(e) => setLanguageFilter(e.target.value)}
-                        className="block w-full rounded-md border-slate-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
-                    >
-                        <option value="all">Any Language</option>
-                        {LANGUAGES.map(lang => <option key={lang.code} value={lang.code}>{lang.name}</option>)}
-                    </select>
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                    <div className="flex items-center">
+                        <label htmlFor="online-filter" className="block text-sm font-medium text-gray-700 mr-2 whitespace-nowrap">
+                            Available now
+                        </label>
+                        <button
+                            type="button"
+                            className={`${showOnlineOnly ? 'bg-teal-500' : 'bg-gray-200'} relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2`}
+                            role="switch"
+                            aria-checked={showOnlineOnly}
+                            onClick={() => setShowOnlineOnly(!showOnlineOnly)}
+                        >
+                            <span
+                                aria-hidden="true"
+                                className={`${showOnlineOnly ? 'translate-x-5' : 'translate-x-0'} pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+                            />
+                        </button>
+                    </div>
+                    <div className="w-full sm:w-56">
+                        <select
+                            id="language-filter"
+                            value={languageFilter}
+                            onChange={(e) => setLanguageFilter(e.target.value)}
+                            className="block w-full rounded-md border-slate-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+                        >
+                            <option value="all">Any Language</option>
+                            {LANGUAGES.map(lang => <option key={lang.code} value={lang.code}>{lang.name}</option>)}
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -123,9 +141,22 @@ export const TutorView: React.FC = () => {
                     filteredTutors.map(tutor => <TutorCard key={tutor.id} tutor={tutor} />)
                 ) : (
                     <div className="col-span-full text-center py-12 bg-white/50 rounded-lg">
-                        <p className="text-gray-500">No human tutors available for this language yet. Please check back later!</p>
+                        <p className="text-gray-500">No tutors match your criteria. Try different filters!</p>
                     </div>
                 )}
+            </div>
+
+            {/* Become a Tutor CTA */}
+            <div className="mt-12">
+                <div className="bg-white p-8 rounded-lg shadow-lg border-t-4 border-green-400 text-center">
+                    <h2 className="text-2xl font-bold font-poppins text-gray-800">Want to become a tutor?</h2>
+                    <p className="mt-2 text-gray-600 max-w-xl mx-auto">Share your language skills with a global community of learners, set your own schedule, and earn money on your terms.</p>
+                    <div className="mt-6">
+                        <Button onClick={() => alert('Tutor applications will be opening soon!')} className="bg-green-500 hover:bg-green-600">
+                            Learn More
+                        </Button>
+                    </div>
+                </div>
             </div>
         </div>
     );
