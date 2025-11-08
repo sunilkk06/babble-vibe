@@ -1,4 +1,7 @@
+
+
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { Lesson } from '../types';
 import { Button } from './common/Button';
 import { SpeakerWaveIcon } from './icons/Icons';
@@ -14,6 +17,7 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
     const [quizFinished, setQuizFinished] = useState(false);
     const [pollyMessage, setPollyMessage] = useState('');
     const [cultureCapsuleHtml, setCultureCapsuleHtml] = useState('');
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -143,7 +147,13 @@ export const LessonView: React.FC<{ lesson: Lesson }> = ({ lesson }) => {
                             <p className="text-green-800 font-semibold">🦜 Polly says: "{pollyMessage}"</p>
                         </div>
 
-                        <div className="mt-6">
+                        <div className="mt-6 flex items-center justify-center gap-x-4">
+                           <button
+                                onClick={() => navigate('/', { state: { lessonCompleted: true } })}
+                                className="inline-flex items-center justify-center gap-x-2 rounded-md bg-transparent px-3.5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm hover:bg-slate-200 transition-colors"
+                            >
+                                Back to Dashboard
+                            </button>
                             <Button onClick={restartQuiz}>
                                 Try Again
                             </Button>

@@ -584,6 +584,15 @@ Provide feedback on their answer.`
     systemPrompt: "You are a helpful local in Tokyo. The user is a lost tourist asking for directions in Japanese. Provide simple, clear directions and be encouraging. Respond in Japanese."
   },
   {
+    id: 'restaurant-ja',
+    title: 'Ordering Food in Tokyo',
+    description: 'Practice ordering food and drinks at a restaurant in Tokyo.',
+    emoji: '🍜',
+    lang: 'ja',
+    category: 'Conversation',
+    systemPrompt: "You are a friendly and patient waiter at a casual restaurant in Tokyo. The user is a customer who wants to order food. Greet them in Japanese, ask for their order, and respond naturally. If they seem to struggle, you can offer suggestions like 'ラーメンはいかがですか？' (Ramen wa ikaga desu ka? - How about some ramen?). Keep your Japanese simple and clear for a learner. Start by welcoming the customer and asking if they are ready to order."
+  },
+  {
     id: 'market-es',
     title: 'At the Market in Madrid',
     description: 'Haggle for prices and buy groceries at a vibrant Spanish market.',
@@ -1127,6 +1136,7 @@ export const VIEWS: { [key: string]: View & { path: string, icon?: any } } = {
   KANJI_LAIR: { id: 'kanji_lair', label: 'Kanji Lair', path: '/kanji-lair', icon: KanjiIcon },
   ACCENT_TRAINING: { id: 'accent_training', label: 'Accent Training', path: '/accent-training', icon: AccentTrainingIcon },
   TUTORS: { id: 'ai_tutors', label: 'Tutors', path: '/tutors', icon: TutorIcon },
+  AI_TUTOR_CHAT: { id: 'ai_tutor_chat', label: 'AI Tutor Chat', path: '/tutors/ai' }, // No icon, not in sidebar
   COMMUNITY: { id: 'community', label: 'Community', path: '/community', icon: CommunityIcon },
   ACHIEVEMENTS: { id: 'achievements', label: 'Achievements', path: '/achievements', icon: AchievementsIcon },
   CHALLENGES: { id: 'challenges', label: 'Challenges', path: '/challenges', icon: ChallengesIcon },

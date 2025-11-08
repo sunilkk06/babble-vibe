@@ -169,6 +169,12 @@ export const generateSpeech = async (prompt: string): Promise<string | null> => 
             contents: [{ parts: [{ text: prompt }] }],
             config: {
                 responseModalities: [Modality.AUDIO],
+                speechConfig: {
+                    voiceConfig: {
+                        // Using 'Kore' as a high-quality, standard voice.
+                        prebuiltVoiceConfig: { voiceName: 'Kore' },
+                    },
+                },
             },
         });
         const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;

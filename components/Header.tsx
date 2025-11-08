@@ -1,7 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { MenuIcon } from './icons/Icons';
-import { ParrotIcon } from './icons/ParrotIcon';
 import type { Language } from '../types';
 import { LANGUAGES } from '../constants';
 
@@ -24,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage
     const [isProfileOpen, setProfileOpen] = useState(false);
     const profileMenuRef = useRef<HTMLDivElement>(null);
 
-    // Fake data for gamification
+    // Mock data for gamification
     const userLevel = 5;
     const levelProgress = 60; // 60%
     

@@ -140,3 +140,25 @@ export const XMarkIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
   </svg>
 );
+
+export const FireIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+        <path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071 1.071 22.5 22.5 0 01-1.544 3.585 23.332 23.332 0 01-2.034 3.734 2.25 2.25 0 00-.512 1.484 12.75 12.75 0 00.99 6.234.75.75 0 00.41 1.127 12.75 12.75 0 006.128 1.432.75.75 0 00.707-1.233 11.25 11.25 0 01-1.282-4.933 2.25 2.25 0 01.328-1.573 23.332 23.332 0 002.034-3.734 22.5 22.5 0 001.544-3.585.75.75 0 00-1.071-1.071z" clipRule="evenodd" />
+    </svg>
+);
+
+export const CoinIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+        <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM9.537 5.624a.75.75 0 00-1.07.034l-2.25 2.5a.75.75 0 001.07 1.07l2.25-2.5a.75.75 0 00-.03-1.104zm4.28 11.662a.75.75 0 001.07-.034l2.25-2.5a.75.75 0 00-1.07-1.07l-2.25 2.5a.75.75 0 00.03 1.104zm-.587-6.9a.75.75 0 10-1.061-1.061l-2.25 2.25a.75.75 0 101.06 1.06l2.25-2.25z" clipRule="evenodd" />
+    </svg>
+);
+
+export const GiftIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+        <path d="M12.75 15.337C11.07 16.5 8.25 16.5 8.25 16.5s-2.82.001-4.5-1.163A2.25 2.25 0 012.25 13.5V10.5a2.25 2.25 0 012.25-2.25c1.68 0 4.5 0 4.5 0s2.82 0 4.5 1.163A2.25 2.25 0 0115 11.25v1.5a2.25 2.25 0 01-2.25 2.587z" />
+        <path d="M12.75 15.337C14.43 16.5 17.25 16.5 17.25 16.5s2.82.001 4.5-1.163A2.25 2.25 0 0023.25 13.5V10.5a2.25 2.25 0 00-2.25-2.25c-1.68 0-4.5 0-4.5 0s-2.82 0-4.5 1.163A2.25 2.25 0 0010.5 11.25v1.5a2.25 2.25 0 002.25 2.587z" />
+        <path d="M8.25 8.25V6a.75.75 0 01.75-.75h2.25a.75.75 0 01.75.75v2.25h-3.75z" />
+        <path d="M17.25 8.25V6a.75.75 0 00-.75-.75h-2.25a.75.75 0 00-.75.75v2.25h3.75z" />
+        <path fillRule="evenodd" d="M12 3.75a.75.75 0 01.75.75v3.75h3a.75.75 0 010 1.5h-3v3a.75.75 0 01-1.5 0v-3h-3a.75.75 0 010-1.5h3V4.5a.75.75 0 01.75-.75z" clipRule="evenodd" />
+    </svg>
+);

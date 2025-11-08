@@ -1,7 +1,6 @@
 
 
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
@@ -19,6 +18,7 @@ import { WordBankView } from './components/WordBankView';
 import { Onboarding } from './components/Onboarding';
 import { LoginPage } from './components/LoginPage';
 import { AITutorView } from './components/AITutorView';
+import { TutorView } from './components/TutorView';
 import { AccentTrainingView } from './components/AccentTrainingView';
 import { KanjiLairView } from './components/KanjiLairView';
 import { Footer } from './components/Footer';
@@ -58,9 +58,37 @@ export default function App() {
   const [installPrompt, setInstallPrompt] = useState<any>(null);
   const [isIos, setIsIos] = useState(false);
   const [showInstallBanner, setShowInstallBanner] = useState(false);
+  const [isInactive, setIsInactive] = useState(false);
+  const inactivityTimer = useRef<number | null>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const resetInactivityTimer = React.useCallback(() => {
+    if (isInactive) {
+      setIsInactive(false);
+    }
+    if (inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
+    inactivityTimer.current = window.setTimeout(() => {
+      setIsInactive(true);
+    }, 120000); // 2 minutes
+  }, [isInactive]);
+
+  useEffect(() => {
+    const events: (keyof WindowEventMap)[] = ['mousemove', 'keydown', 'touchstart', 'scroll'];
+    events.forEach(event => window.addEventListener(event, resetInactivityTimer));
+    resetInactivityTimer();
+
+    return () => {
+      events.forEach(event => window.removeEventListener(event, resetInactivityTimer));
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
+    };
+  }, [resetInactivityTimer]);
+
 
   useEffect(() => {
     const initializeNativeFeatures = async () => {
@@ -224,7 +252,8 @@ export default function App() {
     onLessonSelect: handleLessonSelect,
     scenarios: SCENARIOS.filter(s => s.lang === currentLanguage.code),
     lessons: LESSONS.filter(l => l.lang === currentLanguage.code),
-    onNavigate: (view: View) => navigate(Object.values(VIEWS).find(v => v.id === view.id)?.path || '/')
+    onNavigate: (view: View) => navigate(Object.values(VIEWS).find(v => v.id === view.id)?.path || '/'),
+    isInactive,
   };
 
 
@@ -254,10 +283,11 @@ export default function App() {
             <Route path={VIEWS.WORD_BANK.path} element={<WordBankView language={currentLanguage} />} />
             <Route path={VIEWS.KANJI_LAIR.path} element={<KanjiLairView language={currentLanguage} />} />
             <Route path={VIEWS.ACCENT_TRAINING.path} element={<AccentTrainingView language={currentLanguage} />} />
-            <Route path={VIEWS.COMMUNITY.path} element={<PlaceholderView title="Community Hub" description="Practice with other learners, find language partners, and join study groups. This feature is coming soon!" icon={CommunityIcon} />} />
-            <Route path={VIEWS.ACHIEVEMENTS.path} element={<PlaceholderView title="Achievements" description="Earn badges for your progress, celebrate milestones, and track your learning journey. This feature is under development!" icon={AchievementsIcon} />} />
-            <Route path={VIEWS.CHALLENGES.path} element={<PlaceholderView title="Challenges" description="Take on daily and weekly challenges to test your skills and earn rewards. Get ready for some friendly competition!" icon={ChallengesIcon} />} />
-            <Route path={VIEWS.TUTORS.path} element={<AITutorView language={currentLanguage} />} />
+            <Route path={VIEWS.COMMUNITY.path} element={<CommunityView />} />
+            <Route path={VIEWS.ACHIEVEMENTS.path} element={<AchievementsView />} />
+            <Route path={VIEWS.CHALLENGES.path} element={<ChallengesView />} />
+            <Route path={VIEWS.TUTORS.path} element={<TutorView />} />
+            <Route path={VIEWS.AI_TUTOR_CHAT.path} element={<AITutorView language={currentLanguage} />} />
             <Route path={VIEWS.ABOUT.path} element={<AboutView />} />
             <Route path={VIEWS.TERMS.path} element={<TermsView />} />
             <Route path={VIEWS.PRIVACY.path} element={<PrivacyView />} />

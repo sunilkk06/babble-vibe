@@ -1,9 +1,11 @@
 
+
 import React, { useState, useMemo } from 'react';
-import { TUTORS, LANGUAGES } from '../constants';
+import { Link } from 'react-router-dom';
+import { TUTORS, LANGUAGES, VIEWS } from '../constants';
 import type { Tutor } from '../types';
 import { Button } from './common/Button';
-import { StarIcon } from './icons/Icons';
+import { StarIcon, ChatBubbleIcon } from './icons/Icons';
 
 const getLanguageName = (code: string): string => {
     return LANGUAGES.find(lang => lang.code === code)?.name || code;
@@ -40,6 +42,26 @@ const TutorCard: React.FC<{ tutor: Tutor }> = ({ tutor }) => (
     </div>
 );
 
+const AITutorCard: React.FC = () => (
+    <div className="mb-8 bg-gradient-to-r from-teal-400 to-sky-500 p-6 rounded-xl shadow-lg text-white transform hover:-translate-y-1 transition-transform duration-300">
+        <div className="flex flex-col sm:flex-row items-center gap-x-6">
+            <div className="bg-white/30 p-4 rounded-full text-5xl mb-4 sm:mb-0">
+                🦜
+            </div>
+            <div className="flex-grow text-center sm:text-left">
+                <h3 className="font-bold font-poppins text-xl">Chat with Polly AI Tutor</h3>
+                <p className="text-sm mt-1">Practice conversation, ask grammar questions, or just chat anytime for free!</p>
+            </div>
+            <Link to={VIEWS.AI_TUTOR_CHAT.path} className="mt-4 sm:mt-0 w-full sm:w-auto">
+                <Button className="bg-white text-teal-700 hover:bg-slate-100 w-full">
+                    <ChatBubbleIcon className="w-5 h-5 mr-2" /> Start Chatting
+                </Button>
+            </Link>
+        </div>
+    </div>
+);
+
+
 export const TutorView: React.FC = () => {
     const [languageFilter, setLanguageFilter] = useState('all');
 
@@ -74,10 +96,13 @@ export const TutorView: React.FC = () => {
                 </div>
             </div>
 
+            <AITutorCard />
+
             {/* Filters */}
-            <div className="bg-white p-4 rounded-lg shadow-md mb-8 flex flex-col sm:flex-row gap-4">
-                <div className="flex-1">
-                    <label htmlFor="language-filter" className="block text-sm font-medium text-gray-700 mb-1">
+            <div className="bg-white p-4 rounded-lg shadow-md mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <h2 className="text-2xl font-bold text-gray-700 font-poppins">Live Native Tutors</h2>
+                <div className="w-full sm:w-64">
+                    <label htmlFor="language-filter" className="sr-only">
                         Find a tutor for:
                     </label>
                     <select
@@ -98,7 +123,7 @@ export const TutorView: React.FC = () => {
                     filteredTutors.map(tutor => <TutorCard key={tutor.id} tutor={tutor} />)
                 ) : (
                     <div className="col-span-full text-center py-12 bg-white/50 rounded-lg">
-                        <p className="text-gray-500">No tutors available for this language yet. Please check back later!</p>
+                        <p className="text-gray-500">No human tutors available for this language yet. Please check back later!</p>
                     </div>
                 )}
             </div>
