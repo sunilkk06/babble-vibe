@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
@@ -29,6 +30,8 @@ import { PlaceholderView } from './components/PlaceholderView';
 import { CommunityIcon, AchievementsIcon, ChallengesIcon, TutorIcon } from './components/icons/SidebarIcons';
 import type { View, Scenario, Language, Lesson } from './types';
 import { VIEWS, SCENARIOS, LANGUAGES, LESSONS } from './constants';
+import { Button } from './components/common/Button';
+import { ShareIcon, XMarkIcon } from './components/icons/Icons';
 
 // Wrapper component to handle URL parameters for ScenarioView
 const ScenarioViewWrapper = ({ language }: { language: Language }) => {
@@ -52,6 +55,9 @@ export default function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+  const [isIos, setIsIos] = useState(false);
+  const [showInstallBanner, setShowInstallBanner] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,6 +69,33 @@ export default function App() {
       }
     };
     initializeNativeFeatures();
+  }, []);
+  
+  useEffect(() => {
+    // Check if banner was already dismissed
+    if (localStorage.getItem('chirPollyInstallDismissed') === 'true') {
+        return;
+    }
+    
+    const beforeInstallHandler = (e: Event) => {
+        e.preventDefault();
+        setInstallPrompt(e);
+        setShowInstallBanner(true);
+    };
+    window.addEventListener('beforeinstallprompt', beforeInstallHandler);
+
+    const checkIos = () => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+    }
+    const checkStandalone = () => ('standalone' in window.navigator) && ((window.navigator as any).standalone);
+
+    if (checkIos() && !checkStandalone()) {
+        setIsIos(true);
+        setShowInstallBanner(true);
+    }
+
+    return () => window.removeEventListener('beforeinstallprompt', beforeInstallHandler);
   }, []);
 
   useEffect(() => {
@@ -162,6 +195,25 @@ export default function App() {
     setCurrentLanguage(newLang);
     navigate(VIEWS.DASHBOARD.path);
   };
+
+  const handleInstallClick = () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    installPrompt.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+        } else {
+            console.log('User dismissed the A2HS prompt');
+        }
+        setInstallPrompt(null);
+        setShowInstallBanner(false);
+    });
+  };
+
+  const handleDismissBanner = () => {
+      localStorage.setItem('chirPollyInstallDismissed', 'true');
+      setShowInstallBanner(false);
+  };
   
   if (!isAuthenticated) {
     return <LoginPage onLogin={handleLogin} />;
@@ -215,6 +267,33 @@ export default function App() {
         </main>
         <Footer />
       </div>
+
+       {showInstallBanner && (
+            <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 border-t border-slate-200/80 shadow-lg z-50 animate-fade-in-up md:ml-72">
+                <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <img src="/icon.svg" alt="ChirPolly Icon" className="h-12 w-12 hidden sm:block" />
+                        <div>
+                            <h3 className="font-bold text-slate-800">Get the full experience!</h3>
+                            <p className="text-sm text-slate-600">Install ChirPolly on your device for easy access.</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                        {installPrompt && (
+                            <Button onClick={handleInstallClick}>Install</Button>
+                        )}
+                        {isIos && (
+                            <p className="text-sm text-slate-600 font-semibold text-center bg-slate-100 p-2 rounded-md flex items-center gap-1">
+                                Tap <ShareIcon className="w-5 h-5"/> then "Add to Home Screen"
+                            </p>
+                        )}
+                        <button onClick={handleDismissBanner} className="p-2 text-slate-500 hover:bg-slate-200 rounded-full" title="Dismiss">
+                            <XMarkIcon className="h-6 w-6"/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
     </div>
   );
 }

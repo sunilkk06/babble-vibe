@@ -9,22 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@capacitor/android": "^7.4.4",
-    "@capacitor/cli": "^7.4.4",
-    "@capacitor/core": "^7.4.4",
-    "@google/genai": "^1.27.0",
-    "marked": "^16.4.1",
-<<<<<<< HEAD
     "react": "^19.2.0",
+    "@google/genai": "^1.27.0",
     "react-dom": "^19.2.0",
-    "react-router": "^6.25.1",
-    "react-router-dom": "^6.25.1"
-=======
+    "marked": "^16.4.1",
     "react-router-dom": "^6.25.1",
     "react-router": "^6.25.1",
     "@capacitor/status-bar": "^7.0.3",
     "@capacitor/core": "^7.4.4"
->>>>>>> dc40e73a3147d07aa874f9e415623468a0952ec7
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
