@@ -1,3 +1,5 @@
+// Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
+import React from 'react';
 
 export interface Language {
   code: string;
@@ -182,4 +184,19 @@ export interface Kanji {
     reading: string;
     meaning: string;
   }[];
+}
+
+export interface LeaderboardUser {
+  id: string;
+  name: string;
+  score: number;
+  avatarUrl: string;
+}
+
+export interface Persona {
+  id: 'all-rounder' | 'traveler' | 'student' | 'professional';
+  label: string;
+  description: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  categories: (Scenario['category'] | 'Lesson')[];
 }

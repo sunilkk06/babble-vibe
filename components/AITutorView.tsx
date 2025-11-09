@@ -1,113 +1,258 @@
 import React, { useState, useEffect, useRef } from 'react';
-import type { Message, Language, GrammarFeedback } from '../types';
-import { startChat, sendMessage } from '../services/geminiService';
+import { GoogleGenAI, LiveSession, LiveServerMessage, Modality, Blob } from '@google/genai';
+import type { Message, Language } from '../types';
 import { AI_TUTOR_PROMPT } from '../constants';
-import { SendIcon, SparklesIcon } from './icons/Icons';
+import { MicrophoneIcon, StopCircleIcon } from './icons/Icons';
 import { Spinner } from './common/Spinner';
 
-const parseResponse = (responseText: string): { text: string, feedback: GrammarFeedback | undefined } => {
-    const feedbackMarker = '---GRAMMAR CHECK---';
-    const endMarker = '---END GRAMMAR CHECK---';
-    
-    const feedbackIndex = responseText.indexOf(feedbackMarker);
+// --- Audio Helper Functions ---
+function encode(bytes: Uint8Array) {
+  let binary = '';
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
 
-    if (feedbackIndex === -1) {
-        return { text: responseText, feedback: undefined };
+function decode(base64: string) {
+  const binaryString = atob(base64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+}
+
+async function decodeAudioData(
+  data: Uint8Array,
+  ctx: AudioContext,
+  sampleRate: number,
+  numChannels: number,
+): Promise<AudioBuffer> {
+  const dataInt16 = new Int16Array(data.buffer);
+  const frameCount = dataInt16.length / numChannels;
+  const buffer = ctx.createBuffer(numChannels, frameCount, sampleRate);
+
+  for (let channel = 0; channel < numChannels; channel++) {
+    const channelData = buffer.getChannelData(channel);
+    for (let i = 0; i < frameCount; i++) {
+      channelData[i] = dataInt16[i * numChannels + channel] / 32768.0;
     }
+  }
+  return buffer;
+}
 
-    const text = responseText.substring(0, feedbackIndex).trim();
-    const feedbackBlock = responseText.substring(feedbackIndex + feedbackMarker.length, responseText.indexOf(endMarker));
+function createBlob(data: Float32Array): Blob {
+  const l = data.length;
+  const int16 = new Int16Array(l);
+  for (let i = 0; i < l; i++) {
+    int16[i] = data[i] * 32768;
+  }
+  return {
+    data: encode(new Uint8Array(int16.buffer)),
+    mimeType: 'audio/pcm;rate=16000',
+  };
+}
 
-    const correctionMatch = feedbackBlock.match(/Correction: (.*)/);
-    const explanationMatch = feedbackBlock.match(/Explanation: (.*)/);
 
-    const correction = correctionMatch ? correctionMatch[1].trim() : 'N/A';
-    const explanation = explanationMatch ? explanationMatch[1].trim() : 'N/A';
-    
-    return {
-        text,
-        feedback: { correction, explanation }
-    };
-};
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const AITutorView: React.FC<{ language: Language; }> = ({ language }) => {
     const [messages, setMessages] = useState<Message[]>([]);
-    const [input, setInput] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [showGrammarCheck, setShowGrammarCheck] = useState(true);
+    const [sessionState, setSessionState] = useState<'idle' | 'connecting' | 'active' | 'error'>('idle');
+    const [currentInput, setCurrentInput] = useState('');
+    const [currentOutput, setCurrentOutput] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const sessionPromiseRef = useRef<Promise<LiveSession> | null>(null);
+    const inputAudioContextRef = useRef<AudioContext | null>(null);
+    const outputAudioContextRef = useRef<AudioContext | null>(null);
+    const streamRef = useRef<MediaStream | null>(null);
+    const scriptProcessorRef = useRef<ScriptProcessorNode | null>(null);
+    const nextStartTimeRef = useRef(0);
+    const audioSourcesRef = useRef<Set<AudioBufferSourceNode>>(new Set());
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        // Fix: Replaced `replaceAll` with `replace` and a global regex for broader compatibility.
-        const systemPrompt = AI_TUTOR_PROMPT.replace(/{languageName}/g, language.name);
-        startChat(systemPrompt);
-        setMessages([]);
-
-        const fetchInitialMessage = async () => {
-            setIsLoading(true);
-            try {
-                // Send an empty message to trigger the initial greeting based on the system prompt.
-                const response = await sendMessage('', false);
-                const { text } = parseResponse(response.text);
-                const initialModelMessage: Message = { role: 'model', text };
-                setMessages([initialModelMessage]);
-            } catch (error) {
-                console.error('Error fetching initial message:', error);
-                const errorMessage: Message = { role: 'model', text: 'Oops! Something went wrong. Please try again.' };
-                setMessages([errorMessage]);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchInitialMessage();
-    }, [language]);
+    const currentInputRef = useRef('');
+    const currentOutputRef = useRef('');
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
+    }, [messages, currentInput, currentOutput]);
 
-    const handleSend = async () => {
-        if (!input.trim() || isLoading) return;
+    const stopConversation = async () => {
+        console.log('Stopping conversation...');
+        setSessionState('idle');
         
-        const userMessage: Message = { role: 'user', text: input };
-        setMessages(prev => [...prev, userMessage]);
-        setInput('');
-        setIsLoading(true);
-
-        try {
-            const response = await sendMessage(userMessage.text, showGrammarCheck);
-            const { text, feedback } = parseResponse(response.text);
-            const modelMessage: Message = { role: 'model', text };
-
-            setMessages(prev => {
-                const messagesWithFeedback = [...prev];
-                if (feedback) {
-                    const lastMessageIndex = messagesWithFeedback.length - 1;
-                    const lastMessage = messagesWithFeedback[lastMessageIndex];
-                    if (lastMessage?.role === 'user') {
-                       messagesWithFeedback[lastMessageIndex] = {
-                           ...lastMessage,
-                           grammarFeedback: feedback,
-                       }
-                    }
-                }
-                return [...messagesWithFeedback, modelMessage];
-            });
-        } catch (error) {
-            console.error('Error sending message:', error);
-            const errorMessage: Message = { role: 'model', text: 'Oops! Something went wrong. Please try again.' };
-            setMessages(prev => [...prev, errorMessage]);
-        } finally {
-            setIsLoading(false);
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => track.stop());
+            streamRef.current = null;
+        }
+        if (scriptProcessorRef.current) {
+            scriptProcessorRef.current.disconnect();
+            scriptProcessorRef.current = null;
+        }
+        if (inputAudioContextRef.current && inputAudioContextRef.current.state !== 'closed') {
+            await inputAudioContextRef.current.close();
+            inputAudioContextRef.current = null;
+        }
+        if (outputAudioContextRef.current && outputAudioContextRef.current.state !== 'closed') {
+           await outputAudioContextRef.current.close();
+           outputAudioContextRef.current = null;
+        }
+        if (sessionPromiseRef.current) {
+            try {
+                const session = await sessionPromiseRef.current;
+                session.close();
+            } catch (e) {
+                console.error("Error closing session:", e);
+            }
+            sessionPromiseRef.current = null;
         }
     };
     
+    useEffect(() => {
+        // Cleanup on component unmount or language change
+        return () => {
+            stopConversation();
+        };
+    }, [language]);
+    
+    const startConversation = async () => {
+        setSessionState('connecting');
+        setMessages([]);
+        setErrorMessage('');
+
+        try {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                throw new Error("Your browser does not support audio recording.");
+            }
+            
+            streamRef.current = await navigator.mediaDevices.getUserMedia({ audio: true });
+            
+            inputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
+            outputAudioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+            
+            const source = inputAudioContextRef.current.createMediaStreamSource(streamRef.current);
+            scriptProcessorRef.current = inputAudioContextRef.current.createScriptProcessor(4096, 1, 1);
+            
+            scriptProcessorRef.current.onaudioprocess = (audioProcessingEvent) => {
+                const inputData = audioProcessingEvent.inputBuffer.getChannelData(0);
+                const pcmBlob = createBlob(inputData);
+                sessionPromiseRef.current?.then((session) => session.sendRealtimeInput({ media: pcmBlob }));
+            };
+            
+            source.connect(scriptProcessorRef.current);
+            scriptProcessorRef.current.connect(inputAudioContextRef.current.destination);
+
+            const systemPrompt = AI_TUTOR_PROMPT.replace(/{languageName}/g, language.name);
+
+            sessionPromiseRef.current = ai.live.connect({
+                model: 'gemini-2.5-flash-native-audio-preview-09-2025',
+                callbacks: {
+                    onopen: () => {
+                        console.log('Live session opened.');
+                        setSessionState('active');
+                    },
+                    onmessage: async (message: LiveServerMessage) => {
+                         if (message.serverContent?.outputTranscription) {
+                            const text = message.serverContent.outputTranscription.text;
+                            currentOutputRef.current += text;
+                            setCurrentOutput(currentOutputRef.current);
+                        }
+                        if (message.serverContent?.inputTranscription) {
+                            const text = message.serverContent.inputTranscription.text;
+                            currentInputRef.current += text;
+                            setCurrentInput(currentInputRef.current);
+                        }
+                        
+                        if (message.serverContent?.turnComplete) {
+                            const fullInput = currentInputRef.current;
+                            const fullOutput = currentOutputRef.current;
+                            
+                            setMessages(prev => [
+                                ...prev,
+                                { role: 'user', text: fullInput },
+                                { role: 'model', text: fullOutput }
+                            ]);
+
+                            currentInputRef.current = '';
+                            currentOutputRef.current = '';
+                            setCurrentInput('');
+                            setCurrentOutput('');
+                        }
+
+                        const base64Audio = message.serverContent?.modelTurn?.parts[0]?.inlineData.data;
+                        if (base64Audio && outputAudioContextRef.current) {
+                            const outputCtx = outputAudioContextRef.current;
+                            nextStartTimeRef.current = Math.max(nextStartTimeRef.current, outputCtx.currentTime);
+                            
+                            const audioBuffer = await decodeAudioData(decode(base64Audio), outputCtx, 24000, 1);
+                            
+                            const sourceNode = outputCtx.createBufferSource();
+                            sourceNode.buffer = audioBuffer;
+                            sourceNode.connect(outputCtx.destination);
+                            
+                            sourceNode.addEventListener('ended', () => {
+                                audioSourcesRef.current.delete(sourceNode);
+                            });
+
+                            sourceNode.start(nextStartTimeRef.current);
+                            nextStartTimeRef.current += audioBuffer.duration;
+                            audioSourcesRef.current.add(sourceNode);
+                        }
+                    },
+                    onerror: (e: ErrorEvent) => {
+                        console.error('Live session error:', e);
+                        setErrorMessage('An error occurred during the session. Please try again.');
+                        stopConversation();
+                    },
+                    onclose: () => {
+                        console.log('Live session closed.');
+                        stopConversation();
+                    },
+                },
+                config: {
+                    systemInstruction: systemPrompt,
+                    responseModalities: [Modality.AUDIO],
+                    inputAudioTranscription: {},
+                    outputAudioTranscription: {},
+                },
+            });
+
+        } catch (err) {
+            console.error("Error starting conversation:", err);
+            setErrorMessage("Could not start conversation. Please ensure microphone permissions are enabled.");
+            setSessionState('error');
+            stopConversation();
+        }
+    };
+
+    const handleToggleConversation = () => {
+        if (sessionState === 'active' || sessionState === 'connecting') {
+            stopConversation();
+        } else {
+            startConversation();
+        }
+    };
+    
+    const getStatusText = () => {
+        if (sessionState === 'error') return errorMessage;
+        if (sessionState === 'connecting') return 'Connecting to Polly...';
+        if (sessionState === 'active') {
+            if (currentOutput) return 'Polly is speaking...';
+            return 'Listening...';
+        }
+        return 'Tap the mic to start talking to Polly!';
+    };
+
     return (
         <div className="flex flex-col h-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg border-t-4 border-teal-400">
             <div className="p-4 border-b border-gray-200">
-                <h2 className="text-xl font-bold font-poppins text-gray-800">🤖 Polly AI Tutor</h2>
-                <p className="text-sm text-gray-600">Practice conversation, ask grammar questions, or just chat!</p>
+                <h2 className="text-xl font-bold font-poppins text-gray-800">🦜 Talk to Polly!</h2>
+                <p className="text-sm text-gray-600">Practice your conversation skills with your AI Tutor.</p>
             </div>
 
             <div className="flex-1 p-4 overflow-y-auto">
@@ -118,60 +263,51 @@ export const AITutorView: React.FC<{ language: Language; }> = ({ language }) => 
                            <div className={`rounded-xl px-4 py-2 max-w-md shadow-sm ${msg.role === 'user' ? 'bg-rose-500 text-white' : 'bg-slate-100 text-gray-800'}`}>
                                <p>{msg.text}</p>
                            </div>
-                           {msg.role === 'user' && msg.grammarFeedback && (
-                                <div className="p-3 bg-yellow-100 border border-yellow-300 rounded-lg text-sm text-yellow-900 animate-fade-in shadow-md">
-                                    <h4 className="font-bold mb-1">Grammar Tip!</h4>
-                                    <p><span className="font-semibold">Correction:</span> {msg.grammarFeedback.correction}</p>
-                                    <p><span className="font-semibold">Explanation:</span> {msg.grammarFeedback.explanation}</p>
-                                </div>
-                            )}
                         </div>
                     ))}
-                    {isLoading && messages.length === 0 && (
-                        <div className="flex items-center justify-center h-full">
-                            <Spinner />
-                            <p className="ml-2 text-gray-600">Polly is getting ready...</p>
-                        </div>
+                    {currentInput && (
+                         <div className="flex items-end gap-2 justify-end">
+                            <div className="rounded-xl px-4 py-2 max-w-md shadow-sm bg-rose-500/80 text-white/90">
+                               <p>{currentInput}...</p>
+                           </div>
+                         </div>
                     )}
-                    {isLoading && messages.length > 0 && (
+                    {currentOutput && (
                         <div className="flex items-end gap-2 justify-start">
                              <span className="text-2xl">🦜</span>
-                            <div className="rounded-xl px-4 py-2 bg-slate-100">
-                                <Spinner />
-                            </div>
+                            <div className="rounded-xl px-4 py-2 max-w-md shadow-sm bg-slate-100/80 text-gray-800/90">
+                               <p>{currentOutput}...</p>
+                           </div>
+                        </div>
+                    )}
+                    {sessionState === 'connecting' && (
+                        <div className="flex items-center justify-center p-8">
+                            <Spinner />
                         </div>
                     )}
                     <div ref={messagesEndRef} />
                 </div>
             </div>
 
-            <div className="p-4 border-t border-gray-200">
-                <div className="flex items-center space-x-2">
-                    <button
-                        onClick={() => setShowGrammarCheck(!showGrammarCheck)}
-                        className={`p-2 rounded-full transition-colors duration-200 ${showGrammarCheck ? 'bg-yellow-200 text-yellow-800' : 'bg-slate-200 text-gray-500 hover:bg-slate-300'}`}
-                        title={showGrammarCheck ? 'Disable Grammar Check' : 'Enable Grammar Check'}
-                    >
-                        <SparklesIcon className="w-5 h-5" />
-                    </button>
-                    <input
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                        placeholder={`Chirp in ${language.name}...`}
-                        className="flex-1 p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white"
-                        disabled={isLoading}
-                    />
-                    <button
-                        onClick={handleSend}
-                        disabled={isLoading || !input.trim()}
-                        className="p-2 bg-rose-500 text-white rounded-full hover:bg-rose-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-                        title="Send Chirp"
-                    >
-                        <SendIcon className="w-5 h-5" />
-                    </button>
-                </div>
+            <div className="p-4 border-t border-gray-200 text-center space-y-3">
+                <p className={`text-sm font-semibold min-h-[20px] ${sessionState === 'error' ? 'text-red-500' : 'text-gray-600'}`}>
+                    {getStatusText()}
+                </p>
+                <button
+                    onClick={handleToggleConversation}
+                    disabled={sessionState === 'connecting'}
+                    className={`mx-auto w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg focus:outline-none focus:ring-4 focus:ring-offset-2
+                        ${sessionState === 'active' ? 'bg-rose-500 hover:bg-rose-600 focus:ring-rose-400' : 'bg-teal-500 hover:bg-teal-600 focus:ring-teal-400'}
+                        ${sessionState === 'active' ? 'animate-pulse' : ''}
+                        disabled:bg-gray-400 disabled:cursor-not-allowed`}
+                    title={sessionState === 'active' ? 'Stop Conversation' : 'Start Conversation'}
+                >
+                   {sessionState === 'active' ? (
+                       <StopCircleIcon className="w-10 h-10 text-white"/>
+                   ) : (
+                       <MicrophoneIcon className="w-10 h-10 text-white"/>
+                   )}
+                </button>
             </div>
         </div>
     );

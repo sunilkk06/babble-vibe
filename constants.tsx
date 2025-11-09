@@ -1,8 +1,8 @@
 // Fix: Import React to resolve namespace errors for React.FC and React.SVGProps.
 import React from 'react';
-import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop, PhraseCategory } from './types';
+import type { Language, Scenario, View, CommunityUser, Lesson, AchievementBadge, Challenge, PostLessonMessage, MediaItem, Tutor, Workshop, PhraseCategory, LeaderboardUser, Persona } from './types';
 import { HomeIcon, GlobeIcon, GrammarIcon, VocabularyIcon, ImageGeneratorIcon, CommunityIcon, ChallengesIcon, AchievementsIcon, WordBankIcon, TutorIcon, AccentTrainingIcon, KanjiIcon } from './components/icons/SidebarIcons';
-import { ChatBubbleIcon } from './components/icons/Icons';
+import { ChatBubbleIcon, BriefcaseIcon, AcademicCapIcon, MapPinIcon, SparklesIcon } from './components/icons/Icons';
 
 export const LANGUAGES_CONFIG: (Language & { emoji: string })[] = [
   { code: 'en', name: 'English', emoji: '🇬🇧' },
@@ -39,14 +39,7 @@ export const MOTIVATIONAL_QUOTES: string[] = [
     "Practice makes progress, not perfect. Keep chirping!",
 ];
 
-export const AI_TUTOR_PROMPT = `You are Polly, a friendly, encouraging, and expert AI language tutor from ChirPolly. The user wants to practice conversing in {languageName}.
-
-Your SINGLE MOST IMPORTANT rule is to communicate exclusively in the user's target language, which is {languageName}.
-- If the target language is English, you MUST speak only English.
-- If the target language is French, you MUST speak only French.
-- Do NOT mix languages.
-
-Start the conversation by giving a warm, friendly welcome in {languageName}. Keep your responses natural, supportive, and not too long to encourage a back-and-forth conversation.`;
+export const AI_TUTOR_PROMPT = `You are Polly, a friendly, encouraging, and expert AI language tutor from ChirPolly, who is also a clever parrot. The user wants to practice conversing in {languageName}. Your SINGLE MOST IMPORTANT rule is to communicate exclusively in the user's target language, {languageName}. Respond with spoken audio. Keep your responses natural, supportive, and not too long, like a real conversation. Listen to the user's pronunciation and grammar, and offer gentle, encouraging corrections as part of the conversation (e.g., "Nice chirp! For that 'r' sound, try..."). Also, comment on their emotional tone - for example, if they sound confident, curious, or happy. Start the conversation with a warm, friendly welcome, inviting the user to talk.`;
 
 
 export const COMMUNITY_USERS: CommunityUser[] = [
@@ -893,7 +886,7 @@ Here is the list to provide:
   {
     id: 'restaurant-ta',
     title: 'இரவு உணவு முன்பதிவு',
-    description: 'ஒரு சிறப்பு சந்தர்ப்பத்திற்காக ஒரு மேசையை முன்பதிவு செய்ய ஒரு உணவகத்தை அழைக்கவும்.',
+    description: 'ഒരു சிறப்பு சந்தர்ப்பத்திற்காக ஒரு மேசையை முன்பதிவு செய்ய ஒரு உணவகத்தை அழைக்கவும்.',
     emoji: '🍽️',
     lang: 'ta',
     category: 'Conversation',
@@ -1283,4 +1276,62 @@ export const ALL_VIEWS: { id: string; label: string; icon: React.FC<React.SVGPro
     { id: 'community', label: 'Community', icon: CommunityIcon },
     { id: 'achievements', label: 'Achievements', icon: AchievementsIcon },
     { id: 'challenges', label: 'Challenges', icon: ChallengesIcon },
+];
+
+export const LEADERBOARD_DATA: { [key: string]: { title: string, users: LeaderboardUser[] } } = {
+    conversation: {
+        title: "Conversation Kings 💬",
+        users: [
+            { id: '1', name: 'Maria Garcia', score: 2450, avatarUrl: 'https://picsum.photos/seed/lb1/40' },
+            { id: '4', name: 'Ken Tanaka', score: 2310, avatarUrl: 'https://picsum.photos/seed/lb2/40' },
+            { id: '6', name: 'Chloe Wright', score: 2180, avatarUrl: 'https://picsum.photos/seed/lb3/40' },
+        ]
+    },
+    vocabulary: {
+        title: "Vocabulary Virtuosos 📚",
+        users: [
+            { id: '3', name: 'Anne Dubois', score: 32, avatarUrl: 'https://picsum.photos/seed/lb4/40' },
+            { id: '5', name: 'Lukas Müller', score: 29, avatarUrl: 'https://picsum.photos/seed/lb5/40' },
+            { id: '2', name: 'John Smith', score: 25, avatarUrl: 'https://picsum.photos/seed/lb6/40' },
+        ]
+    },
+    grammar: {
+        title: "Grammar Gurus 🧑‍🏫",
+        users: [
+            { id: '1', name: 'Maria Garcia', score: 98, avatarUrl: 'https://picsum.photos/seed/lb1/40' },
+            { id: '5', name: 'Lukas Müller', score: 95, avatarUrl: 'https://picsum.photos/seed/lb5/40' },
+            { id: '3', name: 'Anne Dubois', score: 92, avatarUrl: 'https://picsum.photos/seed/lb4/40' },
+        ]
+    }
+};
+
+export const PERSONAS: Persona[] = [
+    {
+        id: 'all-rounder',
+        label: 'All-Rounder',
+        description: 'A balanced mix of lessons and real-world scenarios.',
+        icon: SparklesIcon,
+        categories: ['Conversation', 'Career Focus', 'Cultural Immersion', 'Keigo Mastery', 'Lesson']
+    },
+    {
+        id: 'traveler',
+        label: 'Traveler',
+        description: 'Focus on conversations and cultural immersion.',
+        icon: MapPinIcon,
+        categories: ['Conversation', 'Cultural Immersion']
+    },
+    {
+        id: 'student',
+        label: 'Student',
+        description: 'Build a strong foundation with core lessons and practice.',
+        icon: AcademicCapIcon,
+        categories: ['Lesson', 'Conversation']
+    },
+    {
+        id: 'professional',
+        label: 'Professional',
+        description: 'Master business language and formal communication.',
+        icon: BriefcaseIcon,
+        categories: ['Career Focus', 'Keigo Mastery']
+    }
 ];
