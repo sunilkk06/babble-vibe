@@ -1,5 +1,7 @@
 
 
+
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -128,8 +130,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         <div className="space-y-8">
             <header className="text-center md:text-left">
                 <h1 className="text-4xl lg:text-5xl font-bold font-poppins text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-rose-500">
-                    Every Chirp Takes You Closer to Fluency!
+                    Bridging Worlds, One Chirp at a Time.
                 </h1>
+                <p className="mt-2 text-lg text-gray-600 max-w-2xl md:max-w-none">From the ancient wisdom of Sanskrit to the global language of business, discover a new way to connect.</p>
             </header>
 
             <section>
