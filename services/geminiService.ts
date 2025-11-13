@@ -3,6 +3,13 @@
 import { GoogleGenAI, Chat, GenerateContentResponse, Modality, Type } from "@google/genai";
 import type { Message, ImageVocabularyWord, QuizQuestion, VocabularyWord } from '../types';
 
+export interface AdaptiveStep {
+    title: string;
+    objective: string;
+    recommendedView?: 'lesson' | 'scenario' | 'practice' | 'review';
+    suggestedId?: string;
+}
+
 if (!process.env.API_KEY) {
     throw new Error("API_KEY environment variable not set");
 }
@@ -21,6 +28,45 @@ export const generateContent = async (prompt: string): Promise<string> => {
     } catch (error) {
         console.error('generateContent failed:', error);
         throw new Error('Failed to generate content. Please try again.');
+    }
+};
+
+// Build an adaptive learning path plan for the current user/persona.
+export const generateAdaptivePath = async (languageName: string, personaLabel: string): Promise<AdaptiveStep[]> => {
+    const prompt = `You are Polly, an expert language coach.
+Create a short adaptive learning path for a ${personaLabel} learning ${languageName}.
+Return 5 to 7 concise steps. Each step should have:
+- title (max 7 words)
+- objective (one sentence)
+- recommendedView: one of [lesson, scenario, practice, review]
+If you know a fitting scenario or lesson id pattern, include suggestedId, otherwise omit.`;
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+            config: {
+                responseMimeType: 'application/json',
+                responseSchema: {
+                    type: Type.ARRAY,
+                    items: {
+                        type: Type.OBJECT,
+                        properties: {
+                            title: { type: Type.STRING },
+                            objective: { type: Type.STRING },
+                            recommendedView: { type: Type.STRING },
+                            suggestedId: { type: Type.STRING },
+                        },
+                        required: ['title','objective']
+                    }
+                }
+            }
+        });
+        const json = response.text.trim();
+        const plan = JSON.parse(json) as AdaptiveStep[];
+        return plan;
+    } catch (error) {
+        console.error('generateAdaptivePath failed:', error);
+        return [];
     }
 };
 

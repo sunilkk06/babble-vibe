@@ -1308,8 +1308,8 @@ export const LEADERBOARD_DATA: { [key: string]: { title: string, users: Leaderbo
 export const PERSONAS: Persona[] = [
     {
         id: 'all-rounder',
-        label: 'All-Rounder',
-        description: 'A balanced mix of lessons and real-world scenarios.',
+        label: 'Adaptive Mode',
+        description: 'AI-personalized route that adapts to your speaking and goals.',
         icon: SparklesIcon,
         categories: ['Conversation', 'Career Focus', 'Cultural Immersion', 'Keigo Mastery', 'Lesson']
     },

@@ -9,7 +9,7 @@ import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import type { Scenario, Lesson, Challenge, Persona } from '../types';
 import { CHALLENGES, VIEWS, PERSONAS } from '../constants';
 import { FireIcon, StarIcon } from './icons/Icons';
-import { generateContent as genaiGenerateContent } from '../services/geminiService';
+import { generateContent as genaiGenerateContent, generateAdaptivePath, AdaptiveStep } from '../services/geminiService';
 
 // --- Reusable Components ---
 
@@ -130,6 +130,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
     const [genaiPrompt, setGenaiPrompt] = useState('');
     const [genaiResult, setGenaiResult] = useState<string | null>(null);
     const [genaiLoading, setGenaiLoading] = useState(false);
+    const [plan, setPlan] = useState<AdaptiveStep[] | null>(null);
+    const [planLoading, setPlanLoading] = useState(false);
 
     const handleGenaiRun = async () => {
         if (!genaiPrompt.trim()) return;
@@ -142,6 +144,18 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
             setGenaiResult('Sorry, something went wrong generating content.');
         } finally {
             setGenaiLoading(false);
+        }
+    };
+
+    const handleBuildPlan = async () => {
+        setPlanLoading(true);
+        try {
+            const data = await generateAdaptivePath(''+(navigator?.language || 'English'), activePersona.label);
+            setPlan(data);
+        } catch (e) {
+            setPlan([]);
+        } finally {
+            setPlanLoading(false);
         }
     };
 
@@ -178,7 +192,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
             </section>
 
             <section>
-                <h2 className="text-2xl font-bold text-slate-700 font-poppins mb-4">Your ChirpPath</h2>
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-2xl font-bold text-slate-700 font-poppins">Your ChirpPath</h2>
+                    <button onClick={handleBuildPlan} disabled={planLoading}
+                        className="px-3 py-2 rounded-md text-sm font-semibold bg-teal-500 text-white hover:bg-teal-600 disabled:bg-slate-300">
+                        {planLoading ? 'Building…' : 'Personalize with AI'}
+                    </button>
+                </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {PERSONAS.map(persona => (
                         <PersonaCard 
@@ -189,6 +209,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                         />
                     ))}
                 </div>
+                {plan && (
+                    <div className="mt-4 bg-white rounded-xl shadow-md p-4 border border-slate-200">
+                        <h3 className="font-bold text-slate-700 mb-2">AI Plan for {activePersona.label}</h3>
+                        <ol className="list-decimal pl-5 space-y-2">
+                            {plan.map((step, idx) => (
+                                <li key={idx}>
+                                    <p className="font-semibold text-slate-800">{step.title}</p>
+                                    <p className="text-sm text-slate-600">{step.objective}</p>
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
+                )}
             </section>
             
             {lessons.length > 0 && (
