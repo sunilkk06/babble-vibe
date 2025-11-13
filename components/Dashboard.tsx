@@ -151,9 +151,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         setPlanLoading(true);
         try {
             const data = await generateAdaptivePath(''+(navigator?.language || 'English'), activePersona.label);
-            setPlan(data);
+            if (data && data.length > 0) {
+                setPlan(data);
+            } else {
+                setPlan(null);
+            }
         } catch (e) {
-            setPlan([]);
+            setPlan(null);
         } finally {
             setPlanLoading(false);
         }
@@ -209,7 +213,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                         />
                     ))}
                 </div>
-                {plan && (
+                {plan && plan.length > 0 && (
                     <div className="mt-4 bg-white rounded-xl shadow-md p-4 border border-slate-200">
                         <h3 className="font-bold text-slate-700 mb-2">AI Plan for {activePersona.label}</h3>
                         <ol className="list-decimal pl-5 space-y-2">
