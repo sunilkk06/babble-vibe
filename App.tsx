@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, useNavigate, useLocation, useParams, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, useParams, Navigate, Outlet } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { Sidebar } from './components/Sidebar';
@@ -50,11 +50,27 @@ const LessonViewWrapper = () => {
 };
 
 
+// Helpers
+const needsVerification = (user: any | null) => {
+  if (!user) return false;
+  const isPassword = user.providerData?.some((p: any) => p?.providerId === 'password') || user.providerData?.length === 0;
+  return isPassword && !user.emailVerified;
+};
+
+// Route guard component (auth + email verified)
+const ProtectedRoute: React.FC<{ isAuthed: boolean; emailVerified: boolean }> = ({ isAuthed, emailVerified }) => {
+  if (!isAuthed) return <Navigate to="/auth" replace />;
+  if (!emailVerified) return <Navigate to="/verify-email" replace />;
+  return <Outlet />;
+};
+
 export default function App() {
   const [currentLanguage, setCurrentLanguage] = useState<Language>(LANGUAGES[0]);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authUser, setAuthUser] = useState<any>(null);
+  const emailVerified = authUser ? !!authUser.emailVerified : false;
   const [installPrompt, setInstallPrompt] = useState<any>(null);
   const [isIos, setIsIos] = useState(false);
   const [showInstallBanner, setShowInstallBanner] = useState(false);
@@ -98,7 +114,40 @@ export default function App() {
     };
     initializeNativeFeatures();
   }, []);
+
+  // Firebase auth listener
+  useEffect(() => {
+    let unsub: any;
+    (async () => {
+      try {
+        const { auth } = await import('./services/firebase');
+        const { onAuthStateChanged } = await import('firebase/auth');
+        unsub = onAuthStateChanged(auth, (user) => {
+          setAuthUser(user);
+          setIsAuthenticated(!!user);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+    return () => { if (unsub) unsub(); };
+  }, []);
   
+  useEffect(() => {
+    // Redirect based on auth/verification status
+    if (!isAuthenticated && location.pathname !== '/auth') {
+      navigate('/auth', { replace: true });
+      return;
+    }
+    if (isAuthenticated && !emailVerified && location.pathname !== '/verify-email') {
+      navigate('/verify-email', { replace: true });
+      return;
+    }
+    if (isAuthenticated && emailVerified && location.pathname === '/verify-email') {
+      navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, emailVerified, navigate, location.pathname]);
+
   useEffect(() => {
     // Check if banner was already dismissed
     if (localStorage.getItem('chirPollyInstallDismissed') === 'true') {
@@ -135,12 +184,16 @@ export default function App() {
     }
   }, [isAuthenticated]);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
+  const handleLogin = () => {};
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
+  const handleLogout = async () => {
+    try {
+      const { auth, } = await import('./services/firebase');
+      const { signOut } = await import('firebase/auth');
+      await signOut(auth);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleOnboardingComplete = () => {
@@ -243,9 +296,6 @@ export default function App() {
       setShowInstallBanner(false);
   };
   
-  if (!isAuthenticated) {
-    return <LoginPage onLogin={handleLogin} />;
-  }
 
   const dashboardProps = {
     onScenarioSelect: handleScenarioSelect,
@@ -271,28 +321,45 @@ export default function App() {
           currentLanguage={currentLanguage}
           setCurrentLanguage={handleLanguageChange}
           onLogout={handleLogout}
+          user={authUser}
         />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           <Routes>
-            <Route path={VIEWS.DASHBOARD.path} element={<Dashboard {...dashboardProps} />} />
-            <Route path={VIEWS.LANGUAGES_PAGE.path} element={<LanguagesView onLanguageSelect={handleLanguageSelectFromPage} lessons={LESSONS} />} />
-            <Route path={VIEWS.SCENARIO.path} element={<ScenarioViewWrapper language={currentLanguage} />} />
-            <Route path={VIEWS.LESSON.path} element={<LessonViewWrapper />} />
-            <Route path={VIEWS.GRAMMAR.path} element={<GrammarClinicView />} />
-            <Route path={VIEWS.IMAGE_EDITOR.path} element={<ImageEditorView language={currentLanguage} />} />
-            <Route path={VIEWS.WORD_BANK.path} element={<WordBankView language={currentLanguage} />} />
-            <Route path={VIEWS.KANJI_LAIR.path} element={<KanjiLairView language={currentLanguage} />} />
-            <Route path={VIEWS.ACCENT_TRAINING.path} element={<AccentTrainingView language={currentLanguage} />} />
-            <Route path={VIEWS.COMMUNITY.path} element={<CommunityView />} />
-            <Route path={VIEWS.ACHIEVEMENTS.path} element={<AchievementsView />} />
-            <Route path={VIEWS.CHALLENGES.path} element={<ChallengesView />} />
-            <Route path={VIEWS.TUTORS.path} element={<TutorView />} />
-            <Route path={VIEWS.AI_TUTOR_CHAT.path} element={<AITutorView language={currentLanguage} />} />
-            <Route path={VIEWS.ABOUT.path} element={<AboutView />} />
-            <Route path={VIEWS.TERMS.path} element={<TermsView />} />
-            <Route path={VIEWS.PRIVACY.path} element={<PrivacyView />} />
-            {/* Fallback route to redirect any unknown paths to the dashboard */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* Public routes */}
+            <Route path="/auth" element={<LoginPage />} />
+            <Route path="/verify-email" element={<(await import('./components/VerifyEmail')).VerifyEmail />} />
+
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute isAuthed={isAuthenticated} emailVerified={emailVerified} />}>
+              <Route path={VIEWS.DASHBOARD.path} element={<Dashboard {...dashboardProps} />} />
+              <Route path={VIEWS.LANGUAGES_PAGE.path} element={<LanguagesView onLanguageSelect={handleLanguageSelectFromPage} lessons={LESSONS} />} />
+              <Route path={VIEWS.SCENARIO.path} element={<ScenarioViewWrapper language={currentLanguage} />} />
+              <Route path={VIEWS.LESSON.path} element={<LessonViewWrapper />} />
+              <Route path={VIEWS.GRAMMAR.path} element={<GrammarClinicView />} />
+              <Route path={VIEWS.IMAGE_EDITOR.path} element={<ImageEditorView language={currentLanguage} />} />
+              <Route path={VIEWS.WORD_BANK.path} element={<WordBankView language={currentLanguage} />} />
+              <Route path={VIEWS.KANJI_LAIR.path} element={<KanjiLairView language={currentLanguage} />} />
+              <Route path={VIEWS.ACCENT_TRAINING.path} element={<AccentTrainingView language={currentLanguage} />} />
+              <Route path={VIEWS.COMMUNITY.path} element={<CommunityView />} />
+              <Route path={VIEWS.ACHIEVEMENTS.path} element={<AchievementsView />} />
+              <Route path={VIEWS.CHALLENGES.path} element={<ChallengesView />} />
+              <Route path={VIEWS.TUTORS.path} element={<TutorView />} />
+              <Route path={VIEWS.AI_TUTOR_CHAT.path} element={<AITutorView language={currentLanguage} />} />
+              <Route path={VIEWS.ABOUT.path} element={<AboutView />} />
+              <Route path={VIEWS.TERMS.path} element={<TermsView />} />
+              <Route path={VIEWS.PRIVACY.path} element={<PrivacyView />} />
+            </Route>
+
+            {/* Fallback */}
+            <Route path="*" element={
+              !isAuthenticated ? (
+                <Navigate to="/auth" replace />
+              ) : !emailVerified ? (
+                <Navigate to="/verify-email" replace />
+              ) : (
+                <Navigate to={VIEWS.DASHBOARD.path} replace />
+              )
+            } />
           </Routes>
         </main>
         <Footer />

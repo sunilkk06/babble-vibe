@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="320" height="80" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(8,6)">
+    <path d="M14,58 C6,54 4,48 6,44 C15,47 20,49 26,52 C23,56 19,59 14,58 Z" fill="#064E3B" opacity="0.9"/>
+    <path d="M20,56 C13,52 11,47 13,44 C20,46 25,48 31,50 C29,54 25,57 20,56 Z" fill="#0B816B" opacity="0.9"/>
+    <path d="M26,26 C44,14 66,10 84,14 C70,20 53,27 38,36 C33,39 28,42 23,46 C20,41 20,33 26,26 Z" fill="#10B981"/>
+    <path d="M26,32 C44,22 64,18 78,21 C63,28 46,36 32,46 C29,48 26,50 23,52 C21,48 21,40 26,32 Z" fill="#0EA5A4"/>
+    <path d="M22,24 C18,31 18,40 22,48 C27,58 39,62 48,58 C54,55 57,49 56,43 C55,35 50,29 42,26 C35,23 27,22 22,24 Z" fill="#059669"/>
+    <circle cx="44" cy="20" r="10" fill="#10B981"/>
+    <circle cx="47" cy="18.5" r="1.6" fill="#0F172A"/>
+    <path d="M53,17 L62,20 L53,23 C51,21.5 51,18.5 53,17 Z" fill="#F59E0B"/>
+    <path d="M38,16 C40,14 42,13.2 44,13.2 C45.8,13.2 47.2,13.6 48.6,14.3" stroke="#A7F3D0" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.7"/>
+  </g>
+  <g transform="translate(120,52)">
+    <text x="0" y="0" font-family="Poppins, ui-sans-serif, system-ui" font-size="34" font-weight="800" fill="#0F172A">
+      <tspan fill="#065F46">Chir</tspan>
+      <tspan fill="#0EA5A4">Polly</tspan>
+    </text>
+  </g>
+</svg>

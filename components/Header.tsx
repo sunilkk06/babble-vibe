@@ -12,14 +12,21 @@ const ProgressBar: React.FC<{ progress: number }> = ({ progress }) => (
 );
 
 
+interface SignedInUser {
+    displayName?: string | null;
+    email?: string | null;
+    photoURL?: string | null;
+}
+
 interface HeaderProps {
     onToggleSidebar: () => void;
     currentLanguage: Language;
     setCurrentLanguage: (lang: Language) => void;
     onLogout: () => void;
+    user?: SignedInUser | null;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage, setCurrentLanguage, onLogout }) => {
+export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage, setCurrentLanguage, onLogout, user }) => {
     const [isProfileOpen, setProfileOpen] = useState(false);
     const profileMenuRef = useRef<HTMLDivElement>(null);
 
@@ -78,13 +85,19 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage
                             aria-haspopup="true"
                         >
                             <span className="sr-only">Open user menu</span>
-                            <div className="h-8 w-8 rounded-full bg-teal-600 flex items-center justify-center">
-                                <span className="text-sm font-semibold text-white">AD</span>
-                            </div>
+                            {user?.photoURL ? (
+                                <img src={user.photoURL} alt={user.displayName ?? user.email ?? 'User'} className="h-8 w-8 rounded-full object-cover" />
+                            ) : (
+                                <div className="h-8 w-8 rounded-full bg-teal-600 flex items-center justify-center">
+                                    <span className="text-sm font-semibold text-white">
+                                        {(user?.displayName ?? user?.email ?? 'User').split(/[\s@]/).filter(Boolean).slice(0,2).map(s=>s[0]?.toUpperCase()).join('')}
+                                    </span>
+                                </div>
+                            )}
                             <div className="hidden lg:flex lg:items-center ml-4">
                                 <div className="w-full text-left">
                                     <span className="text-sm font-semibold leading-6 text-gray-800" aria-hidden="true">
-                                        Alex Doe
+                                        {user?.displayName ?? user?.email ?? 'Guest'}
                                     </span>
                                     <div className="flex items-center gap-x-2 w-40">
                                         <span className="text-xs font-medium text-yellow-600">Level {userLevel}</span>
@@ -100,17 +113,20 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, currentLanguage
                         {/* Dropdown panel */}
                         {isProfileOpen && (
                             <div
-                                className="absolute right-0 z-10 mt-2.5 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none transition ease-out duration-100"
+                                className="absolute right-0 z-10 mt-2.5 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none transition ease-out duration-100"
                                 role="menu"
                                 aria-orientation="vertical"
                                 aria-labelledby="user-menu-button"
                                 tabIndex={-1}
                             >
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex={-1}>
-                                    Your Profile
-                                </a>
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex={-1}>
-                                    Settings
+                                <div className="px-4 py-2 border-b border-slate-100">
+                                    <p className="text-sm font-semibold text-gray-800 truncate">{user?.displayName ?? user?.email ?? 'Guest'}</p>
+                                    {user?.email && (
+                                        <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                                    )}
+                                </div>
+                                <a href="https://myaccount.google.com/" target="_blank" rel="noreferrer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex={-1}>
+                                    Manage Google Account
                                 </a>
                                 <a href="#" onClick={(e) => { e.preventDefault(); onLogout(); }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabIndex={-1}>
                                     Log out

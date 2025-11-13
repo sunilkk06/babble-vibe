@@ -9,16 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "@google/genai": "^1.27.0",
-    "react-dom": "^19.2.0",
-    "marked": "^16.4.1",
-    "react-router-dom": "^6.25.1",
-    "react-router": "^6.25.1",
-    "@capacitor/status-bar": "^7.0.3",
     "@capacitor/core": "^7.4.4",
+    "@capacitor/status-bar": "^7.0.3",
+    "@google/genai": "^1.27.0",
+    "firebase": "^12.5.0",
     "framer-motion": "^11.3.11",
-    "lottie-react": "^2.4.0"
+    "lottie-react": "^2.4.0",
+    "marked": "^16.4.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router": "^6.25.1",
+    "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

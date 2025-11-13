@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="96" viewBox="0 0 360 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C6F6A6"/>
+      <stop offset="45%" stop-color="#8BEB5E"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7CFC8A"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+    <linearGradient id="tailGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#0EA5A4"/>
+    </linearGradient>
+    <linearGradient id="crestGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF5A5F"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#0F172A" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(10,8)" filter="url(#softShadow)">
+    <path d="M24,70 C21,64 21,58 24,54 C37,60 47,64 55,66 C50,72 40,74 24,70 Z" fill="url(#tailGrad)"/>
+    <path d="M32,68 C29,62 29,58 31,55 C43,59 51,62 58,63 C55,68 47,71 32,68 Z" fill="#10B981" opacity="0.9"/>
+
+    <path d="M40,36 C60,22 88,18 110,22 C94,30 73,40 54,52 C48,56 42,60 36,66 C33,59 33,46 40,36 Z" fill="url(#wingGrad)"/>
+    <path d="M40,42 C60,30 84,26 102,28 C86,36 66,47 49,59 C46,61 43,63 40,66 C38,61 38,50 40,42 Z" fill="#86EFAC" opacity="0.95"/>
+
+    <path d="M36,34 C31,42 31,54 36,64 C43,78 60,82 72,76 C80,72 84,64 83,56 C81,45 73,38 61,34 C51,30 42,30 36,34 Z" fill="url(#bodyGrad)"/>
+
+    <circle cx="66" cy="26" r="12" fill="#6EE7B7"/>
+    <circle cx="63.5" cy="28" r="3.2" fill="#B6F4CE"/>
+    <circle cx="70" cy="24.8" r="2.1" fill="#0F172A"/>
+    <path d="M75,23 L88,26 L75,29 C72.6,27.4 72.6,24.6 75,23 Z" fill="#FF7A1A"/>
+    <path d="M57,21 C60,16 64,14 68,14 C70.2,14 72.3,14.5 74.2,15.5 C71,16 68.7,17.2 67,19.2 C65.6,20.8 64.5,22.7 64,24.8 C61.8,24 59.8,22.8 58,21.3 Z" fill="url(#crestGrad)"/>
+  </g>
+
+  <g transform="translate(140,64)">
+    <text x="0" y="0" font-family="Poppins, ui-sans-serif, system-ui" font-size="40" font-weight="900" letter-spacing="0.5">
+      <tspan fill="#22C55E">Chir</tspan>
+      <tspan fill="#EF4444">Polly</tspan>
+    </text>
+  </g>
+</svg>
