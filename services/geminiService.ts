@@ -10,6 +10,20 @@ if (!process.env.API_KEY) {
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 let activeChat: Chat | null = null;
 
+// Simple text generation helper
+export const generateContent = async (prompt: string): Promise<string> => {
+    try {
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+        });
+        return response.text;
+    } catch (error) {
+        console.error('generateContent failed:', error);
+        throw new Error('Failed to generate content. Please try again.');
+    }
+};
+
 const grammarCheckPrompt = `
 Also, analyze the user's last message for grammatical errors. 
 If there are errors, provide a correction and a brief explanation in a section formatted EXACTLY like this, at the end of your response:

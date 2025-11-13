@@ -9,6 +9,7 @@ import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import type { Scenario, Lesson, Challenge, Persona } from '../types';
 import { CHALLENGES, VIEWS, PERSONAS } from '../constants';
 import { FireIcon, StarIcon } from './icons/Icons';
+import { generateContent as genaiGenerateContent } from '../services/geminiService';
 
 // --- Reusable Components ---
 
@@ -126,6 +127,24 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
     const dailyStreak = 4;
     const xpProgress = 150;
 
+    const [genaiPrompt, setGenaiPrompt] = useState('');
+    const [genaiResult, setGenaiResult] = useState<string | null>(null);
+    const [genaiLoading, setGenaiLoading] = useState(false);
+
+    const handleGenaiRun = async () => {
+        if (!genaiPrompt.trim()) return;
+        setGenaiLoading(true);
+        setGenaiResult(null);
+        try {
+            const text = await genaiGenerateContent(genaiPrompt.trim());
+            setGenaiResult(text);
+        } catch (e) {
+            setGenaiResult('Sorry, something went wrong generating content.');
+        } finally {
+            setGenaiLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-8">
             <header className="text-center md:text-left">
@@ -134,6 +153,29 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                 </h1>
                 <p className="mt-2 text-lg text-gray-600 max-w-2xl md:max-w-none">From the ancient wisdom of Sanskrit to the global language of business, discover a new way to connect.</p>
             </header>
+
+            {/* Simple Gemini content generation demo */}
+            <section className="bg-white rounded-xl shadow-md p-4 border-t-4 border-teal-400">
+                <h2 className="text-xl font-bold text-slate-700 font-poppins mb-2">Quick Generate</h2>
+                <div className="flex flex-col md:flex-row gap-2">
+                    <input
+                        type="text"
+                        value={genaiPrompt}
+                        onChange={(e) => setGenaiPrompt(e.target.value)}
+                        placeholder="Ask Polly (Gemini) anything..."
+                        className="flex-1 p-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    />
+                    <button onClick={handleGenaiRun} disabled={genaiLoading || !genaiPrompt.trim()}
+                        className="px-4 py-2 bg-rose-500 text-white rounded-md disabled:bg-slate-300">
+                        {genaiLoading ? 'Generating...' : 'Generate'}
+                    </button>
+                </div>
+                {genaiResult && (
+                    <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-md whitespace-pre-wrap text-slate-800">
+                        {genaiResult}
+                    </div>
+                )}
+            </section>
 
             <section>
                 <h2 className="text-2xl font-bold text-slate-700 font-poppins mb-4">Your ChirpPath</h2>
