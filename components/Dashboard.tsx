@@ -5,11 +5,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import Lottie, { LottieRefCurrentProps } from 'lottie-react';
-import type { Scenario, Lesson, Challenge, Persona } from '../types';
-import { CHALLENGES, VIEWS, PERSONAS } from '../constants';
+import type { Scenario, Lesson, Challenge } from '../types';
+import { CHALLENGES, VIEWS } from '../constants';
 import { FireIcon, StarIcon } from './icons/Icons';
-import { generateContent as genaiGenerateContent, generateAdaptivePath, AdaptiveStep } from '../services/geminiService';
+import { generateContent as genaiGenerateContent } from '../services/geminiService';
 
 // --- Reusable Components ---
 
@@ -63,26 +62,6 @@ const StatCard: React.FC<{ title: string, icon: React.ReactNode, children: React
     </div>
 );
 
-const PersonaCard: React.FC<{ persona: Persona; isActive: boolean; onClick: () => void; }> = ({ persona, isActive, onClick }) => {
-    const Icon = persona.icon;
-    return (
-        <motion.button
-            onClick={onClick}
-            className={`p-4 rounded-xl text-left transition-all duration-300 w-full h-full flex flex-col shadow-lg transform min-h-[180px] ${
-                isActive 
-                ? 'bg-gradient-to-br from-teal-400 to-sky-500 text-white shadow-teal-500/30' 
-                : 'bg-white/70 backdrop-blur-md border border-slate-200/80 text-slate-800 hover:border-teal-300 hover:-translate-y-1'
-            }`}
-            whileHover={{ y: -4 }}
-        >
-            <div className={`p-2 rounded-lg mb-3 transition-colors self-start ${isActive ? 'bg-white/20' : 'bg-slate-100'}`}>
-              <Icon className={`w-7 h-7 transition-colors ${isActive ? 'text-white' : 'text-teal-600'}`} />
-            </div>
-            <h3 className="font-bold font-poppins text-md leading-tight break-words">{persona.label}</h3>
-            <p className={`text-sm mt-2 flex-grow ${isActive ? 'text-white/90' : 'text-slate-600'}`}>{persona.description}</p>
-        </motion.button>
-    );
-};
 
 
 // --- Main Dashboard Component ---
@@ -100,7 +79,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
     const [dailyChallenge, setDailyChallenge] = useState<Challenge | null>(null);
     const location = useLocation();
     const navigate = useNavigate();
-    const [activePersona, setActivePersona] = useState<Persona>(PERSONAS[0]);
     
     useEffect(() => {
         const dailyChallenges = CHALLENGES.filter(c => c.type === 'daily');
@@ -119,9 +97,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         }
     };
 
-    const filteredScenarios = scenarios.filter(scenario => 
-        activePersona.id === 'all-rounder' || activePersona.categories.includes(scenario.category)
-    );
 
     // Mock data for stats
     const dailyStreak = 4;
@@ -130,8 +105,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
     const [genaiPrompt, setGenaiPrompt] = useState('');
     const [genaiResult, setGenaiResult] = useState<string | null>(null);
     const [genaiLoading, setGenaiLoading] = useState(false);
-    const [plan, setPlan] = useState<AdaptiveStep[] | null>(null);
-    const [planLoading, setPlanLoading] = useState(false);
 
     const handleGenaiRun = async () => {
         if (!genaiPrompt.trim()) return;
@@ -147,21 +120,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
         }
     };
 
-    const handleBuildPlan = async () => {
-        setPlanLoading(true);
-        try {
-            const data = await generateAdaptivePath(''+(navigator?.language || 'English'), activePersona.label);
-            if (data && data.length > 0) {
-                setPlan(data);
-            } else {
-                setPlan(null);
-            }
-        } catch (e) {
-            setPlan(null);
-        } finally {
-            setPlanLoading(false);
-        }
-    };
 
     return (
         <div className="space-y-8">
@@ -195,39 +153,34 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                 )}
             </section>
 
-            <section>
-                <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-2xl font-bold text-slate-700 font-poppins">Your ChirpPath</h2>
-                    <button onClick={handleBuildPlan} disabled={planLoading}
-                        className="px-3 py-2 rounded-md text-sm font-semibold bg-teal-500 text-white hover:bg-teal-600 disabled:bg-slate-300">
-                        {planLoading ? 'Building…' : 'Personalize with AI'}
-                    </button>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {PERSONAS.map(persona => (
-                        <PersonaCard 
-                            key={persona.id}
-                            persona={persona}
-                            isActive={activePersona.id === persona.id}
-                            onClick={() => setActivePersona(persona)}
-                        />
-                    ))}
-                </div>
-                {plan && plan.length > 0 && (
-                    <div className="mt-4 bg-white rounded-xl shadow-md p-4 border border-slate-200">
-                        <h3 className="font-bold text-slate-700 mb-2">AI Plan for {activePersona.label}</h3>
-                        <ol className="list-decimal pl-5 space-y-2">
-                            {plan.map((step, idx) => (
-                                <li key={idx}>
-                                    <p className="font-semibold text-slate-800">{step.title}</p>
-                                    <p className="text-sm text-slate-600">{step.objective}</p>
-                                </li>
-                            ))}
-                        </ol>
+            {/* Hero section replacing persona cards */}
+            <section className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg p-6 border border-white/30">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                    <div className="flex-1">
+                        <h2 className="text-2xl font-bold font-poppins text-slate-800">Welcome to ChirPolly</h2>
+                        <p className="mt-2 text-slate-600">Learn faster with bite-sized lessons, real conversations, and smart guidance powered by AI.</p>
+                        <div className="mt-4 flex gap-2">
+                            <button
+                                onClick={() => {
+                                    if (lessons.length > 0) onLessonSelect(lessons[0]); else navigate(VIEWS.LANGUAGES_PAGE.path);
+                                }}
+                                className="px-4 py-2 rounded-md bg-rose-500 text-white font-semibold hover:bg-rose-600"
+                            >
+                                Continue Learning
+                            </button>
+                            <button
+                                onClick={() => navigate(VIEWS.LANGUAGES_PAGE.path)}
+                                className="px-4 py-2 rounded-md bg-slate-200 text-slate-800 font-semibold hover:bg-slate-300"
+                            >
+                                Explore Languages
+                            </button>
+                        </div>
                     </div>
-                )}
+                    <div className="flex-1 text-center md:text-right">
+                        <div className="inline-flex items-center justify-center h-28 w-28 rounded-full bg-gradient-to-br from-teal-400 to-sky-500 text-4xl">🦜</div>
+                    </div>
+                </div>
             </section>
-            
             {lessons.length > 0 && (
                  <section>
                     <h2 className="text-2xl font-bold text-slate-700 font-poppins mb-4">Core Lessons</h2>
@@ -237,7 +190,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                 </section>
             )}
 
-            {scenarios.length > 0 && (
+            {false && scenarios.length > 0 && (
                 <section>
                     <h2 className="text-2xl font-bold text-slate-700 font-poppins mb-4">Practice Scenarios</h2>
                     <motion.div 
