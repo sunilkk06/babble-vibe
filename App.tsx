@@ -7,6 +7,7 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
+import { VerifyEmail } from './components/VerifyEmail';
 import { ScenarioView } from './components/ScenarioView';
 import { LessonView } from './components/LessonView';
 import { GrammarClinicView } from './components/GrammarClinicView';
@@ -327,7 +328,7 @@ export default function App() {
           <Routes>
             {/* Public routes */}
             <Route path="/auth" element={<LoginPage />} />
-            <Route path="/verify-email" element={<(await import('./components/VerifyEmail')).VerifyEmail />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoute isAuthed={isAuthenticated} emailVerified={emailVerified} />}>
