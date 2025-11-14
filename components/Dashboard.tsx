@@ -102,24 +102,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
     const dailyStreak = 4;
     const xpProgress = 150;
 
-    const [genaiPrompt, setGenaiPrompt] = useState('');
-    const [genaiResult, setGenaiResult] = useState<string | null>(null);
-    const [genaiLoading, setGenaiLoading] = useState(false);
-
-    const handleGenaiRun = async () => {
-        if (!genaiPrompt.trim()) return;
-        setGenaiLoading(true);
-        setGenaiResult(null);
-        try {
-            const text = await genaiGenerateContent(genaiPrompt.trim());
-            setGenaiResult(text);
-        } catch (e) {
-            setGenaiResult('Sorry, something went wrong generating content.');
-        } finally {
-            setGenaiLoading(false);
-        }
-    };
-
 
     return (
         <div className="space-y-8">
@@ -129,29 +111,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                 </h1>
                 <p className="mt-2 text-lg text-gray-600 max-w-2xl md:max-w-none">From the ancient wisdom of Sanskrit to the global language of business, discover a new way to connect.</p>
             </header>
-
-            {/* Simple Gemini content generation demo */}
-            <section className="bg-white rounded-xl shadow-md p-4 border-t-4 border-teal-400">
-                <h2 className="text-xl font-bold text-slate-700 font-poppins mb-2">Quick Generate</h2>
-                <div className="flex flex-col md:flex-row gap-2">
-                    <input
-                        type="text"
-                        value={genaiPrompt}
-                        onChange={(e) => setGenaiPrompt(e.target.value)}
-                        placeholder="Ask Polly (Gemini) anything..."
-                        className="flex-1 p-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    />
-                    <button onClick={handleGenaiRun} disabled={genaiLoading || !genaiPrompt.trim()}
-                        className="px-4 py-2 bg-rose-500 text-white rounded-md disabled:bg-slate-300">
-                        {genaiLoading ? 'Generating...' : 'Generate'}
-                    </button>
-                </div>
-                {genaiResult && (
-                    <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-md whitespace-pre-wrap text-slate-800">
-                        {genaiResult}
-                    </div>
-                )}
-            </section>
 
             {/* Hero section replacing persona cards */}
             <section className="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg p-6 border border-white/30">
@@ -177,7 +136,74 @@ export const Dashboard: React.FC<DashboardProps> = ({ onScenarioSelect, onLesson
                         </div>
                     </div>
                     <div className="flex-1 text-center md:text-right">
-                        <div className="inline-flex items-center justify-center h-28 w-28 rounded-full bg-gradient-to-br from-teal-400 to-sky-500 text-4xl">🦜</div>
+                        <svg className="inline-block w-48 h-48 animate-bounce" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="pathGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#3B82F6"/>
+                                    <stop offset="50%" stopColor="#10B981"/>
+                                    <stop offset="100%" stopColor="#F59E0B"/>
+                                </linearGradient>
+                                <style>{`
+                                    @keyframes float {
+                                        0%, 100% { transform: translateY(0px); }
+                                        50% { transform: translateY(-20px); }
+                                    }
+                                    @keyframes rotate {
+                                        0% { transform: rotate(0deg); }
+                                        100% { transform: rotate(360deg); }
+                                    }
+                                    .float-animation { animation: float 3s ease-in-out infinite; }
+                                    .rotate-animation { animation: rotate 20s linear infinite; }
+                                `}</style>
+                            </defs>
+                            
+                            {/* Background circle */}
+                            <circle cx="100" cy="100" r="95" fill="none" stroke="url(#pathGrad)" strokeWidth="2" opacity="0.3"/>
+                            
+                            {/* Rotating path elements */}
+                            <g className="rotate-animation" style={{transformOrigin: '100px 100px'}}>
+                                <circle cx="100" cy="30" r="8" fill="#3B82F6" opacity="0.6"/>
+                                <circle cx="160" cy="60" r="8" fill="#10B981" opacity="0.6"/>
+                                <circle cx="170" cy="130" r="8" fill="#F59E0B" opacity="0.6"/>
+                                <circle cx="130" cy="170" r="8" fill="#E91E63" opacity="0.6"/>
+                                <circle cx="60" cy="170" r="8" fill="#8B5CF6" opacity="0.6"/>
+                                <circle cx="30" cy="130" r="8" fill="#14B8A6" opacity="0.6"/>
+                                <circle cx="40" cy="60" r="8" fill="#EC4899" opacity="0.6"/>
+                            </g>
+                            
+                            {/* Center parrot with float animation */}
+                            <g className="float-animation">
+                                {/* Parrot body */}
+                                <ellipse cx="100" cy="105" rx="18" ry="22" fill="#E91E63"/>
+                                
+                                {/* Parrot head */}
+                                <circle cx="110" cy="85" r="14" fill="#E91E63"/>
+                                
+                                {/* Parrot crest */}
+                                <path d="M 105 72 Q 103 65 108 68 Q 110 62 113 70" fill="#E91E63"/>
+                                
+                                {/* Eye */}
+                                <circle cx="115" cy="83" r="5" fill="white"/>
+                                <circle cx="116" cy="83" r="3" fill="black"/>
+                                
+                                {/* Beak */}
+                                <path d="M 120 85 L 132 86 L 120 89 Z" fill="#FFA500"/>
+                                
+                                {/* Wing */}
+                                <ellipse cx="100" cy="105" rx="20" ry="16" fill="#22C55E" opacity="0.8" transform="rotate(-25 100 105)"/>
+                                
+                                {/* Tail */}
+                                <path d="M 85 120 Q 75 130 70 145 L 75 140 Q 82 128 85 120" fill="#14B8A6" opacity="0.9"/>
+                            </g>
+                            
+                            {/* Floating stars around */}
+                            <g opacity="0.7">
+                                <text x="50" y="40" fontSize="20" fill="#FBBF24">✨</text>
+                                <text x="140" y="50" fontSize="18" fill="#EC4899">⭐</text>
+                                <text x="160" y="110" fontSize="20" fill="#3B82F6">✨</text>
+                                <text x="50" y="160" fontSize="18" fill="#10B981">⭐</text>
+                            </g>
+                        </svg>
                     </div>
                 </div>
             </section>

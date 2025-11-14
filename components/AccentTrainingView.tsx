@@ -59,7 +59,7 @@ async function decodeAudioData(
   return buffer;
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'demo-api-key-for-development' });
 
 // --- Phrase Practice Card Component ---
 const PhrasePracticeCard: React.FC<{

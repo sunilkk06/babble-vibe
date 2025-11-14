@@ -1,60 +1,73 @@
 import React, { useId } from 'react';
 
-// Vibrant, playful parrot next to the wordmark with bright gradients and accent colors.
-// Aimed for a lively, Duolingo-like vibrancy while remaining an original design.
+// Vibrant parrot facing right with multicolored text on the right
 export const ParrotIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   const uid = useId();
-  const wingId = `wingGrad-${uid}`;
-  const bodyId = `bodyGrad-${uid}`;
-  const tailId = `tailGrad-${uid}`;
-  const crestId = `crestGrad-${uid}`;
+  const wingGradId = `wingGrad-${uid}`;
+  const tailGradId = `tailGrad-${uid}`;
+  
   return (
-  <svg viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <defs>
-      <linearGradient id={wingId} x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="#C6F6A6"/>
-        <stop offset="45%" stopColor="#8BEB5E"/>
-        <stop offset="100%" stopColor="#22C55E"/>
-      </linearGradient>
-      <linearGradient id={bodyId} x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#7CFC8A"/>
-        <stop offset="100%" stopColor="#16A34A"/>
-      </linearGradient>
-      <linearGradient id={tailId} x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#34D399"/>
-        <stop offset="100%" stopColor="#0EA5A4"/>
-      </linearGradient>
-      <linearGradient id={crestId} x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="#FF5A5F"/>
-        <stop offset="100%" stopColor="#EF4444"/>
-      </linearGradient>
-    </defs>
+    <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <defs>
+        {/* Wing gradient - orange to green */}
+        <linearGradient id={wingGradId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFA500"/>
+          <stop offset="50%" stopColor="#22C55E"/>
+          <stop offset="100%" stopColor="#10B981"/>
+        </linearGradient>
+        
+        {/* Tail gradient - rainbow colors */}
+        <linearGradient id={tailGradId} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#E91E63"/>
+          <stop offset="25%" stopColor="#FFA500"/>
+          <stop offset="50%" stopColor="#FBBF24"/>
+          <stop offset="75%" stopColor="#14B8A6"/>
+          <stop offset="100%" stopColor="#06B6D4"/>
+        </linearGradient>
+      </defs>
 
-    {/* Parrot mark - larger and closer to text for small sizes */}
-    <g transform="translate(4,6)">
-      {/* Tail */}
-      <path d="M20,62 C18,58 18,54 20,51 C30,55 38,58 44,60 C41,64 33,66 20,62 Z" fill={`url(#${tailId})`}/>
-      {/* Wing */}
-      <path d="M30,30 C46,20 66,18 82,20 C70,26 54,34 40,44 C36,46 32,49 28,52 C26,47 26,38 30,30 Z" fill={`url(#${wingId})`}/>
-      {/* Body */}
-      <path d="M28,28 C24,35 24,46 28,54 C34,66 48,70 58,66 C64,63 67,58 66,52 C65,44 60,38 52,34 C44,31 35,30 28,28 Z" fill={`url(#${bodyId})`}/>
-      {/* Head */}
-      <circle cx="56" cy="24" r="12.5" fill="#6EE7B7"/>
-      <circle cx="54" cy="26" r="3" fill="#B6F4CE"/>
-      <circle cx="60.5" cy="22.5" r="2.2" fill="#0F172A"/>
-      {/* Beak */}
-      <path d="M64,21 L75,24 L64,27 C61.8,25.4 61.8,22.6 64,21 Z" fill="#FF7A1A"/>
-      {/* Crest */}
-      <path d="M48,19 C50.5,15 54,13.2 58,13.2 C60.4,13.2 62.4,13.7 64.2,14.6 C61.2,15.1 59,16.5 57.4,18.4 C56,20 55,22 54.6,24.1 C52.6,23.2 50.7,21.8 49.2,20.2 Z" fill={`url(#${crestId})`}/>
-    </g>
-
-    {/* Wordmark right next to parrot */}
-    <g transform="translate(100,58)">
-      <text x="0" y="0" fontFamily="Poppins, ui-sans-serif, system-ui" fontSize="34" fontWeight="900" letterSpacing="0.25">
-        <tspan fill="#22C55E">Chir</tspan>
-        <tspan fill="#EF4444">Polly</tspan>
+      {/* Parrot Body - Magenta/Pink */}
+      <ellipse cx="45" cy="50" rx="22" ry="28" fill="#E91E63"/>
+      
+      {/* Parrot Head */}
+      <circle cx="60" cy="30" r="18" fill="#E91E63"/>
+      
+      {/* Parrot Crest - spiky top */}
+      <path d="M 55 10 Q 52 0 58 5 Q 60 -2 65 8 Q 68 2 70 12" fill="#E91E63"/>
+      
+      {/* Eye white */}
+      <circle cx="68" cy="28" r="8" fill="white"/>
+      
+      {/* Eye pupil */}
+      <circle cx="70" cy="28" r="5" fill="black"/>
+      
+      {/* Eye shine */}
+      <circle cx="72" cy="26" r="2" fill="white"/>
+      
+      {/* Beak - yellow/orange */}
+      <path d="M 75 30 L 95 32 L 75 36 Z" fill="#FFA500"/>
+      <path d="M 95 32 L 100 30 L 95 34 Z" fill="#FFB84D"/>
+      
+      {/* Wing - orange to green gradient */}
+      <ellipse cx="50" cy="55" rx="28" ry="22" fill={`url(#${wingGradId})`} opacity="0.9" transform="rotate(-20 50 55)"/>
+      
+      {/* Tail feathers - rainbow */}
+      <path d="M 35 70 Q 20 85 10 100 L 15 95 Q 25 82 35 70" fill={`url(#${tailGradId})`} opacity="0.95" strokeWidth="0"/>
+      <path d="M 30 75 Q 15 92 5 108 L 12 100 Q 22 85 30 75" fill={`url(#${tailGradId})`} opacity="0.8" strokeWidth="0"/>
+      <path d="M 25 78 Q 8 98 0 115 L 8 105 Q 18 88 25 78" fill={`url(#${tailGradId})`} opacity="0.7" strokeWidth="0"/>
+      
+      {/* Text - multicolored letters, closer to parrot, clean sans-serif */}
+      <text x="105" y="62" fontFamily="Arial, Helvetica, sans-serif" fontSize="44" fontWeight="700" letterSpacing="-1">
+        <tspan fill="#3B82F6">c</tspan>
+        <tspan fill="#10B981">h</tspan>
+        <tspan fill="#FBBF24">i</tspan>
+        <tspan fill="#8B5CF6">r</tspan>
+        <tspan fill="#EF4444">P</tspan>
+        <tspan fill="#EC4899">o</tspan>
+        <tspan fill="#14B8A6">l</tspan>
+        <tspan fill="#F59E0B">l</tspan>
+        <tspan fill="#06B6D4">y</tspan>
       </text>
-    </g>
-  </svg>
+    </svg>
   );
 };

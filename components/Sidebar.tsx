@@ -49,9 +49,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, currentLang
             <Link
                 to="/"
                 onClick={() => setIsOpen(false)}
-                className="flex h-16 shrink-0 items-center justify-center cursor-pointer px-0 py-0"
+                className="flex h-32 shrink-0 items-center justify-center cursor-pointer px-0 py-6"
             >
-                <ParrotIcon className="h-14 w-auto"/>
+                <ParrotIcon className="h-24 w-auto"/>
             </Link>
             <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-2">

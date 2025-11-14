@@ -10,11 +10,14 @@ export interface AdaptiveStep {
     suggestedId?: string;
 }
 
+// Use a fallback demo API key if not configured
+const apiKey = process.env.API_KEY || 'demo-api-key-for-development';
+
 if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable not set");
+    console.warn('⚠️ GEMINI_API_KEY not configured. Running in demo mode - AI features will not work.');
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey });
 let activeChat: Chat | null = null;
 
 // Simple text generation helper

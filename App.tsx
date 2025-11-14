@@ -121,12 +121,26 @@ export default function App() {
     let unsub: any;
     (async () => {
       try {
-        const { auth } = await import('./services/firebase');
+        const { auth, isDemoModeEnabled } = await import('./services/firebase');
         const { onAuthStateChanged } = await import('firebase/auth');
-        unsub = onAuthStateChanged(auth, (user) => {
-          setAuthUser(user);
-          setIsAuthenticated(!!user);
-        });
+        
+        if (isDemoModeEnabled) {
+          // In demo mode, auto-authenticate with a demo user
+          console.log('Demo mode: Auto-authenticating with demo user');
+          setAuthUser({
+            uid: 'demo-user-123',
+            email: 'demo@chirpolly.app',
+            emailVerified: true,
+            displayName: 'Demo User',
+            providerData: [],
+          });
+          setIsAuthenticated(true);
+        } else {
+          unsub = onAuthStateChanged(auth, (user) => {
+            setAuthUser(user);
+            setIsAuthenticated(!!user);
+          });
+        }
       } catch (e) {
         console.error(e);
       }
